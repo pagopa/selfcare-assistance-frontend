@@ -72,43 +72,6 @@ const requiredError = 'Required';
  const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
 
-  // useEffect(() => {
-  //   const loadScriptByURL = (id: any, url: string, callback: any) => {
-  //     const isScriptExist = document.getElementById(id);
-
-  //     if (!isScriptExist) {
-  //       const script = document.createElement('script');
-  //       script.type = 'text/javascript';
-  //       script.src = url;
-  //       script.id = id;
-  //       script.onload = function () {
-  //         if (callback) {
-  //           callback();
-  //         }
-  //       };
-  //       document.body.appendChild(script);
-  //     }
-
-  //     if (isScriptExist && callback) {
-  //       callback();
-  //     }
-  //   };
-
-    // load the script by passing the URL
-  //   loadScriptByURL(
-  //     'recaptcha-key',
-  //     `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
-  //     function () {
-  //       console.log('Script loaded!');
-  //     }
-  //   );
-  //   return () => {
-  //     const id = document.getElementById('recaptcha-key');
-  //     ReactDOM.unmountComponentAtNode(id as Element | DocumentFragment);
-  //     console.log('unmount recaptcha');
-  //   };
-  // }, [viewThxPage]);
-
   const dispatch = useAppDispatch();
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
@@ -269,43 +232,6 @@ const requiredError = 'Required';
               </Grid>
             </Box>
 
-            {/* section visible to non-logged user */}
-            {!user && (
-              <Box>
-                <TitleBox
-                  title="I tuoi contatti"
-                  subTitle="Inserisci i tuoi dati, ci serviranno per ricontattarti e offrirti la nostra assistenza"
-                  mbTitle={1}
-                  mtTitle={7}
-                  mbSubTitle={4}
-                  variantTitle="h3"
-                  variantSubTitle="body2"
-                  // TODO: add in common library subTitleFontSize="16px"
-                />
-                <Grid container spacing={3}>
-                  <Grid item xs={6} mb={3} sx={{ height: '75px' }}>
-                    <CustomTextField {...baseTextFieldProps('name', 'Nome', 'Nome')} />
-                  </Grid>
-                  <Grid item xs={6} mb={3} sx={{ height: '75px' }}>
-                    <CustomTextField {...baseTextFieldProps('surname', 'Cognome', 'Cognome')} />
-                  </Grid>
-                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
-                    <CustomTextField
-                      {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
-                    />
-                  </Grid>
-                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
-                    <CustomTextField
-                      {...baseTextFieldProps(
-                        'emailConfirm',
-                        'Conferma indirizzo e-mail istituzionale',
-                        'Conferma indirizzo e-mail istituzionale'
-                      )}
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-            )}
             <Grid container spacing={2} mt={10}>
               <Grid item xs={3}>
                 <Button
