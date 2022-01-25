@@ -12,7 +12,8 @@ export default function ThankyouPage({ title, description, onAction }: Props) {
       <Box style={{ textAlign: 'center', margin: 'auto' }}>
         <Grid item xs={12}>
           <Box mb={5}>
-            <ConfirmIcon />
+            {/* TODO: modify icon in common */}
+            <ConfirmIcon /> 
           </Box>
         </Grid>
         <Grid item xs={12}>

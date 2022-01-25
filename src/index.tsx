@@ -15,7 +15,7 @@ import { ENV } from './utils/env';
 // eslint-disable-next-line functional/immutable-data
 CONFIG.MOCKS.MOCK_USER = MOCK_USER;
 // eslint-disable-next-line functional/immutable-data
-CONFIG.URL_FE.LOGIN = `${ENV.URL_FE.LOGIN}?onSuccess=dashboard`;
+CONFIG.URL_FE.LOGIN = `${ENV.URL_FE.LOGIN}?onSuccess=assistenza`;
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
 

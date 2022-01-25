@@ -240,7 +240,7 @@ const requiredError = 'Required';
                   variant="outlined"
                   type="submit"
                   onClick={() => {
-                    history.goBack();
+                    history.push(ENV.URL_FE.DASHBOARD);
                   }}
                 >
                   Indietro
