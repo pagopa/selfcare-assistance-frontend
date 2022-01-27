@@ -11,7 +11,7 @@
     "@mui/x-data-grid": "^5.0.1",
     "@mui/x-data-grid-generator": "^5.0.1",
     "@pagopa/mui-italia": "pagopa/mui-italia",
-    "@pagopa/selfcare-common-frontend": "^1.1.0",
+    "@pagopa/selfcare-common-frontend": "^1.1.1",
     "@pagopa/ts-commons": "^10.2.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -54,7 +54,10 @@
     "eject": "react-scripts eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
-    "prettify": "prettier --write \"./**/*.{ts,tsx}\""
+    "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
+    "generate": "npm-run-all generate:*",
+    "clean:api-notification-manager": "rimraf src/api/generated/notification-manager && rimraf openApi/generated",
+    "generate:api-notification-manager": "yarn run clean:api-notification-manager && mkdirp openApi/generated && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/notification-manager-api-docs.json > openApi/generated/notification-manager-swagger20.json && node openApi/scripts/fixSwagger20ArraySchemaDef.js openApi/generated/notification-manager-swagger20.json && gen-api-models --api-spec openApi/generated/notification-manager-swagger20.json --out-dir src/api/generated/notification-manager --no-strict --request-types --response-decoders --client"
   },
   "eslintConfig": {
     "extends": [
