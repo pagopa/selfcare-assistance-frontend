@@ -1,43 +1,20 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import ConfirmIcon from '@pagopa/selfcare-common-frontend/components/icons/ConfirmIcon';
+// import { Box, Button, Grid, Typography } from '@mui/material';
+import CheckIllustrationIcon from '@pagopa/selfcare-common-frontend/components/icons/CheckIllustrationIcon';
+import EndingPage from '@pagopa/selfcare-common-frontend/components/EndingPage';
 
 type Props = {
   title: string;
   description: string;
-  onAction?: React.MouseEventHandler<HTMLButtonElement>;
+  onAction?: () => void;
 };
 export default function ThankyouPage({ title, description, onAction }: Props) {
   return (
-    <Grid container>
-      <Box style={{ textAlign: 'center', margin: 'auto' }}>
-        <Grid item xs={12}>
-          <Box mb={5}>
-            {/* TODO: modify icon in common */}
-            <ConfirmIcon /> 
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant={'h2'} mb={1}>
-            {title}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} mb={10}>
-          <Typography variant={'body2'} sx={{ fontSize: '18px' }}>
-            {description}
-          </Typography>
-        </Grid>
-        <Grid item xs={4} sx={{margin: 'auto'}}>
-          <Button
-            sx={{ width: '100%'}}
-            color="primary"
-            variant="contained"
-            type="submit"
-            onClick={onAction}
-          >
-            Indietro
-          </Button>
-        </Grid>
-      </Box>
-    </Grid>
+    <EndingPage 
+      icon={<CheckIllustrationIcon />}
+      title={title}
+      description= {description}
+      onButtonClick= {onAction}
+      buttonLabel={"Chiudi"}
+    />
   );
 }

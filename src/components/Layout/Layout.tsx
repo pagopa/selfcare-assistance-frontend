@@ -19,7 +19,7 @@ export default function Layout({ children }: Props) {
       }}
     >
       <Header withSecondHeader={false} />
-      <Grid container direction="row" flexGrow={1}>
+      <Grid container>
         {children}
       </Grid>
       <Footer assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined} />

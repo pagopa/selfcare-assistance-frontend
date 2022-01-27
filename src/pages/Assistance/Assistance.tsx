@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
-import { useHistory } from 'react-router';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
 import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
 import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
@@ -12,7 +11,6 @@ import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
-import { ENV } from '../../utils/env';
 import { useAppDispatch } from './../../redux/hooks';
 import ThankyouPage from './ThankyouPage';
 
@@ -75,8 +73,6 @@ const requiredError = 'Required';
   const dispatch = useAppDispatch();
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
-
-  const history = useHistory();
 
   const user = useAppSelector(userSelectors.selectLoggedUser);
 
@@ -239,9 +235,7 @@ const requiredError = 'Required';
                   color="primary"
                   variant="outlined"
                   type="submit"
-                  onClick={() => {
-                    history.push(ENV.URL_FE.DASHBOARD);
-                  }}
+                  onClick={() => window.location.assign(document.referrer)}
                 >
                   Indietro
                 </Button>
@@ -273,11 +267,7 @@ const requiredError = 'Required';
           // TODO: verify correct text and correct redirect
           description="Ti risponderemo al più presto al tuo indirizzo e-mail istituzionale.
           Grazie per averci contattato."
-          onAction={
-            user
-              ? () => history.push(ENV.URL_FE.DASHBOARD)
-              : () => window.location.assign(ENV.URL_FE.LANDING)
-          }
+          onAction={() => window.location.assign(document.referrer)}
         />
       )}
     </React.Fragment>
