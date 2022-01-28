@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
@@ -15,10 +15,10 @@ import { useAppDispatch } from './../../redux/hooks';
 import ThankyouPage from './ThankyouPage';
 
 export type AssistanceRequest = {
-  name: string;
-  surname: string;
-  email: string;
-  emailConfirm: string;
+  name?: string;
+  surname?: string;
+  email?: string;
+  emailConfirm?: string;
   message: string;
   messageObject: string;
 };
@@ -67,7 +67,7 @@ const CustomTextArea = styled(TextField)({
 const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 const requiredError = 'Required';
 
- const Assistance = () => {
+const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -79,20 +79,6 @@ const requiredError = 'Required';
   const validate = (values: Partial<AssistanceRequest>) =>
     Object.fromEntries(
       Object.entries({
-        name: user && !values.name ? requiredError : undefined,
-        surname: !values.surname ? requiredError : undefined,
-        email: !values.email
-          ? requiredError
-          : !emailRegexp.test(values.email)
-          ? 'L’indirizzo email non è valido'
-          : undefined,
-        emailConfirm: !values.emailConfirm
-          ? requiredError
-          : !emailRegexp.test(values.emailConfirm)
-          ? 'L’indirizzo email non è valido'
-          : values.emailConfirm !== values.email
-          ? "L’indirizzo email di conferma non è uguale all'indirizzo email inserito"
-          : undefined,
         messageObject: !values.messageObject ? requiredError : undefined,
         message: !values.message ? requiredError : undefined,
       }).filter(([_key, value]) => value)
@@ -110,21 +96,20 @@ const requiredError = 'Required';
     validate,
     onSubmit: (values) => {
       setLoading(true);
-          saveAssistance(values)
-            .then(() => {
-              setThxPage(true);
-            })
-            .catch((reason) =>
-              addError({
-                id: 'SAVE_ASSISTANCE',
-                blocking: false,
-                error: reason,
-                techDescription: `An error occurred while saving assistance form`,
-                toNotify: true,
-              })
-            )
-            .finally(() => setLoading(false));
-
+      saveAssistance(values)
+        .then(() => {
+          setThxPage(true);
+        })
+        .catch((reason) =>
+          addError({
+            id: 'SAVE_ASSISTANCE',
+            blocking: false,
+            error: reason,
+            techDescription: `An error occurred while saving assistance form`,
+            toNotify: true,
+          })
+        )
+        .finally(() => setLoading(false));
     },
   });
 
@@ -190,21 +175,29 @@ const requiredError = 'Required';
             mbSubTitle={7}
             variantTitle="h1"
             variantSubTitle="h5"
-            // TODO: add in common library titleFontSize="48px" 
+            titleFontSize="48px"
           />
           <form onSubmit={formik.handleSubmit}>
             {/* section visible to logged user */}
             <Box>
               <Grid container direction="column" spacing={3}>
                 <Grid container item>
-                  <Grid item xs={6} mb={3} sx={{ height: '75px' }}>
+                  <Grid item xs={6} sx={{ height: '75px' }}>
                     <CustomTextField
+                      className="messageObject"
                       {...baseTextFieldProps(
                         'messageObject',
                         'Oggetto del messaggio',
                         'Oggetto del messaggio'
                       )}
                     />
+                  </Grid>
+                  <Grid item xs={12} mb={3} sx={{ height: '75px' }}>
+                    <Box sx={{marginTop:'-17px'}}>
+                      <Typography variant="body2" sx={{ fontSize: '14px', color:'#5A768A' }}>
+                        Indicaci l’argomento della tua richiesta
+                      </Typography>
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid container item>
@@ -252,19 +245,11 @@ const requiredError = 'Required';
                 </Button>
               </Grid>
             </Grid>
-            <Box mt={3}>
-              <Typography variant="body2" sx={{ fontSize: '14px' }}>
-                Form protetto tramite reCAPTCHA e Google{' '}
-                <Link href="https://policies.google.com/privacy">Privacy Policy</Link> e
-                <Link href="https://policies.google.com/terms">Termini di servizio</Link> applicati.
-              </Typography>
-            </Box>
           </form>
         </Box>
       ) : (
         <ThankyouPage
           title="Abbiamo ricevuto la tua richiesta"
-          // TODO: verify correct text and correct redirect
           description="Ti risponderemo al più presto al tuo indirizzo e-mail istituzionale.
           Grazie per averci contattato."
           onAction={() => window.location.assign(document.referrer)}

@@ -1918,18 +1918,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@pagopa/mui-italia@github:pagopa/mui-italia":
-  version "0.4.2"
-  resolved "https://codeload.github.com/pagopa/mui-italia/tar.gz/7e81d4f3cdecf7230a33a5286db5e02ef4357949"
-  dependencies:
-    "@emotion/react" "^11.5.0"
-    "@emotion/styled" "^11.3.0"
-    "@fontsource/titillium-web" "^4.5.0"
-    "@mui/material" "^5.0.4"
-    react "^17.0.2"
-    react-dom "^17.0.2"
-    react-scripts "4.0.3"
-
 "@pagopa/mui-italia@pagopa/mui-italia":
   version "0.3.1"
   resolved "https://codeload.github.com/pagopa/mui-italia/tar.gz/4977b6dab1142fe5663d2e736a0a4a8ad40080bf"

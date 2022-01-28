@@ -1,0 +1,82 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "selc-notification-manager",
+    "description" : "Self Care Notification Manager API documentation",
+    "version" : "1.0-SNAPSHOT"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:80",
+    "description" : "Inferred Url"
+  } ],
+  "tags" : [ {
+    "name" : "notification-manager",
+    "description" : "Notification Manager operations"
+  } ],
+  "paths" : {
+    "/notifications/v1/customer-care" : {
+      "post" : {
+        "tags" : [ "notification-manager" ],
+        "summary" : "sendNotificationToCustomerCare",
+        "description" : "Service that sends the notification to the Customer Care",
+        "operationId" : "sendNotificationToCustomerCareUsingPOST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMessageDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          },
+          "204" : {
+            "description" : "No Content"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ "global" ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CreateMessageDto" : {
+        "title" : "CreateMessageDto",
+        "required" : [ "content", "subject" ],
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "type" : "string",
+            "description" : "Notification message content"
+          },
+          "subject" : {
+            "type" : "string",
+            "description" : "Notification message subject"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "description" : "A bearer token in the format of a JWS and conformed to the specifications included in [RFC8725](https://tools.ietf.org/html/RFC8725)",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}
