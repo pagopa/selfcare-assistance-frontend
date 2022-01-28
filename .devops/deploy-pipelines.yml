@@ -150,7 +150,7 @@ stages:
               INLINE_RUNTIME_CHUNK: 'false'
               REACT_APP_URL_FE_LOGIN: '$(react_app_url_fe_auth)/login'
               REACT_APP_URL_FE_LOGOUT: '$(react_app_url_fe_auth)/logout'
-              REACT_APP_URL_FE_ONBOARDING: '$(react_app_url_fe_onboarding)/add'
+              REACT_APP_URL_FE_DASHBOARD: '$(react_app_url_fe_dashboard)'
               REACT_APP_URL_FE_LANDING: '$(react_app_url_fe_landing)'
               REACT_APP_URL_FE_ASSISTANCE: '$(react_app_url_fe_assistance)'
               REACT_APP_URL_API_PARTY_PROCESS: '$(react_app_url_api_party_process)'
