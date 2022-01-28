@@ -64,7 +64,7 @@ const CustomTextArea = styled(TextField)({
     },
   },
 });
-const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
+
 const requiredError = 'Required';
 
 const Assistance = () => {
