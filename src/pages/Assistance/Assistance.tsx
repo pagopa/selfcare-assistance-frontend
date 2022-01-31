@@ -171,7 +171,7 @@ const Assistance = () => {
           <TitleBox
             title="Assistenza"
             subTitle="Come possiamo aiutarti? Compila il modulo e invialo online, ti ricontatteremo al più presto."
-            mbTitle={2}
+            mbTitle={1}
             mbSubTitle={7}
             variantTitle="h1"
             variantSubTitle="h5"
@@ -180,7 +180,7 @@ const Assistance = () => {
           <form onSubmit={formik.handleSubmit}>
             {/* section visible to logged user */}
             <Box>
-              <Grid container direction="column" spacing={3}>
+              <Grid container direction="column" >
                 <Grid container item>
                   <Grid item xs={6} sx={{ height: '75px' }}>
                     <CustomTextField
@@ -192,7 +192,7 @@ const Assistance = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12} mb={3} sx={{ height: '75px' }}>
+                  <Grid item xs={12} mb={5}>
                     <Box sx={{marginTop:'-17px'}}>
                       <Typography variant="body2" sx={{ fontSize: '14px', color:'#5A768A' }}>
                         Indicaci l’argomento della tua richiesta
