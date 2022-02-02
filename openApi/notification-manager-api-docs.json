@@ -63,6 +63,10 @@
             "type" : "string",
             "description" : "Notification message content"
           },
+          "senderEmail" : {
+            "type" : "string",
+            "description" : "Notification message sender email"
+          },
           "subject" : {
             "type" : "string",
             "description" : "Notification message subject"

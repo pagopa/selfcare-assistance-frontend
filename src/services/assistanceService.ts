@@ -13,5 +13,6 @@ export const saveAssistance = async (value: AssistanceRequest): Promise<void> =>
 
 export const assistanceRequest2CreateMessageDto = (e: AssistanceRequest):CreateMessageDto => ({
   content:e.message,
-  subject:e.messageObject
+  subject:e.messageObject,
+  senderEmail:e.email
 });

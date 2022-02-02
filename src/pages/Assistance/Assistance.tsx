@@ -59,13 +59,14 @@ const CustomTextArea = styled(TextField)({
     fontWeight: '400',
     '&::placeholder': {
       fontStyle: 'italic',
-      color: '      #5C6F82',
+      color: '#5C6F82',
       opacity: '1',
     },
   },
 });
 
 const requiredError = 'Required';
+const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 
 const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
@@ -81,13 +82,23 @@ const Assistance = () => {
       Object.entries({
         messageObject: !values.messageObject ? requiredError : undefined,
         message: !values.message ? requiredError : undefined,
+        email: !values.email
+          ? requiredError
+          : !emailRegexp.test(values.email)
+          ? 'L’indirizzo email non è valido'
+          : undefined,
+        emailConfirm: !values.emailConfirm
+          ? requiredError
+          : !emailRegexp.test(values.emailConfirm)
+          ? 'L’indirizzo email non è valido'
+          : values.emailConfirm !== values.email
+          ? "L’indirizzo email di conferma non è uguale all'indirizzo email inserito"
+          : undefined,
       }).filter(([_key, value]) => value)
     );
 
   const formik = useFormik<AssistanceRequest>({
     initialValues: {
-      name: user?.name ?? '',
-      surname: user?.surname ?? '',
       email: user?.email ?? '',
       emailConfirm: user?.email ?? '',
       message: '',
@@ -178,10 +189,9 @@ const Assistance = () => {
             titleFontSize="48px"
           />
           <form onSubmit={formik.handleSubmit}>
-            {/* section visible to logged user */}
             <Box>
-              <Grid container direction="column" >
-                <Grid container item>
+              <Grid container direction="column">
+                <Grid container item spacing={3}>
                   <Grid item xs={6} sx={{ height: '75px' }}>
                     <CustomTextField
                       className="messageObject"
@@ -192,15 +202,33 @@ const Assistance = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12} mb={5}>
-                    <Box sx={{marginTop:'-17px'}}>
-                      <Typography variant="body2" sx={{ fontSize: '14px', color:'#5A768A' }}>
+                  <Grid item xs={12} mb={3} sx={{ height: '75px' }}>
+                    <Box sx={{ marginTop: '-17px' }}>
+                      <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
                         Indicaci l’argomento della tua richiesta
                       </Typography>
                     </Box>
                   </Grid>
                 </Grid>
-                <Grid container item>
+                <Grid container item spacing={3} mb={8}>
+                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                    <CustomTextField
+                      {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
+                      inputProps={{ readOnly: user?.email ? true : false }}
+                    />
+                  </Grid>
+                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                    <CustomTextField
+                      {...baseTextFieldProps(
+                        'emailConfirm',
+                        'Conferma indirizzo e-mail istituzionale',
+                        'Conferma indirizzo e-mail istituzionale'
+                      )}
+                      inputProps={{ readOnly: user?.email ? true : false }}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item spacing={3}>
                   <Grid item xs={10}>
                     <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
                       Testo del messaggio
