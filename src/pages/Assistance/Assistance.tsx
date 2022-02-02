@@ -26,6 +26,9 @@ export type AssistanceRequest = {
 };
 
 const CustomTextField = styled(TextField)({
+  "& .MuiInputBase-root.Mui-disabled:before": {
+    borderBottomStyle: "solid"
+  },
   '.MuiInputLabel-asterisk': {
     display: 'none',
   },
