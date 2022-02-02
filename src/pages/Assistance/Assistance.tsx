@@ -76,7 +76,7 @@ const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
   
-  useUnloadEventInterceptorAndActivate('Se esci, la richiesta di assistenza andrà persa.');
+  useUnloadEventInterceptorAndActivate('Vuoi davvero uscire?','Se esci, la richiesta di assistenza andrà persa.');
   const onExit = useUnloadEventOnExit();
   const { unregisterUnloadEvent } = useUnloadEventInterceptor();
 
