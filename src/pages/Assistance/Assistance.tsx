@@ -3,10 +3,12 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
+import UnloadEventHandler from '@pagopa/selfcare-common-frontend/components/UnloadEventHandler';
 import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
 import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
+import { useUnloadEventInterceptor, useUnloadEventOnExit, useUnloadEventInterceptorAndActivate } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
@@ -51,6 +53,9 @@ const CustomTextField = styled(TextField)({
       color: '#5C6F82',
       opacity: '1',
     },
+    '&.Mui-disabled':{
+      '-webkit-text-fill-color':'#5C6F82'
+    },
   },
 });
 const CustomTextArea = styled(TextField)({
@@ -70,6 +75,10 @@ const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 
 const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
+  
+  useUnloadEventInterceptorAndActivate('Se esci, la richiesta di assistenza andrà persa.');
+  const onExit = useUnloadEventOnExit();
+  const { unregisterUnloadEvent } = useUnloadEventInterceptor();
 
   const dispatch = useAppDispatch();
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
@@ -109,6 +118,7 @@ const Assistance = () => {
       setLoading(true);
       saveAssistance(values)
         .then(() => {
+          unregisterUnloadEvent();
           setThxPage(true);
         })
         .catch((reason) =>
@@ -177,6 +187,7 @@ const Assistance = () => {
 
   return (
     <React.Fragment>
+      <UnloadEventHandler />
       {!viewThxPage ? (
         <Box px={24} my={13}>
           <TitleBox
@@ -213,12 +224,13 @@ const Assistance = () => {
                 <Grid container item spacing={3} mb={8}>
                   <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
+                      disabled ={user?.email ? true : false}
                       {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
-                      inputProps={{ readOnly: user?.email ? true : false }}
                     />
                   </Grid>
                   <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
+                      disabled ={user?.email ? true : false}
                       {...baseTextFieldProps(
                         'emailConfirm',
                         'Conferma indirizzo e-mail istituzionale',
@@ -255,8 +267,7 @@ const Assistance = () => {
                   sx={{ width: '100%' }}
                   color="primary"
                   variant="outlined"
-                  type="submit"
-                  onClick={() => window.location.assign(document.referrer)}
+                  onClick={() => onExit(() => window.location.assign(document.referrer))}
                 >
                   Indietro
                 </Button>
