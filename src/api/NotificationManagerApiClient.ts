@@ -1,20 +1,19 @@
 import { storageRead } from '@pagopa/selfcare-common-frontend/utils/storage-utils';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
+import { buildFetchApi, extractResponse } from '@pagopa/selfcare-common-frontend/utils/api-utils';
 import { STORAGE_KEY_TOKEN } from '../utils/constants';
 import { store } from '../redux/store';
 import { ENV } from '../utils/env';
 import { createClient, WithDefaultsT } from './generated/notification-manager/client';
-import { buildFetchApi, extractResponse } from './api-utils';
 import { CreateMessageDto } from './generated/notification-manager/CreateMessageDto';
 
-const withBearer: WithDefaultsT<'bearerAuth'> =
-  (wrappedOperation) => (params: any) => {
-    const token = storageRead(STORAGE_KEY_TOKEN, 'string');
-    return wrappedOperation({
-      ...params,
-      bearerAuth: `Bearer ${token}`,
-    });
-  };
+const withBearer: WithDefaultsT<'bearerAuth'> = (wrappedOperation) => (params: any) => {
+  const token = storageRead(STORAGE_KEY_TOKEN, 'string');
+  return wrappedOperation({
+    ...params,
+    bearerAuth: `Bearer ${token}`,
+  });
+};
 
 const apiClient = createClient({
   baseUrl: ENV.URL_API.API_ASSISTANCE,
@@ -39,7 +38,7 @@ const onRedirectToLogin = () =>
 export const NotificationManagerApi = {
   save: async (entity: CreateMessageDto): Promise<void> => {
     const result = await apiClient.sendNotificationToCustomerCareUsingPOST({
-      body: entity
+      body: entity,
     });
     return extractResponse(result, 204, onRedirectToLogin);
   },

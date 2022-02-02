@@ -1918,6 +1918,18 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@pagopa/mui-italia@github:pagopa/mui-italia":
+  version "0.4.2"
+  resolved "https://codeload.github.com/pagopa/mui-italia/tar.gz/7e81d4f3cdecf7230a33a5286db5e02ef4357949"
+  dependencies:
+    "@emotion/react" "^11.5.0"
+    "@emotion/styled" "^11.3.0"
+    "@fontsource/titillium-web" "^4.5.0"
+    "@mui/material" "^5.0.4"
+    react "^17.0.2"
+    react-dom "^17.0.2"
+    react-scripts "4.0.3"
+
 "@pagopa/mui-italia@pagopa/mui-italia":
   version "0.3.1"
   resolved "https://codeload.github.com/pagopa/mui-italia/tar.gz/4977b6dab1142fe5663d2e736a0a4a8ad40080bf"
@@ -1951,10 +1963,10 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.2.1.tgz#862cfc8c86cf5cbcf61d6f411e7e230596e32e03"
-  integrity sha512-Ooot0ATprJnH26fpq48g4XvYs/emXFGWFozXOtqCIU0vxAHPvsxZtXRymQdzhcquAIvFvBTdd2n6w6Ewf/jAmA==
+"@pagopa/selfcare-common-frontend@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.2.2.tgz#dc43203ab3e58202817c3ef72143350f11f3f3b6"
+  integrity sha512-7r2VU33Eu82zlSNQZhMjv6c5Eg35AwWxxv3dKktdX+Ms0sIIryIA1QxsWmLqvLSw7qi/41fZ+plo5vHZFGcXrQ==
   dependencies:
     "@emotion/react" "^11.4.1"
     "@emotion/styled" "^11.3.0"
