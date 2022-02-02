@@ -3,7 +3,6 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
-import UnloadEventHandler from '@pagopa/selfcare-common-frontend/components/UnloadEventHandler';
 import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
 import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
@@ -190,7 +189,6 @@ const Assistance = () => {
 
   return (
     <React.Fragment>
-      <UnloadEventHandler />
       {!viewThxPage ? (
         <Box px={24} my={13}>
           <TitleBox
