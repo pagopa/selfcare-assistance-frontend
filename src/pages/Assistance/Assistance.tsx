@@ -213,7 +213,7 @@ const Assistance = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12} mb={3} sx={{ height: '75px' }}>
+                  <Grid item xs={12} mb={5}>
                     <Box sx={{ marginTop: '-17px' }}>
                       <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
                         Indicaci l’argomento della tua richiesta
@@ -228,9 +228,8 @@ const Assistance = () => {
                       {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
                     />
                   </Grid>
-                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                  { !user?.email && <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
-                      disabled ={user?.email ? true : false}
                       {...baseTextFieldProps(
                         'emailConfirm',
                         'Conferma indirizzo e-mail istituzionale',
@@ -238,7 +237,7 @@ const Assistance = () => {
                       )}
                       inputProps={{ readOnly: user?.email ? true : false }}
                     />
-                  </Grid>
+                  </Grid>}
                 </Grid>
                 <Grid container item spacing={3}>
                   <Grid item xs={10}>
