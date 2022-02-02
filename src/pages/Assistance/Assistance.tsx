@@ -100,8 +100,6 @@ const Assistance = () => {
           : undefined,
         emailConfirm: !values.emailConfirm
           ? requiredError
-          : !emailRegexp.test(values.emailConfirm)
-          ? 'L’indirizzo email non è valido'
           : values.emailConfirm !== values.email
           ? "L’indirizzo email di conferma non è uguale all'indirizzo email inserito"
           : undefined,
