@@ -157,6 +157,9 @@ stages:
               REACT_APP_URL_API_DASHBOARD: '$(react_app_url_api_dashboard)'
               REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
               REACT_APP_PAGOPA_HELP_EMAIL: '$(react_app_pagopa_help_email)'
+              REACT_APP_ANALYTICS_ENABLE: true # TODO
+              REACT_APP_ANALYTICS_MOCK: true # TODO
+              REACT_APP_MIXPANEL_TOKEN: 'DUMMY' # TODO
           - bash: |
               printf "$EXECUTION_ID\n$(git name-rev --name-only FETCH_HEAD) $(git rev-parse HEAD)" > $(System.DefaultWorkingDirectory)/build/build.info
             env:
