@@ -23,5 +23,13 @@ export const ENV = {
   API_TIMEOUT_MS: {
     ASSISTANCE: env.get('REACT_APP_API_ASSISTANCE_TIMEOUT_MS').required().asInt(),
   },
+  
+  ANALYTCS: {
+    ENABLE: env.get('REACT_APP_ANALYTICS_ENABLE').default('false').asBool(),
+    MOCK: env.get('REACT_APP_ANALYTICS_MOCK').default('false').asBool(),
+    DEBUG: env.get('REACT_APP_ANALYTICS_DEBUG').default('false').asBool(),
+    TOKEN: env.get('REACT_APP_MIXPANEL_TOKEN').required().asString(),
+    API_HOST: env.get('REACT_APP_MIXPANEL_API_HOST').default('https://api-eu.mixpanel.com').asString(),
+  },
 
 };

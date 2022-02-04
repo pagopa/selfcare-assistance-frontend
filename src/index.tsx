@@ -20,6 +20,7 @@ CONFIG.URL_FE.LOGIN = `${ENV.URL_FE.LOGIN}?onSuccess=assistenza`;
 CONFIG.URL_FE.LOGOUT = ENV.URL_FE.LOGOUT;
 // eslint-disable-next-line functional/immutable-data
 CONFIG.URL_FE.ASSISTANCE = '/assistance';
+import './consentAndAnalyticsConfiguration.ts';
 
 ReactDOM.render(
   <React.StrictMode>
