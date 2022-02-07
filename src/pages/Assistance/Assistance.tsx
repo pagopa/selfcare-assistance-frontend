@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
@@ -9,6 +9,8 @@ import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import { useUnloadEventInterceptor, useUnloadEventOnExit, useUnloadEventInterceptorAndActivate } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
+import { uniqueId } from 'lodash';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
@@ -56,7 +58,7 @@ const CustomTextField = styled(TextField)({
       opacity: '1',
     },
     '&.Mui-disabled':{
-      '-webkit-text-fill-color':'#5C6F82'
+      WebkitTextFillColor:'#5C6F82'
     },
   },
 });
@@ -87,6 +89,15 @@ const Assistance = () => {
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
 
   const user = useAppSelector(userSelectors.selectLoggedUser);
+  const requestIdRef = useRef<string>();
+
+  useEffect(() => {
+    if(!requestIdRef.current){
+      // eslint-disable-next-line functional/immutable-data
+      requestIdRef.current = uniqueId();
+      trackEvent('CUSTOMER_CARE_CONTACT', { event_name: 'CUSTOMER_CARE_CONTACT', request_id : requestIdRef.current });
+    }
+  }, []);
 
   const validate = (values: Partial<AssistanceRequest>) =>
     Object.fromEntries(
@@ -120,15 +131,18 @@ const Assistance = () => {
         .then(() => {
           unregisterUnloadEvent();
           setThxPage(true);
+          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { event_name: 'CUSTOMER_CARE_CONTACT_SUCCESS', request_id : requestIdRef.current });
         })
         .catch((reason) =>
-          addError({
+          {
+            trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { event_name: 'CUSTOMER_CARE_CONTACT_FAILURE', request_id : requestIdRef.current });
+            addError({
             id: 'SAVE_ASSISTANCE',
             blocking: false,
             error: reason,
             techDescription: `An error occurred while saving assistance form`,
-            toNotify: true,
-          })
+            toNotify: false,
+          });}
         )
         .finally(() => setLoading(false));
     },
