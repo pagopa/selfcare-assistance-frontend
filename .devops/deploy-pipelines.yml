@@ -36,6 +36,10 @@ variables:
 
     react_app_url_api_assistance: '$(UAT_REACT_APP_URL_API_NOTIFICATION)'
     react_app_enable_assistance: 'true'
+    react_app_analytics_enabled: '$(UAT_ANALYTICS_ENABLED)'
+    react_app_analytics_mocked: '$(UAT_ANALYTICS_MOCKED)'
+    react_app_mixpanel_token: '$(UAT_MIXPANEL_TOKEN)'
+    react_app_onetrust_domain_id: '$(UAT_ONETRUST_DOMAIN_ID)'
 
   ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     environment: 'PROD'
@@ -52,6 +56,11 @@ variables:
 
     react_app_url_api_assistance: '$(PROD_REACT_APP_URL_API_NOTIFICATION)'
     react_app_enable_assistance: 'true'
+    react_app_url_storage: '$(PROD_REACT_APP_URL_STORAGE)'
+    react_app_analytics_enabled: '$(PROD_ANALYTICS_ENABLED)'
+    react_app_analytics_mocked: '$(PROD_ANALYTICS_MOCKED)'
+    react_app_mixpanel_token: '$(PROD_MIXPANEL_TOKEN)'
+    react_app_onetrust_domain_id: '$(PROD_ONETRUST_DOMAIN_ID)'
 
   # every branch different from past will be considered as DEV
   #  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release-dev') }}:
@@ -70,6 +79,11 @@ variables:
 
     react_app_url_api_assistance: '$(DEV_REACT_APP_URL_API_NOTIFICATION)'
     react_app_enable_assistance: 'true'
+    react_app_url_storage: '$(DEV_REACT_APP_URL_STORAGE)'
+    react_app_analytics_enabled: '$(DEV_ANALYTICS_ENABLED)'
+    react_app_analytics_mocked: '$(DEV_ANALYTICS_MOCKED)'
+    react_app_mixpanel_token: '$(DEV_MIXPANEL_TOKEN)'
+    react_app_onetrust_domain_id: '$(DEV_ONETRUST_DOMAIN_ID)'
 
 # Automatically triggered on PR
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
@@ -148,6 +162,7 @@ stages:
             displayName: 'Build files'
             env:
               INLINE_RUNTIME_CHUNK: 'false'
+              REACT_APP_ENV: '$(environment)'
               REACT_APP_URL_FE_LOGIN: '$(react_app_url_fe_auth)/login'
               REACT_APP_URL_FE_LOGOUT: '$(react_app_url_fe_auth)/logout'
               REACT_APP_URL_FE_DASHBOARD: '$(react_app_url_fe_dashboard)'
@@ -157,9 +172,10 @@ stages:
               REACT_APP_URL_API_DASHBOARD: '$(react_app_url_api_dashboard)'
               REACT_APP_ENABLE_ASSISTANCE: '$(react_app_enable_assistance)'
               REACT_APP_PAGOPA_HELP_EMAIL: '$(react_app_pagopa_help_email)'
-              REACT_APP_ANALYTICS_ENABLE: true # TODO
-              REACT_APP_ANALYTICS_MOCK: true # TODO
-              REACT_APP_MIXPANEL_TOKEN: 'DUMMY' # TODO
+              REACT_APP_ANALYTICS_ENABLE: '$(react_app_analytics_enabled)'
+              REACT_APP_ANALYTICS_MOCK: '$(react_app_analytics_mocked)'
+              REACT_APP_MIXPANEL_TOKEN: '$(react_app_mixpanel_token)'
+              REACT_APP_ONETRUST_DOMAIN_ID: '$(react_app_onetrust_domain_id)'
           - bash: |
               printf "$EXECUTION_ID\n$(git name-rev --name-only FETCH_HEAD) $(git rev-parse HEAD)" > $(System.DefaultWorkingDirectory)/build/build.info
             env:
