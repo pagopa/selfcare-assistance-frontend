@@ -7,7 +7,11 @@ import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/use
 import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
-import { useUnloadEventInterceptor, useUnloadEventOnExit, useUnloadEventInterceptorAndActivate } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
+import {
+  useUnloadEventInterceptor,
+  useUnloadEventOnExit,
+  useUnloadEventInterceptorAndActivate,
+} from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
@@ -25,8 +29,8 @@ export type AssistanceRequest = {
 };
 
 const CustomTextField = styled(TextField)({
-  "& .MuiInputBase-root.Mui-disabled:before": {
-    borderBottomStyle: "solid"
+  '& .MuiInputBase-root.Mui-disabled:before': {
+    borderBottomStyle: 'solid',
   },
   '.MuiInputLabel-asterisk': {
     display: 'none',
@@ -55,8 +59,8 @@ const CustomTextField = styled(TextField)({
       color: '#5C6F82',
       opacity: '1',
     },
-    '&.Mui-disabled':{
-      '-webkit-text-fill-color':'#5C6F82'
+    '&.Mui-disabled': {
+      '-webkit-text-fill-color': '#5C6F82',
     },
   },
 });
@@ -77,8 +81,11 @@ const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 
 const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
-  
-  useUnloadEventInterceptorAndActivate('Vuoi davvero uscire?','Se esci, la richiesta di assistenza andrà persa.');
+
+  useUnloadEventInterceptorAndActivate(
+    'Vuoi davvero uscire?',
+    'Se esci, la richiesta di assistenza andrà persa.'
+  );
   const onExit = useUnloadEventOnExit();
   const { unregisterUnloadEvent } = useUnloadEventInterceptor();
 
@@ -223,20 +230,22 @@ const Assistance = () => {
                 <Grid container item spacing={3} mb={8}>
                   <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
-                      disabled ={user?.email ? true : false}
+                      disabled={user?.email ? true : false}
                       {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
                     />
                   </Grid>
-                  { !user?.email && <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
-                    <CustomTextField
-                      {...baseTextFieldProps(
-                        'emailConfirm',
-                        'Conferma indirizzo e-mail istituzionale',
-                        'Conferma indirizzo e-mail istituzionale'
-                      )}
-                      inputProps={{ readOnly: user?.email ? true : false }}
-                    />
-                  </Grid>}
+                  {!user?.email && (
+                    <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                      <CustomTextField
+                        {...baseTextFieldProps(
+                          'emailConfirm',
+                          'Conferma indirizzo e-mail istituzionale',
+                          'Conferma indirizzo e-mail istituzionale'
+                        )}
+                        inputProps={{ readOnly: user?.email ? true : false }}
+                      />
+                    </Grid>
+                  )}
                 </Grid>
                 <Grid container item spacing={3}>
                   <Grid item xs={10}>
@@ -287,7 +296,7 @@ const Assistance = () => {
       ) : (
         <ThankyouPage
           title="Abbiamo ricevuto la tua richiesta"
-          description="Ti risponderemo al più presto al tuo indirizzo e-mail istituzionale.
+          description="Ti risponderemo al più presto al tuo indirizzo e-mail.
           Grazie per averci contattato."
           onAction={() => window.location.assign(document.referrer)}
         />
