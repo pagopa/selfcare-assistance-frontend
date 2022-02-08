@@ -95,7 +95,7 @@ const Assistance = () => {
     if(!requestIdRef.current){
       // eslint-disable-next-line functional/immutable-data
       requestIdRef.current = uniqueId();
-      trackEvent('CUSTOMER_CARE_CONTACT', { event_name: 'CUSTOMER_CARE_CONTACT', request_id : requestIdRef.current });
+      trackEvent('CUSTOMER_CARE_CONTACT', { request_id : requestIdRef.current });
     }
   }, []);
 
@@ -131,11 +131,11 @@ const Assistance = () => {
         .then(() => {
           unregisterUnloadEvent();
           setThxPage(true);
-          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { event_name: 'CUSTOMER_CARE_CONTACT_SUCCESS', request_id : requestIdRef.current });
+          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id : requestIdRef.current });
         })
         .catch((reason) =>
           {
-            trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { event_name: 'CUSTOMER_CARE_CONTACT_FAILURE', request_id : requestIdRef.current });
+            trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id : requestIdRef.current });
             addError({
             id: 'SAVE_ASSISTANCE',
             blocking: false,
