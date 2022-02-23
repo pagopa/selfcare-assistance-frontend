@@ -11,7 +11,7 @@
     "@mui/x-data-grid": "^5.0.1",
     "@mui/x-data-grid-generator": "^5.0.1",
     "@pagopa/mui-italia": "pagopa/mui-italia",
-    "@pagopa/selfcare-common-frontend": "^1.5.11",
+    "@pagopa/selfcare-common-frontend": "^1.5.13",
     "@pagopa/ts-commons": "^10.2.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
