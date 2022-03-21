@@ -8,6 +8,7 @@ import { verifyMockExecution as verifyLoginMockExecution } from '../../../__mock
 import { Provider } from 'react-redux';
 import { createStore } from './../../../redux/store';
 import { act } from 'react-dom/test-utils';
+import './../../../locale';
 
 jest.mock('@pagopa/selfcare-common-frontend/decorators/withLogin');
 jest.mock('../../../services/assistanceService');
@@ -46,5 +47,4 @@ test('test render whit compiled form', async () => {
   fireEvent.click(button);
 
   await waitFor(() => screen.getByText('Abbiamo ricevuto la tua richiesta'));
-  
 });
