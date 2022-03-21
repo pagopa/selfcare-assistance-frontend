@@ -88,9 +88,8 @@ const Assistance = () => {
   const [viewThxPage, setThxPage] = useState(false);
 
   useUnloadEventInterceptorAndActivate(
-    // TODO
-    'Vuoi davvero uscire?',
-    'Se esci, la richiesta di assistenza andrà persa.'
+    t('assistancePageForm.unloadEvent.title'),
+    t('assistancePageForm.unloadEvent.description')
   );
   const onExit = useUnloadEventOnExit();
   const { unregisterUnloadEvent } = useUnloadEventInterceptor();
@@ -118,12 +117,12 @@ const Assistance = () => {
         email: !values.email
           ? requiredError
           : !emailRegexp.test(values.email)
-          ? 'L’indirizzo email non è valido' // TODO
+          ? t('assistancePageForm.dataValidate.invalidEmail')
           : undefined,
         emailConfirm: !values.emailConfirm
           ? requiredError
           : values.emailConfirm !== values.email
-          ? "L’indirizzo email di conferma non è uguale all'indirizzo email inserito" // TODO
+          ? t('assistancePageForm.dataValidate.notEqualConfirmEmail')
           : undefined,
       }).filter(([_key, value]) => value)
     );
@@ -239,7 +238,7 @@ const Assistance = () => {
                   <Grid item xs={12} mb={5}>
                     <Box sx={{ marginTop: '-17px' }}>
                       <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
-                        Indicaci l’argomento della tua richiesta
+                        {t('assistancePageForm.messageObject.helperText')}
                       </Typography>
                     </Box>
                   </Grid>
@@ -248,7 +247,11 @@ const Assistance = () => {
                   <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
                       disabled={user?.email ? true : false}
-                      {...baseTextFieldProps('email', 'Email', 'Indirizzo e-mail istituzionale')}
+                      {...baseTextFieldProps(
+                        'email',
+                        t('assistancePageForm.email.label'),
+                        t('assistancePageForm.email.placeholder')
+                      )}
                     />
                   </Grid>
                   {!user?.email && (
@@ -256,8 +259,8 @@ const Assistance = () => {
                       <CustomTextField
                         {...baseTextFieldProps(
                           'emailConfirm',
-                          'Conferma indirizzo e-mail istituzionale',
-                          'Conferma indirizzo e-mail istituzionale'
+                          t('assistancePageForm.confirmEmail.label'),
+                          t('assistancePageForm.confirmEmail.placeholder')
                         )}
                         inputProps={{ readOnly: user?.email ? true : false }}
                       />
@@ -267,18 +270,18 @@ const Assistance = () => {
                 <Grid container item spacing={3}>
                   <Grid item xs={10}>
                     <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
-                      Testo del messaggio
+                      {t('assistancePageForm.messageTextArea.typography')}
                     </Typography>
                     <CustomTextArea
                       {...baseTextAreaProps(
                         'message',
                         4,
-                        'Descrivi qui il motivo della tua richiesta di assistenza',
+                        t('assistancePageForm.messageTextArea.placeholder'),
                         200
                       )}
                     />
                     <Typography variant="body2" sx={{ fontSize: '14px' }} mt={1}>
-                      Max 200 caratteri
+                      {t('assistancePageForm.messageTextArea.allowedLength')}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -293,7 +296,7 @@ const Assistance = () => {
                   variant="outlined"
                   onClick={() => onExit(() => window.location.assign(document.referrer))}
                 >
-                  Indietro
+                  {t('assistancePageForm.backButton')}
                 </Button>
               </Grid>
               <Grid item xs={3}>
@@ -304,7 +307,7 @@ const Assistance = () => {
                   variant="contained"
                   type="submit"
                 >
-                  Invia
+                  {t('assistancePageForm.confirmButton')}
                 </Button>
               </Grid>
             </Grid>
@@ -312,9 +315,8 @@ const Assistance = () => {
         </Box>
       ) : (
         <ThankyouPage
-          title="Abbiamo ricevuto la tua richiesta"
-          description="Ti risponderemo al più presto al tuo indirizzo e-mail.
-          Grazie per averci contattato."
+          title={t('thankyouPage.title')}
+          description={t('thankyouPage.description')}
           onAction={() => window.location.assign(document.referrer)}
         />
       )}

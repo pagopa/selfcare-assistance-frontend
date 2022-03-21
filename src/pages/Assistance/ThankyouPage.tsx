@@ -1,6 +1,7 @@
 // import { Box, Button, Grid, Typography } from '@mui/material';
 import CheckIllustrationIcon from '@pagopa/selfcare-common-frontend/components/icons/CheckIllustrationIcon';
 import EndingPage from '@pagopa/selfcare-common-frontend/components/EndingPage';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title: string;
@@ -8,13 +9,14 @@ type Props = {
   onAction?: () => void;
 };
 export default function ThankyouPage({ title, description, onAction }: Props) {
+  const { t } = useTranslation();
   return (
-    <EndingPage 
+    <EndingPage
       icon={<CheckIllustrationIcon />}
       title={title}
-      description= {description}
-      onButtonClick= {onAction}
-      buttonLabel={"Chiudi"}
+      description={description}
+      onButtonClick={onAction}
+      buttonLabel={t('thankyouPage.buttonLabel')}
     />
   );
 }
