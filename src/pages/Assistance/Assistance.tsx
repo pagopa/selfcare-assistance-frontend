@@ -12,7 +12,6 @@ import {
   useUnloadEventOnExit,
   useUnloadEventInterceptorAndActivate,
 } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
-import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { uniqueId } from 'lodash';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useTranslation } from 'react-i18next';
@@ -324,4 +323,4 @@ const Assistance = () => {
   );
 };
 
-export default withLogin(Assistance);
+export default Assistance;
