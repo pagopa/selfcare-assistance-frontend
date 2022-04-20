@@ -70,9 +70,9 @@ const CustomTextField = styled(TextField)({
 const CustomTextArea = styled(TextField)({
   textarea: {
     fontSize: '16px',
-    fontWeight: '400',
+    fontWeight: '600',
     '&::placeholder': {
-      fontStyle: 'italic',
+      fontStyle: 'normal',
       color: '#5C6F82',
       opacity: '1',
     },

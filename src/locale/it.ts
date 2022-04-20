@@ -34,8 +34,7 @@ export default {
   },
   thankyouPage: {
     title: 'Abbiamo ricevuto la tua richiesta',
-    description:
-      'Ti risponderemo al più presto al tuo indirizzo e-mail. Grazie per averci contattato.',
+    description: 'Ti risponderemo al più presto al tuo indirizzo e-mail.',
     buttonLabel: 'Chiudi',
   },
 };
