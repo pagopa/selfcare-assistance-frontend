@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
@@ -161,6 +161,7 @@ const Assistance = () => {
     field: keyof AssistanceRequest,
     label?: string,
     placeholder?: string
+    // disabled?: boolean
   ) => {
     const isError = !!formik.errors[field] && formik.errors[field] !== requiredError;
     return {
@@ -172,9 +173,9 @@ const Assistance = () => {
       error: isError,
       helperText: isError ? formik.errors[field] : undefined,
       required: true,
-      variant: 'standard' as const,
+      variant: 'outlined' as const,
       onChange: formik.handleChange,
-      sx: { width: '100%' },
+      sx: { width: '100%', '.disabled': { color: 'red' } },
       InputProps: {
         style: {
           fontSize: '16px',
@@ -216,16 +217,23 @@ const Assistance = () => {
             title={t('assistancePageForm.title')}
             subTitle={t('assistancePageForm.subTitle')}
             mbTitle={1}
-            mbSubTitle={7}
+            mbSubTitle={4}
             variantTitle="h1"
             variantSubTitle="h5"
             titleFontSize="48px"
           />
-          <form onSubmit={formik.handleSubmit}>
-            <Box>
+          <Box
+            sx={{
+              boxShadow:
+                '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
+              borderRadius: '4px',
+              p: 3,
+            }}
+          >
+            <form onSubmit={formik.handleSubmit}>
               <Grid container direction="column">
-                <Grid container item spacing={3}>
-                  <Grid item xs={6} sx={{ height: '75px' }}>
+                <Grid container item>
+                  <Grid item xs={12} sx={{ height: '75px' }} pb={2}>
                     <CustomTextField
                       className="messageObject"
                       {...baseTextFieldProps(
@@ -235,23 +243,25 @@ const Assistance = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12} mb={5}>
-                    <Box sx={{ marginTop: '-17px' }}>
+                  <Grid item xs={12} mb={3} pb={2}>
+                    <Box sx={{ marginTop: '-12px', marginLeft: '13px' }}>
                       <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
                         {t('assistancePageForm.messageObject.helperText')}
                       </Typography>
                     </Box>
                   </Grid>
                 </Grid>
-                <Grid container item spacing={3} mb={8}>
-                  <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                <Grid container item spacing={2}>
+                  <Grid item xs={!user?.email ? 6 : 12} mb={4} sx={{ height: '75px' }}>
                     <CustomTextField
                       disabled={user?.email ? true : false}
                       {...baseTextFieldProps(
                         'email',
                         t('assistancePageForm.email.label'),
                         t('assistancePageForm.email.placeholder')
+                        // user?.email ? true : false
                       )}
+                      // InputLabelProps={{ shrink: false }}
                     />
                   </Grid>
                   {!user?.email && (
@@ -268,50 +278,58 @@ const Assistance = () => {
                   )}
                 </Grid>
                 <Grid container item spacing={3}>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
                     <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
                       {t('assistancePageForm.messageTextArea.typography')}
                     </Typography>
                     <CustomTextArea
                       {...baseTextAreaProps(
                         'message',
-                        4,
+                        3,
                         t('assistancePageForm.messageTextArea.placeholder'),
                         200
                       )}
                     />
-                    <Typography variant="body2" sx={{ fontSize: '14px' }} mt={1}>
+                    <Typography
+                      variant="body2"
+                      sx={{ fontSize: '14px', marginLeft: '13px' }}
+                      mt={1}
+                    >
                       {t('assistancePageForm.messageTextArea.allowedLength')}
                     </Typography>
                   </Grid>
                 </Grid>
+                <Grid item py={3}>
+                  <Divider />
+                </Grid>
               </Grid>
-            </Box>
 
-            <Grid container spacing={2} mt={10}>
-              <Grid item xs={3}>
-                <Button
-                  sx={{ width: '100%' }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => onExit(() => window.location.assign(document.referrer))}
-                >
-                  {t('assistancePageForm.backButton')}
-                </Button>
+              <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <Button
+                    disabled={!formik.dirty || !formik.isValid}
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                  >
+                    {t('assistancePageForm.confirmButton')}
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={3}>
-                <Button
-                  disabled={!formik.dirty || !formik.isValid}
-                  sx={{ width: '100%' }}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  {t('assistancePageForm.confirmButton')}
-                </Button>
-              </Grid>
+            </form>
+          </Box>
+          <Grid container mt={4}>
+            <Grid item xs={3}>
+              <Button
+                sx={{ fontWeight: 700 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => onExit(() => window.location.assign(document.referrer))}
+              >
+                {t('assistancePageForm.backButton')}
+              </Button>
             </Grid>
-          </form>
+          </Grid>
         </Box>
       ) : (
         <ThankyouPage

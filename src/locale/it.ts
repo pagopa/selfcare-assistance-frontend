@@ -10,8 +10,7 @@ export default {
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
     title: 'Assistenza',
-    subTitle:
-      'Come possiamo aiutarti? Compila il modulo e invialo online, ti ricontatteremo al più presto.',
+    subTitle: 'Come possiamo aiutarti? Compila e invia il modulo: ti ricontatteremo al più presto.',
     messageObject: {
       label: 'Oggetto del messaggio',
       placeholder: 'Oggetto del messaggio',
@@ -27,7 +26,7 @@ export default {
     },
     messageTextArea: {
       typography: 'Testo del messaggio',
-      placeholder: 'Descrivi qui il motivo della tua richiesta di assistenza',
+      placeholder: 'Descrivi il motivo della tua richiesta',
       allowedLength: 'Max 200 caratteri',
     },
     backButton: 'Indietro',
