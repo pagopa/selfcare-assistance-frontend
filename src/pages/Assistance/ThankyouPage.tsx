@@ -12,7 +12,7 @@ export default function ThankyouPage({ title, description, onAction }: Props) {
   const { t } = useTranslation();
   return (
     <EndingPage
-      icon={<CheckIllustrationIcon />} // TODO: sostituire icona con quella presente in materil IllusCompleted
+      icon={<CheckIllustrationIcon sx={{ width: '70px', height: '70px' }} />}
       title={title}
       description={description}
       onButtonClick={onAction}
