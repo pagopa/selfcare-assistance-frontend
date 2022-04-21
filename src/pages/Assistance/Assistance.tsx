@@ -161,7 +161,6 @@ const Assistance = () => {
     field: keyof AssistanceRequest,
     label?: string,
     placeholder?: string
-    // disabled?: boolean
   ) => {
     const isError = !!formik.errors[field] && formik.errors[field] !== requiredError;
     return {
@@ -259,9 +258,7 @@ const Assistance = () => {
                         'email',
                         t('assistancePageForm.email.label'),
                         t('assistancePageForm.email.placeholder')
-                        // user?.email ? true : false
                       )}
-                      // InputLabelProps={{ shrink: false }}
                     />
                   </Grid>
                   {!user?.email && (
