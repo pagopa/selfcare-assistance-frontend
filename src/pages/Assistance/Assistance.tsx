@@ -211,8 +211,14 @@ const Assistance = () => {
   return (
     <React.Fragment>
       {!viewThxPage ? (
-        <Box sx={{ backgroundColor: 'rgb(242, 242, 242)' }}>
-          <Box px={24} py={2} my={13}>
+        <Grid
+          container
+          item
+          justifyContent="center"
+          display="flex"
+          sx={{ backgroundColor: 'rgb(242, 242, 242)' }}
+        >
+          <Box px={24} my={13}>
             <TitleBox
               title={t('assistancePageForm.title')}
               subTitle={t('assistancePageForm.subTitle')}
@@ -330,7 +336,7 @@ const Assistance = () => {
               </Grid>
             </Grid>
           </Box>
-        </Box>
+        </Grid>
       ) : (
         <ThankyouPage
           title={t('thankyouPage.title')}
