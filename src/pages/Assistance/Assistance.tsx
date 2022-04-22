@@ -211,123 +211,125 @@ const Assistance = () => {
   return (
     <React.Fragment>
       {!viewThxPage ? (
-        <Box px={24} my={13}>
-          <TitleBox
-            title={t('assistancePageForm.title')}
-            subTitle={t('assistancePageForm.subTitle')}
-            mbTitle={1}
-            mbSubTitle={4}
-            variantTitle="h1"
-            variantSubTitle="h5"
-            titleFontSize="48px"
-          />
-          <Box
-            sx={{
-              boxShadow:
-                '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
-              borderRadius: '4px',
-              p: 3,
-            }}
-          >
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container direction="column">
-                <Grid container item>
-                  <Grid item xs={12} sx={{ height: '75px' }} pb={2}>
-                    <CustomTextField
-                      className="messageObject"
-                      {...baseTextFieldProps(
-                        'messageObject',
-                        t('assistancePageForm.messageObject.label'),
-                        t('assistancePageForm.messageObject.placeholder')
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} mb={3} pb={2}>
-                    <Box sx={{ marginTop: '-12px', marginLeft: '13px' }}>
-                      <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
-                        {t('assistancePageForm.messageObject.helperText')}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid container item spacing={2}>
-                  <Grid item xs={!user?.email ? 6 : 12} mb={4} sx={{ height: '75px' }}>
-                    <CustomTextField
-                      disabled={user?.email ? true : false}
-                      {...baseTextFieldProps(
-                        'email',
-                        t('assistancePageForm.email.label'),
-                        t('assistancePageForm.email.placeholder')
-                      )}
-                    />
-                  </Grid>
-                  {!user?.email && (
-                    <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+        <Grid container item justifyContent="center" display="flex">
+          <Box px={24} my={13}>
+            <TitleBox
+              title={t('assistancePageForm.title')}
+              subTitle={t('assistancePageForm.subTitle')}
+              mbTitle={1}
+              mbSubTitle={4}
+              variantTitle="h1"
+              variantSubTitle="h5"
+              titleFontSize="48px"
+            />
+            <Box
+              sx={{
+                boxShadow:
+                  '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
+                borderRadius: '4px',
+                p: 3,
+              }}
+            >
+              <form onSubmit={formik.handleSubmit}>
+                <Grid container direction="column">
+                  <Grid container item>
+                    <Grid item xs={12} sx={{ height: '75px' }} pb={2}>
                       <CustomTextField
+                        className="messageObject"
                         {...baseTextFieldProps(
-                          'emailConfirm',
-                          t('assistancePageForm.confirmEmail.label'),
-                          t('assistancePageForm.confirmEmail.placeholder')
+                          'messageObject',
+                          t('assistancePageForm.messageObject.label'),
+                          t('assistancePageForm.messageObject.placeholder')
                         )}
-                        inputProps={{ readOnly: user?.email ? true : false }}
                       />
                     </Grid>
-                  )}
-                </Grid>
-                <Grid container item spacing={3}>
-                  <Grid item xs={12}>
-                    <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
-                      {t('assistancePageForm.messageTextArea.typography')}
-                    </Typography>
-                    <CustomTextArea
-                      {...baseTextAreaProps(
-                        'message',
-                        3,
-                        t('assistancePageForm.messageTextArea.placeholder'),
-                        200
-                      )}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{ fontSize: '14px', marginLeft: '13px' }}
-                      mt={1}
-                    >
-                      {t('assistancePageForm.messageTextArea.allowedLength')}
-                    </Typography>
+                    <Grid item xs={12} mb={3} pb={2}>
+                      <Box sx={{ marginTop: '-12px', marginLeft: '13px' }}>
+                        <Typography variant="body2" sx={{ fontSize: '14px', color: '#5A768A' }}>
+                          {t('assistancePageForm.messageObject.helperText')}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Grid container item spacing={2}>
+                    <Grid item xs={!user?.email ? 6 : 12} mb={4} sx={{ height: '75px' }}>
+                      <CustomTextField
+                        disabled={user?.email ? true : false}
+                        {...baseTextFieldProps(
+                          'email',
+                          t('assistancePageForm.email.label'),
+                          t('assistancePageForm.email.placeholder')
+                        )}
+                      />
+                    </Grid>
+                    {!user?.email && (
+                      <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
+                        <CustomTextField
+                          {...baseTextFieldProps(
+                            'emailConfirm',
+                            t('assistancePageForm.confirmEmail.label'),
+                            t('assistancePageForm.confirmEmail.placeholder')
+                          )}
+                          inputProps={{ readOnly: user?.email ? true : false }}
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                  <Grid container item spacing={3}>
+                    <Grid item xs={12}>
+                      <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
+                        {t('assistancePageForm.messageTextArea.typography')}
+                      </Typography>
+                      <CustomTextArea
+                        {...baseTextAreaProps(
+                          'message',
+                          3,
+                          t('assistancePageForm.messageTextArea.placeholder'),
+                          200
+                        )}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{ fontSize: '14px', marginLeft: '13px' }}
+                        mt={1}
+                      >
+                        {t('assistancePageForm.messageTextArea.allowedLength')}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item py={3}>
+                    <Divider />
                   </Grid>
                 </Grid>
-                <Grid item py={3}>
-                  <Divider />
-                </Grid>
-              </Grid>
 
-              <Grid container spacing={2}>
-                <Grid item xs={3}>
-                  <Button
-                    disabled={!formik.dirty || !formik.isValid}
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                  >
-                    {t('assistancePageForm.confirmButton')}
-                  </Button>
+                <Grid container spacing={2}>
+                  <Grid item xs={3}>
+                    <Button
+                      disabled={!formik.dirty || !formik.isValid}
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                    >
+                      {t('assistancePageForm.confirmButton')}
+                    </Button>
+                  </Grid>
                 </Grid>
+              </form>
+            </Box>
+            <Grid container mt={4}>
+              <Grid item xs={3}>
+                <Button
+                  sx={{ fontWeight: 700 }}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => onExit(() => window.location.assign(document.referrer))}
+                >
+                  {t('assistancePageForm.backButton')}
+                </Button>
               </Grid>
-            </form>
-          </Box>
-          <Grid container mt={4}>
-            <Grid item xs={3}>
-              <Button
-                sx={{ fontWeight: 700 }}
-                color="primary"
-                variant="outlined"
-                onClick={() => onExit(() => window.location.assign(document.referrer))}
-              >
-                {t('assistancePageForm.backButton')}
-              </Button>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Grid>
       ) : (
         <ThankyouPage
           title={t('thankyouPage.title')}
