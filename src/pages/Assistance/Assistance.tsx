@@ -14,7 +14,7 @@ import {
 } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import { uniqueId } from 'lodash';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
@@ -330,7 +330,13 @@ const Assistance = () => {
         </Box>
       ) : (
         <ThankyouPage
-          title={t('thankyouPage.title')}
+          title={
+            (
+              <Trans i18nKey="thankyouPage.title">
+                Abbiamo ricevuto la tua <br /> richiesta
+              </Trans>
+            ) as unknown as string
+          }
           description={t('thankyouPage.description')}
           onAction={() => window.location.assign(document.referrer)}
         />

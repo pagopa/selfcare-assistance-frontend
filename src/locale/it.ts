@@ -33,7 +33,7 @@ export default {
     confirmButton: 'Invia',
   },
   thankyouPage: {
-    title: 'Abbiamo ricevuto la tua richiesta',
+    title: 'Abbiamo ricevuto la tua <1/> richiesta',
     description: 'Ti risponderemo al più presto al tuo indirizzo e-mail.',
     buttonLabel: 'Chiudi',
   },
