@@ -338,17 +338,25 @@ const Assistance = () => {
           </Box>
         </Grid>
       ) : (
-        <ThankyouPage
-          title={
-            (
-              <Trans i18nKey="thankyouPage.title">
-                Abbiamo ricevuto la tua <br /> richiesta
-              </Trans>
-            ) as unknown as string
-          }
-          description={t('thankyouPage.description')}
-          onAction={() => window.location.assign(document.referrer)}
-        />
+        <Grid
+          container
+          item
+          justifyContent="center"
+          display="flex"
+          sx={{ backgroundColor: 'rgb(242, 242, 242)' }}
+        >
+          <ThankyouPage
+            title={
+              (
+                <Trans i18nKey="thankyouPage.title">
+                  Abbiamo ricevuto la tua <br /> richiesta
+                </Trans>
+              ) as unknown as string
+            }
+            description={t('thankyouPage.description')}
+            onAction={() => window.location.assign(document.referrer)}
+          />
+        </Grid>
       )}
     </React.Fragment>
   );
