@@ -44,14 +44,17 @@ const CustomTextField = styled(TextField)({
       color: 'green',
     },
   },
+  '.MuiInputLabel-root.Mui-disabled': {
+    color: '#A2ADB8',
+  },
   '.MuiInputLabel-root.Mui-focused': {
-    color: '#5C6F82',
+    // color: '#5C6F82',
     fontWeight: '700',
   },
   '.MuiInputLabel-root': {
     color: '#5C6F82',
-    fontSize: '14px',
-    fontWeight: '700',
+    fontSize: '16px',
+    fontWeight: '600',
   },
   input: {
     color: 'black',
@@ -181,7 +184,6 @@ const Assistance = () => {
           lineHeight: '24px',
           color: '#5C6F82',
           textAlign: 'start' as const,
-          paddingLeft: '16px',
         },
       },
     };
