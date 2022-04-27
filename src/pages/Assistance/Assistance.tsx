@@ -54,15 +54,15 @@ const CustomTextField = styled(TextField)({
     fontWeight: '700',
   },
   input: {
-    color: '#17324D',
-    fontWeight: '700',
-    // textTransform: "capitalize",
+    color: 'black',
+    fontSize: '16px',
+    fontWeight: '600',
     '&::placeholder': {
       color: '#5C6F82',
       opacity: '1',
     },
     '&.Mui-disabled': {
-      WebkitTextFillColor: '#5C6F82',
+      WebkitTextFillColor: '#A2ADB8',
     },
   },
 });
