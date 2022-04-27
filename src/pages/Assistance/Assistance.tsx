@@ -55,7 +55,6 @@ const CustomTextField = styled(TextField)({
   },
   input: {
     color: '#17324D',
-    fontSize: '20px',
     fontWeight: '700',
     // textTransform: "capitalize",
     '&::placeholder': {
