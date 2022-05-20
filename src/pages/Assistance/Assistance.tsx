@@ -123,8 +123,7 @@ const Assistance = () => {
           : undefined,
         emailConfirm: !values.emailConfirm
           ? requiredError
-          : values.emailConfirm !== values.email &&
-            values.email &&
+          : values.email &&
             values.emailConfirm.toLocaleLowerCase() !== values.email.toLocaleLowerCase()
           ? t('assistancePageForm.dataValidate.notEqualConfirmEmail')
           : undefined,
