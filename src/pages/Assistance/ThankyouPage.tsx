@@ -8,8 +8,10 @@ type Props = {
   description: string;
   onAction?: () => void;
 };
+
 export default function ThankyouPage({ title, description, onAction }: Props) {
   const { t } = useTranslation();
+
   return (
     <EndingPage
       icon={<CheckIllustrationIcon sx={{ width: '70px', height: '70px' }} />}
@@ -17,8 +19,8 @@ export default function ThankyouPage({ title, description, onAction }: Props) {
       description={description}
       onButtonClick={onAction}
       buttonLabel={t('thankyouPage.buttonLabel')}
-      variantTitle={'h4'}
-      variantDescription={'body1'}
+      variantTitle={'h2'}
+      variantDescription={'subtitle1'}
     />
   );
 }
