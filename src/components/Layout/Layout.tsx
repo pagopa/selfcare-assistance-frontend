@@ -15,7 +15,6 @@ type Props = {
 };
 
 export default function Layout({ children }: Props) {
-  const onLogout = useUnloadEventLogout();
   const onExit = useUnloadEventOnExit();
   const loggedUser = useSelector(userSelectors.selectLoggedUser);
 
@@ -29,7 +28,7 @@ export default function Layout({ children }: Props) {
     >
       <Header
         withSecondHeader={false}
-        onExit={onLogout}
+        onExit={onExit}
         assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
         enableLogin={true}
         loggedUser={
