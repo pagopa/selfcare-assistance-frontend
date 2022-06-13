@@ -3,10 +3,7 @@ import { Box } from '@mui/system';
 import { Footer, Header } from '@pagopa/selfcare-common-frontend';
 import { useSelector } from 'react-redux';
 import React from 'react';
-import {
-  useUnloadEventLogout,
-  useUnloadEventOnExit,
-} from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
+import { useUnloadEventOnExit } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
 import { ENV } from '../../utils/env';
 
