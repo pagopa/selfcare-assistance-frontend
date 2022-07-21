@@ -94,7 +94,7 @@ const Assistance = () => {
     t('assistancePageForm.unloadEvent.description')
   );
   const onExit = useUnloadEventOnExit();
-  const { unregisterUnloadEvent } = useUnloadEventInterceptor();
+  const { registerUnloadEvent, unregisterUnloadEvent } = useUnloadEventInterceptor();
 
   const dispatch = useAppDispatch();
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
@@ -159,6 +159,14 @@ const Assistance = () => {
         .finally(() => setLoading(false));
     },
   });
+
+  useEffect(() => {
+    if (formik.dirty) {
+      registerUnloadEvent();
+    } else {
+      unregisterUnloadEvent();
+    }
+  }, [formik.dirty]);
 
   const baseTextFieldProps = (
     field: keyof AssistanceRequest,
