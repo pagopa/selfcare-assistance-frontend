@@ -226,15 +226,17 @@ const Assistance = () => {
           display="flex"
           sx={{ backgroundColor: 'rgb(242, 242, 242)' }}
         >
-          <Box px={24} my={13}>
+          <Box px={24}>
             <TitleBox
               title={t('assistancePageForm.title')}
               subTitle={t('assistancePageForm.subTitle')}
-              mbTitle={1}
+              mtTitle={3}
+              mbTitle={2}
               mbSubTitle={4}
-              variantTitle="h1"
-              variantSubTitle="h5"
-              titleFontSize="48px"
+              variantTitle="h4"
+              variantSubTitle="body1"
+              titleFontSize={'32px'}
+              subTitleFontSize={'18px'}
             />
             <Box
               sx={{
@@ -292,9 +294,6 @@ const Assistance = () => {
                   </Grid>
                   <Grid container item spacing={3}>
                     <Grid item xs={12}>
-                      <Typography variant="h3" sx={{ fontSize: '14px', color: '#5A768A' }} mb={2}>
-                        {t('assistancePageForm.messageTextArea.typography')}
-                      </Typography>
                       <CustomTextArea
                         {...baseTextAreaProps(
                           'message',
@@ -331,10 +330,11 @@ const Assistance = () => {
                 </Grid>
               </form>
             </Box>
-            <Grid container mt={4}>
+            <Grid container mt={4} mb={4}>
               <Grid item xs={3}>
                 <Button
                   sx={{ fontWeight: 700 }}
+                  size="small"
                   color="primary"
                   variant="outlined"
                   onClick={() => onExit(() => window.location.assign(document.referrer))}

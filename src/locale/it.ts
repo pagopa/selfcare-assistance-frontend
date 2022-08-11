@@ -25,7 +25,6 @@ export default {
       placeholder: 'Conferma indirizzo e-mail istituzionale',
     },
     messageTextArea: {
-      typography: 'Testo del messaggio',
       placeholder: 'Descrivi il motivo della tua richiesta',
       allowedLength: 'Max 200 caratteri',
     },
