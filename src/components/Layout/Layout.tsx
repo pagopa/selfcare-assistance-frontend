@@ -28,6 +28,7 @@ export default function Layout({ children }: Props) {
         onExit={onExit}
         assistanceEmail={ENV.ASSISTANCE.ENABLE ? ENV.ASSISTANCE.EMAIL : undefined}
         enableLogin={true}
+        enableAssistanceButton={false}
         loggedUser={
           loggedUser
             ? {
