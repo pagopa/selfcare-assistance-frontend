@@ -19,8 +19,8 @@ export default function ThankyouPage({ title, description, onAction }: Props) {
       description={description}
       onButtonClick={onAction}
       buttonLabel={t('thankyouPage.buttonLabel')}
-      variantTitle={'h2'}
-      variantDescription={'subtitle1'}
+      variantTitle={'h4'}
+      variantDescription={'body1'}
     />
   );
 }

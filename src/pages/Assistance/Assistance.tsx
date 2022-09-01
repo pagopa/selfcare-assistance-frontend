@@ -199,6 +199,7 @@ const Assistance = () => {
   const baseTextAreaProps = (
     field: keyof AssistanceRequest,
     rows: number,
+    label?: string,
     placeholder?: string,
     maxLength?: number
   ) => {
@@ -209,6 +210,7 @@ const Assistance = () => {
       name: field,
       error: isError,
       rows,
+      label,
       placeholder,
       sx: { width: '100%' },
       onChange: formik.handleChange,
@@ -255,8 +257,8 @@ const Assistance = () => {
                         className="messageObject"
                         {...baseTextFieldProps(
                           'messageObject',
-                          t('assistancePageForm.messageObject.label'),
-                          t('assistancePageForm.messageObject.placeholder')
+                          t('assistancePageForm.messageObject.placeholder'),
+                          ''
                         )}
                       />
                     </Grid>
@@ -299,6 +301,7 @@ const Assistance = () => {
                           'message',
                           3,
                           t('assistancePageForm.messageTextArea.placeholder'),
+                          '',
                           200
                         )}
                       />

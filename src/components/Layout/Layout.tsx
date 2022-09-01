@@ -40,7 +40,9 @@ export default function Layout({ children }: Props) {
             : false
         }
       />
-      <Grid container>{children}</Grid>
+      <Grid container direction="row" flexGrow={1}>
+        {children}
+      </Grid>
       <Footer onExit={onExit} loggedUser={!!loggedUser} />
     </Box>
   );

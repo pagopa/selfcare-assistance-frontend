@@ -12,7 +12,6 @@ export default {
     title: 'Assistenza',
     subTitle: 'Come possiamo aiutarti? Compila e invia il modulo: ti ricontatteremo al più presto.',
     messageObject: {
-      label: 'Oggetto del messaggio',
       placeholder: 'Oggetto del messaggio',
       helperText: 'Indicaci l’argomento della tua richiesta',
     },
