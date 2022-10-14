@@ -302,7 +302,7 @@ const Assistance = () => {
                           3,
                           t('assistancePageForm.messageTextArea.placeholder'),
                           '',
-                          200
+                          500
                         )}
                       />
                       <Typography

@@ -25,7 +25,7 @@ export default {
     },
     messageTextArea: {
       placeholder: 'Descrivi il motivo della tua richiesta',
-      allowedLength: 'Max 200 caratteri',
+      allowedLength: 'Max 500 caratteri',
     },
     backButton: 'Indietro',
     confirmButton: 'Invia',
