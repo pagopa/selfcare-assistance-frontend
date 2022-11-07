@@ -1326,7 +1326,7 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fontsource/titillium-web@^4.5.8":
+"@fontsource/titillium-web@^4.5.9":
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/@fontsource/titillium-web/-/titillium-web-4.5.9.tgz#9de41e7b27fd6913055c2e9f616e5a2c5180f121"
   integrity sha512-C9bkYCeelkLcom4dHcT3/sM6CmlPwisyRbHUNGAt5LtF3XBdxqOW/R3cB6IaHWjqQvLYb93bTQpJu8X+KfggGA==
@@ -1828,25 +1828,15 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pagopa/mui-italia@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-0.7.0.tgz#165ac4406b8b85b8729861d6fe189c6726a5951a"
-  integrity sha512-9r2MJ0yEgrZDSlSCZE4yj8/N/ojgMTS1faWx3DQ1E7KqrHr6+Urd12AKQPu5VO0NtIw5Vn1gLvAjypA0T+xWbw==
+"@pagopa/mui-italia@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-0.8.2.tgz#0ce722ae1b619d6236219ec37f02426cf322f9c8"
+  integrity sha512-Z7FC8syM5enGcSK64A1qg2HM0KWw17yjdPtVM3Osu2MT05ab2vJCUplTH4kCB7+ZiR82MCtuNjp801hPHriUvA==
   dependencies:
-    "@fontsource/titillium-web" "^4.5.8"
-    clsx "^1.1.1"
-    fp-ts "^2.12.1"
-    io-ts "^2.2.16"
-
-"@pagopa/mui-italia@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-0.7.1.tgz#336cd69cf4ea68ef465648b4d6a1843c85b6fe4c"
-  integrity sha512-8OEO03/M1jRbEVzQLe+Iay8mNhpKdOTd28HS3ItkheQsdBjc+bz7dIJAUjem8Hrin+eOjaUD8w56PL9kIY8N9w==
-  dependencies:
-    "@fontsource/titillium-web" "^4.5.8"
-    clsx "^1.1.1"
-    fp-ts "^2.12.1"
-    io-ts "^2.2.16"
+    "@fontsource/titillium-web" "^4.5.9"
+    clsx "^1.2.1"
+    fp-ts "^2.12.3"
+    io-ts "^2.2.18"
 
 "@pagopa/openapi-codegen-ts@^10.0.6":
   version "10.0.6"
@@ -1862,10 +1852,10 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.12.1.tgz#5c8fa19b3922d322c26d1068e70437760ca876f0"
-  integrity sha512-5S7DLPbsvkkvCJdKBk2aSr3pVwm0FaYiqz542KQqkt85Y47pNLhlkgvj2BnR134LcB8x3bsylKIA9sVo35wH7Q==
+"@pagopa/selfcare-common-frontend@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.13.0.tgz#8f507ec2c07d39320b523d256aabd6992279a67e"
+  integrity sha512-gmoKJsui7tovU0yiyI/TH8UPAF2vEG0mc2K1GTUTfKyl60ONVipbUxVPMtdhiNC64gcEid1SDHZqyxvyuJCG8Q==
   dependencies:
     "@emotion/react" "^11.4.1"
     "@emotion/styled" "^11.3.0"
@@ -1873,7 +1863,7 @@
     "@mui/lab" "^5.0.0-alpha.80"
     "@mui/material" "^5.8.2"
     "@mui/system" "^5.8.1"
-    "@pagopa/mui-italia" "^0.7.0"
+    "@pagopa/mui-italia" "^0.8.2"
     "@pagopa/ts-commons" "^10.2.1"
     "@reduxjs/toolkit" "^1.6.2"
     "@types/lodash" "^4.14.172"
@@ -3804,6 +3794,11 @@ clsx@^1.0.4, clsx@^1.1.1:
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
+clsx@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -5533,10 +5528,10 @@ fp-ts@^2.11.0, fp-ts@^2.11.5:
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.9.tgz#bbc204e0932954b59c98a282635754a4b624a05e"
   integrity sha512-GhYlNKkCOfdjp71ocdtyaQGoqCswEoWDJLRr+2jClnBBq2dnSOtd6QxmJdALq8UhfqCyZZ0f0lxadU4OhwY9nw==
 
-fp-ts@^2.12.1:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.12.1.tgz#e389488bfd1507af06bd5965e97367edcd4fabad"
-  integrity sha512-oxvgqUYR6O9VkKXrxkJ0NOyU0FrE705MeqgBUMEPWyTu6Pwn768cJbHChw2XOBlgFLKfIHxjr2OOBFpv2mUGZw==
+fp-ts@^2.12.3:
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.13.1.tgz#1bf2b24136cca154846af16752dc29e8fa506f2a"
+  integrity sha512-0eu5ULPS2c/jsa1lGFneEFFEdTbembJv8e4QKXeVJ3lm/5hyve06dlKZrpxmMwJt6rYen7sxmHHK2CLaXvWuWQ==
 
 fraction.js@^4.2.0:
   version "4.2.0"
@@ -6160,6 +6155,11 @@ io-ts@^2.2.16:
   version "2.2.16"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.16.tgz#597dffa03db1913fc318c9c6df6931cb4ed808b2"
   integrity sha512-y5TTSa6VP6le0hhmIyN0dqEXkrZeJLeC5KApJq6VLci3UEKF80lZ+KuoUs02RhBxNWlrqSNxzfI7otLX1Euv8Q==
+
+io-ts@^2.2.18:
+  version "2.2.19"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.19.tgz#4ba5e120472a0a07ff693fdb3d7075ea1c1b77c3"
+  integrity sha512-ED0GQwvKRr5C2jqOOJCkuJW2clnbzqFexQ8V7Qsb+VB36S1Mk/OKH7k0FjSe4mjKy9qBRA3OqgVGyFMUEKIubw==
 
 ip@^1.1.0:
   version "1.1.5"
