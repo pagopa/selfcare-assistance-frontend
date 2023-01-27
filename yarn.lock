@@ -1326,6 +1326,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@fontsource/dm-mono@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/dm-mono/-/dm-mono-4.5.10.tgz#2d033549b4fe75ab8e26c5e74081f1ba5aa65519"
+  integrity sha512-cVd0L+tz1PrrNyClnpeJvRtVdvtB69L9PJ4sBm3t2ZCcbzKCa3MmW9duljKeRxTfQh3YTZpevnD14uWumRJYzA==
+
 "@fontsource/titillium-web@^4.5.9":
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/@fontsource/titillium-web/-/titillium-web-4.5.9.tgz#9de41e7b27fd6913055c2e9f616e5a2c5180f121"
@@ -1828,11 +1833,12 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pagopa/mui-italia@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-0.8.2.tgz#0ce722ae1b619d6236219ec37f02426cf322f9c8"
-  integrity sha512-Z7FC8syM5enGcSK64A1qg2HM0KWw17yjdPtVM3Osu2MT05ab2vJCUplTH4kCB7+ZiR82MCtuNjp801hPHriUvA==
+"@pagopa/mui-italia@^0.8.12", "@pagopa/mui-italia@^0.8.8":
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-0.8.12.tgz#e53e7ce965fe44d509b63c34ec45deeb7dbb8cf3"
+  integrity sha512-Qz0fMf5T3GHp/5g0VLyMR3kUtYnXpjtM3H9Hy5Co776Bi9BSiNLEPgP1svupIyW+RX8xpQD5fohyAmCNhP4qRw==
   dependencies:
+    "@fontsource/dm-mono" "^4.5.10"
     "@fontsource/titillium-web" "^4.5.9"
     clsx "^1.2.1"
     fp-ts "^2.12.3"
@@ -1852,10 +1858,10 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^1.13.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.13.0.tgz#8f507ec2c07d39320b523d256aabd6992279a67e"
-  integrity sha512-gmoKJsui7tovU0yiyI/TH8UPAF2vEG0mc2K1GTUTfKyl60ONVipbUxVPMtdhiNC64gcEid1SDHZqyxvyuJCG8Q==
+"@pagopa/selfcare-common-frontend@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.15.0.tgz#7a6d29e10b669e516219f55871d77d6592a8d329"
+  integrity sha512-mn7wWoRGIAV1zelX7hhnraFnSPX2Vb8AW/FWXK6gIX+yntch5K0e+FMZOQnZoQ1Bbqpz0sKpIF6GlWtx2fmWew==
   dependencies:
     "@emotion/react" "^11.4.1"
     "@emotion/styled" "^11.3.0"
@@ -1863,7 +1869,7 @@
     "@mui/lab" "^5.0.0-alpha.80"
     "@mui/material" "^5.8.2"
     "@mui/system" "^5.8.1"
-    "@pagopa/mui-italia" "^0.8.2"
+    "@pagopa/mui-italia" "^0.8.8"
     "@pagopa/ts-commons" "^10.2.1"
     "@reduxjs/toolkit" "^1.6.2"
     "@types/lodash" "^4.14.172"
