@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Button, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, TextField, Typography, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
-import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
 import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
@@ -15,7 +14,6 @@ import { uniqueId } from 'lodash';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useTranslation, Trans } from 'react-i18next';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
-import { useAppSelector } from '../../redux/hooks';
 import { saveAssistance } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { useAppDispatch } from './../../redux/hooks';
@@ -25,7 +23,6 @@ export type AssistanceRequest = {
   name?: string;
   surname?: string;
   email?: string;
-  emailConfirm?: string;
   message: string;
   messageObject: string;
 };
@@ -87,16 +84,17 @@ const Assistance = () => {
   const { t } = useTranslation();
 
   const [viewThxPage, setThxPage] = useState(false);
+  const theme = useTheme();
 
   const onExit = useUnloadEventOnExit();
   const { registerUnloadEvent, unregisterUnloadEvent } = useUnloadEventInterceptor();
 
   const dispatch = useAppDispatch();
-  const addError = (error: AppError) => dispatch(appStateActions.addError(error));
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
 
-  const user = useAppSelector(userSelectors.selectLoggedUser);
   const requestIdRef = useRef<string>();
+
+  const addError = (error: AppError) => dispatch(appStateActions.addError(error));
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -115,20 +113,13 @@ const Assistance = () => {
           ? requiredError
           : !emailRegexp.test(values.email)
           ? t('assistancePageForm.dataValidate.invalidEmail')
-          : undefined,
-        emailConfirm: !values.emailConfirm
-          ? requiredError
-          : values.email &&
-            values.emailConfirm.toLocaleLowerCase() !== values.email.toLocaleLowerCase()
-          ? t('assistancePageForm.dataValidate.notEqualConfirmEmail')
-          : undefined,
+          : undefined
       }).filter(([_key, value]) => value)
     );
 
   const formik = useFormik<AssistanceRequest>({
     initialValues: {
-      email: user?.email ?? '',
-      emailConfirm: user?.email ?? '',
+      email: '',
       message: '',
       messageObject: '',
     },
@@ -240,16 +231,8 @@ const Assistance = () => {
               titleFontSize={'32px'}
               subTitleFontSize={'18px'}
             />
-            <Box
-              sx={{
-                boxShadow:
-                  '0px 8px 10px -5px rgba(0, 43, 85, 0.1), 0px 16px 24px 2px rgba(0, 43, 85, 0.05), 0px 6px 30px 5px rgba(0, 43, 85, 0.1)',
-                borderRadius: '4px',
-                p: 3,
-                backgroundColor: 'white',
-              }}
-            >
-              <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
+              <Paper elevation={8} sx={{p:3,borderRadius: theme.spacing(0.5)}}>
                 <Grid container direction="column">
                   <Grid container item>
                     <Grid item xs={12} sx={{ height: '75px' }} pb={2}>
@@ -271,9 +254,8 @@ const Assistance = () => {
                     </Grid>
                   </Grid>
                   <Grid container item spacing={2}>
-                    <Grid item xs={!user?.email ? 6 : 12} mb={4} sx={{ height: '75px' }}>
+                    <Grid item xs={12} mb={4} sx={{ height: '75px' }}>
                       <CustomTextField
-                        disabled={user?.email ? true : false}
                         {...baseTextFieldProps(
                           'email',
                           t('assistancePageForm.email.label'),
@@ -281,18 +263,6 @@ const Assistance = () => {
                         )}
                       />
                     </Grid>
-                    {!user?.email && (
-                      <Grid item xs={6} mb={4} sx={{ height: '75px' }}>
-                        <CustomTextField
-                          {...baseTextFieldProps(
-                            'emailConfirm',
-                            t('assistancePageForm.confirmEmail.label'),
-                            t('assistancePageForm.confirmEmail.placeholder')
-                          )}
-                          inputProps={{ readOnly: user?.email ? true : false }}
-                        />
-                      </Grid>
-                    )}
                   </Grid>
                   <Grid container item spacing={3}>
                     <Grid item xs={12}>
@@ -314,38 +284,31 @@ const Assistance = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item py={3}>
-                    <Divider />
-                  </Grid>
                 </Grid>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    <Button
-                      disabled={!formik.dirty || !formik.isValid}
-                      color="primary"
-                      variant="contained"
-                      type="submit"
-                    >
-                      {t('assistancePageForm.confirmButton')}
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
-            </Box>
-            <Grid container mt={4} mb={4}>
-              <Grid item xs={3}>
-                <Button
-                  sx={{ fontWeight: 700 }}
-                  size="small"
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => onExit(() => window.location.assign(document.referrer))}
-                >
-                  {t('assistancePageForm.backButton')}
-                </Button>
-              </Grid>
-            </Grid>
+              </Paper>
+              <Box my={4} display='flex' justifyContent='center'>
+                <Box mr={2}>
+                  <Button
+                    sx={{ fontWeight: 700 }}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => onExit(() => window.location.assign(document.referrer))}
+                  >
+                    {t('assistancePageForm.backButton')}
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    disabled={!formik.dirty || !formik.isValid}
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                  >
+                    {t('assistancePageForm.confirmButton')}
+                  </Button>
+                </Box>
+              </Box>
+            </form>
           </Box>
         </Grid>
       ) : (
