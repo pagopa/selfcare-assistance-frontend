@@ -19,10 +19,6 @@ export default {
       label: 'Email',
       placeholder: 'Indirizzo e-mail istituzionale',
     },
-    confirmEmail: {
-      label: 'Conferma indirizzo e-mail istituzionale',
-      placeholder: 'Conferma indirizzo e-mail istituzionale',
-    },
     messageTextArea: {
       placeholder: 'Descrivi il motivo della tua richiesta',
       allowedLength: 'Max 500 caratteri',
