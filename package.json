@@ -14,7 +14,7 @@
     "@pagopa/selfcare-common-frontend": "^1.15.0",
     "@pagopa/ts-commons": "^10.2.1",
     "@reduxjs/toolkit": "^1.6.2",
-    "@types/lodash": "^4.14.172",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^12.20.19",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
