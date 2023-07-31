@@ -21,7 +21,7 @@ import ThankyouPage from './ThankyouPage';
 
 export type AssistanceRequest = {
   email: string;
-  confirmEmail: string;
+  confirmEmail?: string;
 };
 
 const CustomTextField = styled(TextField)({

@@ -14,5 +14,4 @@ export const saveAssistance = async (value: AssistanceRequest): Promise<void> =>
 // TODO Cast to any instead of CreateMessageDto only for non receive error
 export const assistanceRequest2CreateMessageDto = (e: AssistanceRequest): any => ({
   senderEmail: e.email,
-  confirmSenderEmail: e.confirmEmail,
 });
