@@ -18,11 +18,11 @@ export const ENV = {
   },
 
   URL_API: {
-    API_ASSISTANCE: env.get('REACT_APP_URL_API_ASSISTANCE').required().asString(),
+    API_DASHBOARD: env.get('REACT_APP_URL_API_DASHBOARD').required().asString(),
   },
 
   API_TIMEOUT_MS: {
-    ASSISTANCE: env.get('REACT_APP_API_ASSISTANCE_TIMEOUT_MS').required().asInt(),
+    ASSISTANCE: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
   },
 
   ANALYTCS: {
