@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Box, Button, Grid, Paper, TextField, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
 import { styled } from '@mui/system';
@@ -12,16 +12,15 @@ import {
 } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
 import { uniqueId } from 'lodash';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
-import { saveAssistance } from '../../services/assistanceService';
+import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { useAppDispatch } from './../../redux/hooks';
-import ThankyouPage from './ThankyouPage';
 
 export type AssistanceRequest = {
   email: string;
-  confirmEmail?: string;
+  confirmEmail: string;
 };
 
 const CustomTextField = styled(TextField)({
@@ -45,7 +44,6 @@ const CustomTextField = styled(TextField)({
   },
   '.MuiInputLabel-root': {
     color: '#5C6F82',
-    fontSize: '16px',
     fontWeight: '600',
   },
   input: {
@@ -65,22 +63,17 @@ const CustomTextField = styled(TextField)({
 const requiredError = 'Required';
 const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const Assistance = () => {
   const { t } = useTranslation();
-
-  const [viewThxPage, setThxPage] = useState(false);
   const theme = useTheme();
-
+  const dispatch = useAppDispatch();
   const onExit = useUnloadEventOnExit();
   const { registerUnloadEvent, unregisterUnloadEvent } = useUnloadEventInterceptor();
-
-  const dispatch = useAppDispatch();
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
 
-  const requestIdRef = useRef<string>();
-
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
+
+  const requestIdRef = useRef<string>();
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -112,21 +105,23 @@ const Assistance = () => {
       confirmEmail: '',
     },
     validate,
-    onSubmit: (values) => {
+    onSubmit: (values: AssistanceRequest) => {
       setLoading(true);
-      saveAssistance(values)
-        .then(() => {
-          unregisterUnloadEvent();
-          setThxPage(true);
-          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
+      sendRequestToSupport(values.email)
+        .then((response) => {
+          if (response.redirectUrl) {
+            trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
+            unregisterUnloadEvent();
+            window.location.assign(response.redirectUrl);
+          }
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
           addError({
-            id: 'SAVE_ASSISTANCE',
+            id: 'SEND_REQUEST_FAILED',
             blocking: false,
             error: reason,
-            techDescription: `An error occurred while saving assistance form`,
+            techDescription: `An error occurred while sending request to assistance from ${requestIdRef.current}`,
             toNotify: false,
           });
         })
@@ -162,20 +157,19 @@ const Assistance = () => {
       required: true,
       variant: 'outlined' as const,
       onChange: formik.handleChange,
-      sx: { width: '100%', '.disabled': { color: 'red' } },
+      sx: { width: '100%', '.disabled': { color: theme.palette.error } },
       InputProps: {
         style: {
-          fontSize: '16px',
           fontWeight: 'fontWeightRegular',
           lineHeight: '24px',
-          color: '#5C6F82',
+          color: theme.palette.text.secondary,
           textAlign: 'start' as const,
         },
       },
     };
   };
 
-  return !viewThxPage ? (
+  return (
     <Grid container xs={12}>
       <Grid
         container
@@ -238,26 +232,6 @@ const Assistance = () => {
           </form>
         </Grid>
       </Grid>
-    </Grid>
-  ) : (
-    <Grid
-      container
-      item
-      justifyContent="center"
-      display="flex"
-      sx={{ backgroundColor: theme.palette.background.default }}
-    >
-      <ThankyouPage
-        title={
-          (
-            <Trans i18nKey="thankyouPage.title">
-              Abbiamo ricevuto la tua <br /> richiesta
-            </Trans>
-          ) as unknown as string
-        }
-        description={t('thankyouPage.description')}
-        onAction={() => window.location.assign(document.referrer)}
-      />
     </Grid>
   );
 };

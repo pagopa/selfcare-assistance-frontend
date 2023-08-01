@@ -1,17 +1,11 @@
-import { NotificationManagerApi } from '../api/NotificationManagerApiClient';
-import { AssistanceRequest } from '../pages/Assistance/Assistance';
-// import { CreateMessageDto } from './../api/generated/notification-manager/CreateMessageDto';
+import { DashboardApi } from '../api/DashboardApiClient';
+import { SupportResponse } from '../api/generated/b4f-dashboard/SupportResponse';
 
-export const saveAssistance = async (value: AssistanceRequest): Promise<void> => {
+export const sendRequestToSupport = async (email: string): Promise<SupportResponse> => {
   /* istanbul ignore if */
   if (process.env.REACT_APP_API_MOCK_ASSISTANCE === 'true') {
-    return new Promise<void>((resolve) => resolve());
+    return new Promise((resolve) => resolve({ redirectUrl: 'mockedUrl' }));
   } else {
-    return NotificationManagerApi.save(assistanceRequest2CreateMessageDto(value));
+    return DashboardApi.sendSupportRequest(email);
   }
 };
-
-// TODO Cast to any instead of CreateMessageDto only for non receive error
-export const assistanceRequest2CreateMessageDto = (e: AssistanceRequest): any => ({
-  senderEmail: e.email,
-});
