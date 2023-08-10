@@ -61,7 +61,7 @@ const CustomTextField = styled(TextField)({
 });
 
 const requiredError = 'Required';
-const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
+const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,5}$');
 
 const Assistance = () => {
   const { t } = useTranslation();
