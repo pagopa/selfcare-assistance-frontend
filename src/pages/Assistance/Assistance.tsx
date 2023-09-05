@@ -1,19 +1,21 @@
-import { useEffect, useRef } from 'react';
-import { Box, Button, Grid, Paper, TextField, useTheme } from '@mui/material';
-import { useFormik } from 'formik';
+import { Box, Button, Grid, Link, Paper, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
-import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
+import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
-import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import {
   useUnloadEventInterceptor,
   useUnloadEventOnExit,
 } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
-import { uniqueId } from 'lodash';
+import {
+  AppError,
+  appStateActions,
+} from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+import { useFormik } from 'formik';
+import { uniqueId } from 'lodash';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { useAppDispatch } from './../../redux/hooks';
@@ -208,7 +210,17 @@ const Assistance = () => {
                 </Grid>
               </Grid>
             </Paper>
-            <Box my={5} display="flex" justifyContent="space-between">
+            <Typography variant="body2" mt={2} color={'#5C6F82'}>
+              Proseguendo dichiari di aver letto la{' '}
+              <Link
+                sx={{ cursor: 'pointer', textDecoration: 'none' }}
+                href="https://www.pagopa.it/it/privacy-policy-assistenza/"
+              >
+                Privacy Policy Assistenza
+              </Link>
+            </Typography>
+
+            <Box my={4} display="flex" justifyContent="space-between">
               <Box>
                 <Button
                   color="primary"
