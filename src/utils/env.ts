@@ -10,6 +10,10 @@ export const ENV = {
     EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
   },
 
+  URL_FILE: {
+    PRIVACY_POLICY: 'https://www.pagopa.it/it/privacy-policy-assistenza/',
+  },
+
   URL_FE: {
     LOGIN: env.get('REACT_APP_URL_FE_LOGIN').required().asString(),
     LOGOUT: env.get('REACT_APP_URL_FE_LOGOUT').required().asString(),
