@@ -211,7 +211,7 @@ const Assistance = () => {
                 </Grid>
               </Grid>
             </Paper>
-            <Typography variant="body2" mt={2} color={'#5C6F82'}>
+            <Typography variant="body2" mt={2} color={theme.palette.text.secondary}>
               <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
                 Proseguendo dichiari di aver letto la
                 <Link
