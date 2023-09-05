@@ -211,12 +211,12 @@ const Assistance = () => {
               </Grid>
             </Paper>
             <Typography variant="body2" mt={2} color={'#5C6F82'}>
-              Proseguendo dichiari di aver letto la{' '}
+              {t('assistancePageForm.privacyPolicy')}{' '}
               <Link
                 sx={{ cursor: 'pointer', textDecoration: 'none' }}
                 href="https://www.pagopa.it/it/privacy-policy-assistenza/"
               >
-                Privacy Policy Assistenza
+                {t('assistancePageForm.linkPrivacyPolicy')}
               </Link>
             </Typography>
 

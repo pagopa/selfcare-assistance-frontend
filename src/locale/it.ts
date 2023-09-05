@@ -20,6 +20,8 @@ export default {
     },
     back: 'Indietro',
     forward: 'Avanti',
+    privacyPolicy: 'Proseguendo dichiari di aver letto la',
+    linkPrivacyPolicy: 'Privacy Policy Assistenza',
   },
   thankyouPage: {
     title: 'Abbiamo ricevuto la tua <1/> richiesta',
