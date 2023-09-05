@@ -15,9 +15,10 @@ import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsS
 import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
 import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
+import { ENV } from '../../utils/env';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -211,15 +212,16 @@ const Assistance = () => {
               </Grid>
             </Paper>
             <Typography variant="body2" mt={2} color={'#5C6F82'}>
-              {t('assistancePageForm.privacyPolicy')}{' '}
-              <Link
-                sx={{ cursor: 'pointer', textDecoration: 'none' }}
-                href="https://www.pagopa.it/it/privacy-policy-assistenza/"
-              >
-                {t('assistancePageForm.linkPrivacyPolicy')}
-              </Link>
+              <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
+                Proseguendo dichiari di aver letto la
+                <Link
+                  sx={{ cursor: 'pointer', textDecoration: 'none' }}
+                  href={ENV.URL_FILE.PRIVACY_POLICY}
+                >
+                  Privacy Policy Assistenza
+                </Link>
+              </Trans>
             </Typography>
-
             <Box my={4} display="flex" justifyContent="space-between">
               <Box>
                 <Button
