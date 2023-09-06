@@ -172,6 +172,10 @@ const Assistance = () => {
     };
   };
 
+  const preventClipboardEvents = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <Grid container xs={12}>
       <Grid
@@ -181,7 +185,7 @@ const Assistance = () => {
         display="flex"
         sx={{ backgroundColor: theme.palette.background.default }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={6} maxWidth={{ md: '684px' }}>
           <TitleBox
             title={t('assistancePageForm.title')}
             subTitle={t('assistancePageForm.subTitle')}
@@ -194,10 +198,12 @@ const Assistance = () => {
           <form onSubmit={formik.handleSubmit}>
             <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
               <Grid container item direction="column" spacing={3}>
-                <Grid item xs={12}>
+                <Grid item xs={12} pb={1}>
                   <CustomTextField
                     {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
                     size="small"
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -207,6 +213,8 @@ const Assistance = () => {
                       t('assistancePageForm.confirmEmail.label')
                     )}
                     size="small"
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
               </Grid>
