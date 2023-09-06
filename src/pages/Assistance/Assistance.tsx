@@ -172,11 +172,7 @@ const Assistance = () => {
     };
   };
 
-  const preventDefaultCopy = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-  };
-
-  const preventDefaultPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const preventClipboardEvents = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
   };
 
@@ -206,8 +202,8 @@ const Assistance = () => {
                   <CustomTextField
                     {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
                     size="small"
-                    onCopy={preventDefaultCopy}
-                    onPaste={preventDefaultPaste}
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -217,8 +213,8 @@ const Assistance = () => {
                       t('assistancePageForm.confirmEmail.label')
                     )}
                     size="small"
-                    onCopy={preventDefaultCopy}
-                    onPaste={preventDefaultPaste}
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
               </Grid>
