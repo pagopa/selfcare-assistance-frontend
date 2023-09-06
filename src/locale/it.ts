@@ -11,7 +11,7 @@ export default {
     },
     title: 'Come possiamo aiutarti?',
     subTitle:
-      'Indica l’indirizzo email istituzionale in cui desideri ricevere le risposte dell’assistenza.',
+      'Indica l’indirizzo email in cui desideri ricevere d’ora in poi le risposte dell’assistenza.',
     email: {
       label: 'Inserisci l’indirizzo email',
     },
