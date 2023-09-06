@@ -189,7 +189,7 @@ const Assistance = () => {
         display="flex"
         sx={{ backgroundColor: theme.palette.background.default }}
       >
-        <Grid item xs={6} sx={{ maxWidth: '684px' }}>
+        <Grid item xs={6} maxWidth={{ md: '684px' }}>
           <TitleBox
             title={t('assistancePageForm.title')}
             subTitle={t('assistancePageForm.subTitle')}
