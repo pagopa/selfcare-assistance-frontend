@@ -1,21 +1,24 @@
-import { useEffect, useRef } from 'react';
-import { Box, Button, Grid, Paper, TextField, useTheme } from '@mui/material';
-import { useFormik } from 'formik';
+import { Box, Button, Grid, Link, Paper, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
-import { AppError } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
+import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
 import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
-import { appStateActions } from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import {
   useUnloadEventInterceptor,
   useUnloadEventOnExit,
 } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
-import { uniqueId } from 'lodash';
+import {
+  AppError,
+  appStateActions,
+} from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
-import { useTranslation } from 'react-i18next';
-import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
+import { useFormik } from 'formik';
+import { uniqueId } from 'lodash';
+import { useEffect, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
+import { ENV } from '../../utils/env';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -169,6 +172,10 @@ const Assistance = () => {
     };
   };
 
+  const preventClipboardEvents = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <Grid container xs={12}>
       <Grid
@@ -178,7 +185,7 @@ const Assistance = () => {
         display="flex"
         sx={{ backgroundColor: theme.palette.background.default }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={6} maxWidth={{ md: '684px' }}>
           <TitleBox
             title={t('assistancePageForm.title')}
             subTitle={t('assistancePageForm.subTitle')}
@@ -191,10 +198,12 @@ const Assistance = () => {
           <form onSubmit={formik.handleSubmit}>
             <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
               <Grid container item direction="column" spacing={3}>
-                <Grid item xs={12}>
+                <Grid item xs={12} pb={1}>
                   <CustomTextField
                     {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
                     size="small"
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -204,11 +213,24 @@ const Assistance = () => {
                       t('assistancePageForm.confirmEmail.label')
                     )}
                     size="small"
+                    onCopy={preventClipboardEvents}
+                    onPaste={preventClipboardEvents}
                   ></CustomTextField>
                 </Grid>
               </Grid>
             </Paper>
-            <Box my={5} display="flex" justifyContent="space-between">
+            <Typography variant="body2" mt={2} color={theme.palette.text.secondary}>
+              <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
+                Proseguendo dichiari di aver letto la
+                <Link
+                  sx={{ cursor: 'pointer', textDecoration: 'none' }}
+                  href={ENV.URL_FILE.PRIVACY_POLICY}
+                >
+                  Privacy Policy Assistenza
+                </Link>
+              </Trans>
+            </Typography>
+            <Box my={4} display="flex" justifyContent="space-between">
               <Box>
                 <Button
                   color="primary"
