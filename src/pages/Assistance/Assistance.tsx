@@ -110,7 +110,7 @@ const Assistance = () => {
     validate,
     onSubmit: (values: AssistanceRequest) => {
       setLoading(true);
-      sendRequestToSupport(values.email)
+      sendRequestToSupport(values.email, 'prod-selfcare')
         .then((response) => {
           if (response.redirectUrl) {
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
