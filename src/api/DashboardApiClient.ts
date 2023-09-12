@@ -36,10 +36,11 @@ const onRedirectToLogin = () =>
   );
 
 export const DashboardApi = {
-  sendSupportRequest: async (email: string): Promise<SupportResponse> => {
+  sendSupportRequest: async (email: string, productId: string): Promise<SupportResponse> => {
     const result = await apiClient.sendSupportRequestUsingPOST({
       body: {
         email: email as EmailString,
+        productId,
       },
     });
     return extractResponse(result, 200, onRedirectToLogin);
