@@ -9,22 +9,18 @@ export default {
       notEqualConfirmEmail:
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
-    title: 'Assistenza',
-    subTitle: 'Come possiamo aiutarti? Compila e invia il modulo: ti ricontatteremo al più presto.',
-    messageObject: {
-      placeholder: 'Oggetto del messaggio',
-      helperText: 'Indicaci l’argomento della tua richiesta',
-    },
+    title: 'Come possiamo aiutarti?',
+    subTitle:
+      'Indica l’indirizzo email in cui desideri ricevere d’ora in poi le risposte dell’assistenza.',
     email: {
-      label: 'Email',
-      placeholder: 'Indirizzo e-mail istituzionale',
+      label: 'Inserisci l’indirizzo email',
     },
-    messageTextArea: {
-      placeholder: 'Descrivi il motivo della tua richiesta',
-      allowedLength: 'Max 500 caratteri',
+    confirmEmail: {
+      label: 'Conferma l’indirizzo email',
     },
-    backButton: 'Indietro',
-    confirmButton: 'Invia',
+    back: 'Indietro',
+    forward: 'Avanti',
+    linkPrivacyPolicy: 'Proseguendo dichiari di aver letto la <1>Privacy Policy Assistenza</1>',
   },
   thankyouPage: {
     title: 'Abbiamo ricevuto la tua <1/> richiesta',

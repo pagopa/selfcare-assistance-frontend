@@ -10,6 +10,10 @@ export const ENV = {
     EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
   },
 
+  URL_FILE: {
+    PRIVACY_POLICY: 'https://www.pagopa.it/it/privacy-policy-assistenza/',
+  },
+
   URL_FE: {
     LOGIN: env.get('REACT_APP_URL_FE_LOGIN').required().asString(),
     LOGOUT: env.get('REACT_APP_URL_FE_LOGOUT').required().asString(),
@@ -18,11 +22,11 @@ export const ENV = {
   },
 
   URL_API: {
-    API_ASSISTANCE: env.get('REACT_APP_URL_API_ASSISTANCE').required().asString(),
+    API_DASHBOARD: env.get('REACT_APP_URL_API_DASHBOARD').required().asString(),
   },
 
   API_TIMEOUT_MS: {
-    ASSISTANCE: env.get('REACT_APP_API_ASSISTANCE_TIMEOUT_MS').required().asInt(),
+    ASSISTANCE: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
   },
 
   ANALYTCS: {

@@ -10,8 +10,8 @@
     "@mui/material": "^5.8.2",
     "@mui/x-data-grid": "^5.0.1",
     "@mui/x-data-grid-generator": "^5.0.1",
-    "@pagopa/mui-italia": "^0.8.12",
-    "@pagopa/selfcare-common-frontend": "^1.15.0",
+    "@pagopa/mui-italia": "^0.11.0",
+    "@pagopa/selfcare-common-frontend": "^1.34.2",
     "@pagopa/ts-commons": "^10.2.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@types/lodash": "^4.14.172",
@@ -53,8 +53,8 @@
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
     "generate": "npm-run-all generate:*",
-    "clean:api-notification-manager": "rimraf src/api/generated/notification-manager && rimraf openApi/generated",
-    "generate:api-notification-manager": "yarn run clean:api-notification-manager && mkdirp openApi/generated && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/notification-manager-api-docs.json > openApi/generated/notification-manager-swagger20.json && node ./node_modules/@pagopa/selfcare-common-frontend/utils/fixSwagger20ArraySchemaDef.js openApi/generated/notification-manager-swagger20.json && gen-api-models --api-spec openApi/generated/notification-manager-swagger20.json --out-dir src/api/generated/notification-manager --no-strict --request-types --response-decoders --client"
+    "clean:api-b4f-dashboard": "rimraf src/api/generated/dashboard && rimraf openApi/generated",
+    "generate:api-b4f-dashboard": "yarn run clean:api-b4f-dashboard && mkdirp openApi/generated-dashboard && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/dashboard-api-docs.json > openApi/generated-dashboard/dashboard-swagger20.json && node openApi/scripts/api-b4f-dashboard_fixPreGen.js && node ./node_modules/@pagopa/selfcare-common-frontend/utils/fixSwagger20ArraySchemaDef.js openApi/generated-dashboard/dashboard-swagger20.json && gen-api-models --api-spec openApi/generated-dashboard/dashboard-swagger20.json --out-dir src/api/generated/b4f-dashboard --no-strict --request-types --response-decoders --client && node openApi/scripts/api-b4f-dashboard_fixPostGen.js"
   },
   "eslintConfig": {
     "extends": [
