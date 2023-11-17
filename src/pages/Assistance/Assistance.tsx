@@ -112,7 +112,7 @@ const Assistance = () => {
       const product =
         window.location.hostname?.startsWith('pnpg') ||
         window.location.hostname?.startsWith('imprese')
-          ? 'pn-imprese'
+          ? 'pn-pg'
           : 'selfcare';
       setLoading(true);
       sendRequestToSupport(values.email, 'prod-'.concat(product))
