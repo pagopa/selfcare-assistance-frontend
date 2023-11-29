@@ -121,8 +121,8 @@ const Assistance = () => {
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
             setTimeout(() => {
-              window.open(response.redirectUrl, '_top');
-            });
+              window.open(response.redirectUrl, '_blank');
+            }, 1000);
           }
         })
         .catch((reason) => {
