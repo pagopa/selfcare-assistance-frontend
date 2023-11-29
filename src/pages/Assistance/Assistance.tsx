@@ -109,6 +109,7 @@ const Assistance = () => {
     },
     validate,
     onSubmit: (values: AssistanceRequest) => {
+      const windowReference = window.open();
       const product =
         window.location.hostname?.startsWith('pnpg') ||
         window.location.hostname?.startsWith('imprese')
@@ -118,9 +119,13 @@ const Assistance = () => {
       sendRequestToSupport(values.email, 'prod-'.concat(product))
         .then((response) => {
           if (response.redirectUrl) {
+            const url = response.redirectUrl;
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            window.open(response.redirectUrl, '_blank');
+            if(windowReference){
+              // eslint-disable-next-line functional/immutable-data
+              windowReference.location = url;
+            }
           }
         })
         .catch((reason) => {
