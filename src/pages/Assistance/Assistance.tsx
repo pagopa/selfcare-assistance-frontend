@@ -120,7 +120,7 @@ const Assistance = () => {
           if (response.redirectUrl) {
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            window.open(response.redirectUrl, '_blank');
+            setTimeout(() => window.open(response.redirectUrl, '_blank'));
           }
         })
         .catch((reason) => {
