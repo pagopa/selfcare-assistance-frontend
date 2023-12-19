@@ -16,6 +16,7 @@ import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
@@ -64,7 +65,6 @@ const CustomTextField = styled(TextField)({
 });
 
 const requiredError = 'Required';
-const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,5}$');
 
 const Assistance = () => {
   const { t } = useTranslation();
@@ -109,13 +109,23 @@ const Assistance = () => {
     },
     validate,
     onSubmit: (values: AssistanceRequest) => {
+      const windowReference = window.open();
+      const product =
+        window.location.hostname?.startsWith('pnpg') ||
+        window.location.hostname?.startsWith('imprese')
+          ? 'pn-pg'
+          : 'selfcare';
       setLoading(true);
-      sendRequestToSupport(values.email, 'prod-selfcare')
+      sendRequestToSupport(values.email, 'prod-'.concat(product))
         .then((response) => {
           if (response.redirectUrl) {
+            const url = response.redirectUrl;
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            window.open(response.redirectUrl, '_blank');
+            if(windowReference){
+              // eslint-disable-next-line functional/immutable-data
+              windowReference.location = url;
+            }
           }
         })
         .catch((reason) => {
