@@ -17,7 +17,6 @@ import { uniqueId } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
-import { useHistory } from 'react-router-dom';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
@@ -74,7 +73,6 @@ const Assistance = () => {
   const onExit = useUnloadEventOnExit();
   const { registerUnloadEvent, unregisterUnloadEvent } = useUnloadEventInterceptor();
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
-  const history = useHistory();
 
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
 
@@ -247,7 +245,7 @@ const Assistance = () => {
                 <Button
                   color="primary"
                   variant="outlined"
-                  onClick={() => onExit(() => history.goBack())}
+                  onClick={() => onExit(() => history.go(-1))}
                 >
                   {t('assistancePageForm.back')}
                 </Button>
