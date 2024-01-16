@@ -245,7 +245,7 @@ const Assistance = () => {
                 <Button
                   color="primary"
                   variant="outlined"
-                  onClick={() => onExit(() => window.location.assign(document.referrer))}
+                  onClick={() => onExit(() => history.go(-1))}
                 >
                   {t('assistancePageForm.back')}
                 </Button>
