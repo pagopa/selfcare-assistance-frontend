@@ -122,7 +122,7 @@ const Assistance = () => {
             const url = response.redirectUrl;
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            if(windowReference){
+            if (windowReference) {
               // eslint-disable-next-line functional/immutable-data
               windowReference.location = url;
             }
@@ -245,7 +245,7 @@ const Assistance = () => {
                 <Button
                   color="primary"
                   variant="outlined"
-                  onClick={() => onExit(() => window.location.assign(document.referrer))}
+                  onClick={() => onExit(() => history.go(-1))}
                 >
                   {t('assistancePageForm.back')}
                 </Button>
