@@ -122,11 +122,20 @@ const Assistance = () => {
       sendRequestToSupport(values.email, product)
         .then(async (response) => {
           if (response.redirectUrl) {
-            const url = response.redirectUrl;
+            const baseUrl = response.redirectUrl.split('?')[0];
+            const jwt = new URLSearchParams(response.redirectUrl.split('?')[1]).get('jwt');
+            const returnTo = new URLSearchParams(response.redirectUrl.split('?')[1]).get(
+              'return_to'
+            );
+            const bodyData = {
+              jwt,
+              return_to: returnTo,
+            };
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            await fetch(url, {
+            await fetch(baseUrl, {
               method: 'POST',
+              body: JSON.stringify(bodyData),
             });
           }
         })
