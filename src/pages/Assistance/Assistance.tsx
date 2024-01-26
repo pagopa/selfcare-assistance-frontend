@@ -112,7 +112,6 @@ const Assistance = () => {
     },
     validate,
     onSubmit: (values: AssistanceRequest) => {
-      const windowReference = window.open();
       const product = productIdByUrl
         ? productIdByUrl
         : window.location.hostname?.startsWith('pnpg') ||
@@ -121,15 +120,14 @@ const Assistance = () => {
         : 'prod-selfcare';
       setLoading(true);
       sendRequestToSupport(values.email, product)
-        .then((response) => {
+        .then(async (response) => {
           if (response.redirectUrl) {
             const url = response.redirectUrl;
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
-            if (windowReference) {
-              // eslint-disable-next-line functional/immutable-data
-              windowReference.location = url;
-            }
+            await fetch(url, {
+              method: 'POST',
+            });
           }
         })
         .catch((reason) => {
