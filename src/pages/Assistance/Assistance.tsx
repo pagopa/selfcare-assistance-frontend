@@ -78,6 +78,9 @@ const Assistance = () => {
 
   const requestIdRef = useRef<string>();
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const productIdByUrl = urlParams.get('productId');
+
   useEffect(() => {
     if (!requestIdRef.current) {
       // eslint-disable-next-line functional/immutable-data
@@ -110,13 +113,14 @@ const Assistance = () => {
     validate,
     onSubmit: (values: AssistanceRequest) => {
       const windowReference = window.open();
-      const product =
-        window.location.hostname?.startsWith('pnpg') ||
-        window.location.hostname?.startsWith('imprese')
-          ? 'pn-pg'
-          : 'selfcare';
+      const product = productIdByUrl
+        ? productIdByUrl
+        : window.location.hostname?.startsWith('pnpg') ||
+          window.location.hostname?.startsWith('imprese')
+        ? 'prod-pn-pg'
+        : 'prod-selfcare';
       setLoading(true);
-      sendRequestToSupport(values.email, 'prod-'.concat(product))
+      sendRequestToSupport(values.email, product)
         .then((response) => {
           if (response.redirectUrl) {
             const url = response.redirectUrl;
@@ -195,7 +199,7 @@ const Assistance = () => {
         display="flex"
         sx={{ backgroundColor: theme.palette.background.default }}
       >
-        <Grid item xs={6} maxWidth={{ md: '684px' }}>
+        <Grid item xs={6} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
           <TitleBox
             title={t('assistancePageForm.title')}
             subTitle={t('assistancePageForm.subTitle')}
@@ -243,6 +247,7 @@ const Assistance = () => {
             <Box my={4} display="flex" justifyContent="space-between">
               <Box>
                 <Button
+                  size="small"
                   color="primary"
                   variant="outlined"
                   onClick={() => onExit(() => history.go(-1))}
@@ -252,10 +257,11 @@ const Assistance = () => {
               </Box>
               <Box>
                 <Button
-                  disabled={!formik.dirty || !formik.isValid}
+                  size="small"
                   color="primary"
                   variant="contained"
                   type="submit"
+                  disabled={!formik.dirty || !formik.isValid}
                 >
                   {t('assistancePageForm.forward')}
                 </Button>
