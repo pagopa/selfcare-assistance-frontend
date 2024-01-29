@@ -138,8 +138,9 @@ const Assistance = () => {
                 'Content-Type': 'application/json',
               },
               method: 'POST',
-              mode: 'no-cors',
               body: JSON.stringify(bodyData),
+            }).then((response) => {
+              window.location.assign(response.url);
             });
           }
         })
