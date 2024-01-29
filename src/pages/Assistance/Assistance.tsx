@@ -134,7 +134,11 @@ const Assistance = () => {
             trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
             unregisterUnloadEvent();
             await fetch(baseUrl, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
               method: 'POST',
+              mode: 'no-cors',
               body: JSON.stringify(bodyData),
             });
           }
