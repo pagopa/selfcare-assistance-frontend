@@ -17,7 +17,7 @@ import { uniqueId } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
-import { sendRequestToSupport } from '../../services/assistanceService';
+import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
 import { useAppDispatch } from './../../redux/hooks';
@@ -111,26 +111,37 @@ const Assistance = () => {
       confirmEmail: '',
     },
     validate,
-    onSubmit: (values: AssistanceRequest) => {
-      const windowReference = window.open();
+    onSubmit: async (values: AssistanceRequest) => {
       const product = productIdByUrl
         ? productIdByUrl
         : window.location.hostname?.startsWith('pnpg') ||
           window.location.hostname?.startsWith('imprese')
         ? 'prod-pn-pg'
         : 'prod-selfcare';
+      const token = storageTokenOps.read();
+      const formData = {
+        email: values.email,
+        productId: product,
+      };
+
       setLoading(true);
-      sendRequestToSupport(values.email, product)
-        .then((response) => {
-          if (response.redirectUrl) {
-            const url = response.redirectUrl;
-            trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-            unregisterUnloadEvent();
-            if (windowReference) {
-              // eslint-disable-next-line functional/immutable-data
-              windowReference.location = url;
-            }
-          }
+      await fetch(ENV.URL_API.API_DASHBOARD + '/support', {
+        headers: {
+          accept: '*/*',
+          'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',
+          authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
+          const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
+          window.open(winUrl, 'win');
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
