@@ -48,6 +48,9 @@
               "$ref": "#/definitions/Problem"
             }
           },
+          "409": {
+            "description": "Conflict"
+          },
           "500": {
             "description": "Internal Server Error",
             "schema": {
@@ -106,23 +109,12 @@
             "name": "principal",
             "required": false,
             "type": "object"
-          },
-          {
-            "description": "mode",
-            "enum": [
-              "BASE",
-              "FULLY"
-            ],
-            "in": "query",
-            "name": "mode",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "schema":{"$ref":"#/definitions/InstitutionResourceArray"}
+            "schema":{"$ref":"#/definitions/InstitutionBaseResourceArray"}
           },
           "400": {
             "description": "Bad Request",
@@ -162,6 +154,58 @@
         "description": "Service to get all the institutions related to logged user",
         "operationId": "getInstitutionsUsingGET",
         "summary": "getInstitutions"
+      }
+    },
+    "/institutions/products": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema":{"$ref":"#/definitions/ProductsResourceArray"}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "institutions"
+        ],
+        "description": "Service to get all the products related to a specific institution",
+        "operationId": "getProductsTreeUsingGET",
+        "summary": "getProductsTree"
       }
     },
     "/institutions/{institutionId}": {
@@ -667,6 +711,7 @@
         "tags": [
           "institutions"
         ],
+        "deprecated": true,
         "description": "Service to get all the products related to a specific institution",
         "operationId": "getInstitutionProductsUsingGET",
         "summary": "getInstitutionProducts"
@@ -1381,11 +1426,15 @@
           {
             "description": "Institution Type",
             "enum": [
+              "AS",
+              "CON",
               "GSP",
               "PA",
               "PG",
               "PSP",
               "PT",
+              "REC",
+              "SA",
               "SCP"
             ],
             "in": "path",
@@ -1661,7 +1710,7 @@
           "application/json"
         ],
         "produces": [
-          "application/json",
+          "text/html",
           "application/problem+json"
         ],
         "parameters": [
@@ -1706,9 +1755,7 @@
         "responses": {
           "200": {
             "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/SupportResponse"
-            }
+            "schema":{"$ref":"#/definitions/STRINGWrapper"}
           },
           "400": {
             "description": "Bad Request",
@@ -1737,7 +1784,7 @@
           }
         ],
         "tags": [
-          "support"
+          "external-v2"
         ],
         "description": "Service to retrieve Support contact's form",
         "operationId": "sendSupportRequestUsingPOST",
@@ -1818,6 +1865,75 @@
         "description": "Service create an 'Identity Token' based on a Self Care session token",
         "operationId": "exchangeUsingGET",
         "summary": "exchange"
+      }
+    },
+    "/token/exchange/fatturazione": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "description": "Institution's unique internal identifier",
+            "in": "query",
+            "name": "institutionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Back Office environment",
+            "in": "query",
+            "name": "environment",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/STRINGWrapper"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "token"
+        ],
+        "description": "Service to create a 'Billing Token' based on a Self Care session token",
+        "operationId": "billingTokenUsingGET",
+        "summary": "billingToken"
       }
     },
     "/user-groups": {
@@ -2720,7 +2836,53 @@
       }
     }
   },
-  "definitions" : {"ProductRoleMappingsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductRoleMappingsResource"}},"BrokerResourceArray":{"type": "array", "items": {"$ref": "#/definitions/BrokerResource"}},"PartyProductArray":{"type": "array", "items": {"$ref": "#/definitions/PartyProduct"}},"InstitutionUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionUserResource"}},"ProductUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductUserResource"}},"ProductsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductsResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"GeographicTaxonomyResourceArray":{"type": "array", "items": {"$ref": "#/definitions/GeographicTaxonomyResource"}},"STRINGWrapper":{"type": "string"},"STRINGArray":{"type": "array", "items": {"type": "string"}},"InstitutionResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionResource"}},
+  "definitions" : {"ProductRoleMappingsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductRoleMappingsResource"}},"BrokerResourceArray":{"type": "array", "items": {"$ref": "#/definitions/BrokerResource"}},"PartyProductArray":{"type": "array", "items": {"$ref": "#/definitions/PartyProduct"}},"InstitutionUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionUserResource"}},"ProductUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductUserResource"}},"ProductsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductsResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"GeographicTaxonomyResourceArray":{"type": "array", "items": {"$ref": "#/definitions/GeographicTaxonomyResource"}},"ProductsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductsResource"}},"STRINGWrapper":{"type": "string"},"STRINGArray":{"type": "array", "items": {"type": "string"}},"InstitutionBaseResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionBaseResource"}},
+    "AdditionalInformations": {
+      "properties": {
+        "agentOfPublicService": {
+          "description": "The institution is an agent of a public service",
+          "example": false,
+          "type": "boolean"
+        },
+        "agentOfPublicServiceNote": {
+          "description": "agentOfPublicService Note",
+          "type": "string"
+        },
+        "belongRegulatedMarket": {
+          "description": "The institution belongs to a regulated market",
+          "example": false,
+          "type": "boolean"
+        },
+        "establishedByRegulatoryProvision": {
+          "description": "The institution is a company established by a regulatory provision",
+          "example": false,
+          "type": "boolean"
+        },
+        "establishedByRegulatoryProvisionNote": {
+          "description": "establishedByRegulatoryProvision Note",
+          "type": "string"
+        },
+        "ipa": {
+          "description": "The institution is registered on IPA",
+          "example": false,
+          "type": "boolean"
+        },
+        "ipaCode": {
+          "description": "IPA code",
+          "type": "string"
+        },
+        "otherNote": {
+          "description": "Other note",
+          "type": "string"
+        },
+        "regulatedMarketNote": {
+          "description": "regulatedMarket Note",
+          "type": "string"
+        }
+      },
+      "title": "AdditionalInformations",
+      "type": "object"
+    },
     "Attribute": {
       "properties": {
         "code": {
@@ -2748,6 +2910,21 @@
         }
       },
       "title": "BackOfficeConfigurationsResource",
+      "type": "object"
+    },
+    "Billing": {
+      "properties": {
+        "publicServices": {
+          "type": "boolean"
+        },
+        "recipientCode": {
+          "type": "string"
+        },
+        "vatNumber": {
+          "type": "string"
+        }
+      },
+      "title": "Billing",
       "type": "object"
     },
     "BrokerResource": {
@@ -2858,6 +3035,21 @@
       "title": "CreateUserGroupDto",
       "type": "object"
     },
+    "DataProtectionOfficer": {
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "pec": {
+          "type": "string"
+        }
+      },
+      "title": "DataProtectionOfficer",
+      "type": "object"
+    },
     "DelegationIdResource": {
       "properties": {
         "id": {
@@ -2913,25 +3105,25 @@
     },
     "DelegationResource": {
       "properties": {
-        "from": {
+        "brokerId": {
+          "type": "string"
+        },
+        "brokerName": {
           "type": "string"
         },
         "id": {
           "type": "string"
         },
-        "institutionFromRootName": {
+        "institutionId": {
           "type": "string"
         },
         "institutionName": {
           "type": "string"
         },
-        "partnerName": {
+        "institutionRootName": {
           "type": "string"
         },
         "productId": {
-          "type": "string"
-        },
-        "to": {
           "type": "string"
         },
         "type": {
@@ -3051,11 +3243,32 @@
         "address": {
           "type": "string"
         },
+        "aooParentCode": {
+          "type": "string"
+        },
         "attributes": {
           "items": {
             "$ref": "#/definitions/Attribute"
           },
           "type": "array"
+        },
+        "billing": {
+          "$ref": "#/definitions/Billing"
+        },
+        "category": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "dataProtectionOfficer": {
+          "$ref": "#/definitions/DataProtectionOfficer"
         },
         "description": {
           "type": "string"
@@ -3077,20 +3290,45 @@
         },
         "institutionType": {
           "enum": [
+            "AS",
+            "CON",
             "GSP",
             "PA",
             "PG",
             "PSP",
             "PT",
+            "REC",
+            "SA",
             "SCP"
           ],
           "type": "string"
+        },
+        "onboarding": {
+          "items": {
+            "$ref": "#/definitions/OnboardedProduct"
+          },
+          "type": "array"
         },
         "origin": {
           "type": "string"
         },
         "originId": {
           "type": "string"
+        },
+        "paymentServiceProvider": {
+          "$ref": "#/definitions/PaymentServiceProvider"
+        },
+        "rootParent": {
+          "$ref": "#/definitions/RootParentResponse"
+        },
+        "subunitCode": {
+          "type": "string"
+        },
+        "subunitType": {
+          "type": "string"
+        },
+        "supportContact": {
+          "$ref": "#/definitions/SupportContact"
         },
         "taxCode": {
           "type": "string"
@@ -3102,10 +3340,52 @@
       "title": "Institution",
       "type": "object"
     },
+    "InstitutionBaseResource": {
+      "properties": {
+        "id": {
+          "description": "Institution's unique internal identifier",
+          "type": "string"
+        },
+        "name": {
+          "description": "Institution's name",
+          "type": "string"
+        },
+        "parentDescription": {
+          "description": "Sub unit institution parent Description",
+          "type": "string"
+        },
+        "status": {
+          "description": "Institution's status",
+          "type": "string"
+        },
+        "userRole": {
+          "description": "Logged user's role",
+          "type": "string"
+        }
+      },
+      "title": "InstitutionBaseResource",
+      "type": "object"
+    },
     "InstitutionInfo": {
       "properties": {
+        "additionalInformations": {
+          "$ref": "#/definitions/AdditionalInformations",
+          "description": "Institution's additional informations"
+        },
         "address": {
           "description": "Institution's physical address",
+          "type": "string"
+        },
+        "city": {
+          "description": "Institution's city",
+          "type": "string"
+        },
+        "country": {
+          "description": "Institution's country",
+          "type": "string"
+        },
+        "county": {
+          "description": "Institution's county",
           "type": "string"
         },
         "dpoData": {
@@ -3123,11 +3403,15 @@
         "institutionType": {
           "description": "Institution's type",
           "enum": [
+            "AS",
+            "CON",
             "GSP",
             "PA",
             "PG",
             "PSP",
             "PT",
+            "REC",
+            "SA",
             "SCP"
           ],
           "type": "string"
@@ -3185,6 +3469,18 @@
           "description": "Institution's category",
           "type": "string"
         },
+        "city": {
+          "description": "Institution's city",
+          "type": "string"
+        },
+        "country": {
+          "description": "Institution's country",
+          "type": "string"
+        },
+        "county": {
+          "description": "Institution's county",
+          "type": "string"
+        },
         "externalId": {
           "description": "Institution's unique external identifier",
           "type": "string"
@@ -3207,11 +3503,15 @@
         "institutionType": {
           "description": "Institution's type",
           "enum": [
+            "AS",
+            "CON",
             "GSP",
             "PA",
             "PG",
             "PSP",
             "PT",
+            "REC",
+            "SA",
             "SCP"
           ],
           "type": "string"
@@ -3235,6 +3535,13 @@
         "parentDescription": {
           "description": "Sub unit institution parent Description",
           "type": "string"
+        },
+        "products": {
+          "description": "${swagger.dashboard.institutions.model.products}",
+          "items": {
+            "$ref": "#/definitions/OnboardedProductResource"
+          },
+          "type": "array"
         },
         "recipientCode": {
           "description": "Billing recipient code",
@@ -3383,6 +3690,64 @@
       "title": "InvalidParam",
       "type": "object"
     },
+    "OnboardedProduct": {
+      "properties": {
+        "authorized": {
+          "type": "boolean"
+        },
+        "billing": {
+          "$ref": "#/definitions/Billing"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ACTIVE",
+            "DELETED",
+            "PENDING",
+            "REJECTED",
+            "SUSPENDED",
+            "TOBEVALIDATED"
+          ],
+          "type": "string"
+        },
+        "userRole": {
+          "type": "string"
+        }
+      },
+      "title": "OnboardedProduct",
+      "type": "object"
+    },
+    "OnboardedProductResource": {
+      "properties": {
+        "authorized": {
+          "type": "boolean"
+        },
+        "billing": {
+          "$ref": "#/definitions/Billing"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "productOnBoardingStatus": {
+          "enum": [
+            "ACTIVE",
+            "DELETED",
+            "PENDING",
+            "REJECTED",
+            "SUSPENDED",
+            "TOBEVALIDATED"
+          ],
+          "type": "string"
+        },
+        "userRole": {
+          "type": "string"
+        }
+      },
+      "title": "OnboardedProductResource",
+      "type": "object"
+    },
     "OnboardingRequestResource": {
       "properties": {
         "admins": {
@@ -3398,7 +3763,11 @@
         },
         "manager": {
           "$ref": "#/definitions/UserInfo",
-          "description": "Manager specific data"
+          "description": "Manager specific data. It's required when institutionType is not PT"
+        },
+        "productId": {
+          "description": "Product's identifier",
+          "type": "string"
         },
         "status": {
           "description": "Onboarding request's status",
@@ -3476,6 +3845,27 @@
         }
       },
       "title": "PartyProduct",
+      "type": "object"
+    },
+    "PaymentServiceProvider": {
+      "properties": {
+        "abiCode": {
+          "type": "string"
+        },
+        "businessRegisterNumber": {
+          "type": "string"
+        },
+        "legalRegisterName": {
+          "type": "string"
+        },
+        "legalRegisterNumber": {
+          "type": "string"
+        },
+        "vatNumberGroup": {
+          "type": "boolean"
+        }
+      },
+      "title": "PaymentServiceProvider",
       "type": "object"
     },
     "PlainUserResource": {
@@ -3704,7 +4094,7 @@
           "type": "array"
         },
         "delegable": {
-          "description": "If a product is delegable to a technical partner ",
+          "description": "If a product is delegable to a technical partner",
           "example": false,
           "type": "boolean"
         },
@@ -3719,6 +4109,11 @@
         "imageUrl": {
           "description": "Product's depict image",
           "type": "string"
+        },
+        "invoiceable": {
+          "description": "If a product is invoiceable",
+          "example": false,
+          "type": "boolean"
         },
         "logo": {
           "description": "Product's logo",
@@ -3801,6 +4196,18 @@
       "title": "PspData",
       "type": "object"
     },
+    "RootParentResponse": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "RootParentResponse",
+      "type": "object"
+    },
     "SearchUserDto": {
       "properties": {
         "fiscalCode": {
@@ -3817,7 +4224,7 @@
     "SubProductResource": {
       "properties": {
         "delegable": {
-          "description": "If a product is delegable to a technical partner ",
+          "description": "If a product is delegable to a technical partner",
           "example": false,
           "type": "boolean"
         },
@@ -3832,6 +4239,11 @@
         "imageUrl": {
           "description": "Product's depict image",
           "type": "string"
+        },
+        "invoiceable": {
+          "description": "If a product is invoiceable",
+          "example": false,
+          "type": "boolean"
         },
         "logo": {
           "description": "Product's logo",
@@ -3872,6 +4284,18 @@
       "title": "SubProductResource",
       "type": "object"
     },
+    "SupportContact": {
+      "properties": {
+        "supportEmail": {
+          "type": "string"
+        },
+        "supportPhone": {
+          "type": "string"
+        }
+      },
+      "title": "SupportContact",
+      "type": "object"
+    },
     "SupportContactResource": {
       "properties": {
         "supportEmail": {
@@ -3903,15 +4327,6 @@
         "email"
       ],
       "title": "SupportRequestDto",
-      "type": "object"
-    },
-    "SupportResponse": {
-      "properties": {
-        "redirectUrl": {
-          "type": "string"
-        }
-      },
-      "title": "SupportResponse",
       "type": "object"
     },
     "UpdateInstitutionDto": {

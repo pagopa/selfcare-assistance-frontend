@@ -5,7 +5,6 @@ import { EmailString } from '@pagopa/ts-commons/lib/strings';
 import { store } from '../redux/store';
 import { ENV } from '../utils/env';
 import { createClient, WithDefaultsT } from './generated/b4f-dashboard/client';
-import { SupportResponse } from './generated/b4f-dashboard/SupportResponse';
 
 const withBearer: WithDefaultsT<'bearerAuth'> = (wrappedOperation) => (params: any) => {
   const token = storageTokenOps.read();
@@ -36,7 +35,7 @@ const onRedirectToLogin = () =>
   );
 
 export const DashboardApi = {
-  sendSupportRequest: async (email: string, productId: string): Promise<SupportResponse> => {
+  sendSupportRequest: async (email: string, productId: string): Promise<string> => {
     const result = await apiClient.sendSupportRequestUsingPOST({
       body: {
         email: email as EmailString,
