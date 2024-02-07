@@ -10,8 +10,7 @@ export default {
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
     title: 'Come possiamo aiutarti?',
-    subTitle:
-      'Indica l’indirizzo email in cui desideri ricevere d’ora in poi le risposte dell’assistenza.',
+    subTitle: 'Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza.',
     email: {
       label: 'Inserisci l’indirizzo email',
     },
