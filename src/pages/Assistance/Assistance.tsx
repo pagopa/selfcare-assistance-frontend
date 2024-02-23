@@ -125,7 +125,7 @@ const Assistance = () => {
       };
 
       setLoading(true);
-      await fetch(ENV.URL_API.API_DASHBOARD + '/support', {
+      await fetch(ENV.URL_API.API_DASHBOARD + '/v1/support', {
         headers: {
           accept: '*/*',
           'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',
