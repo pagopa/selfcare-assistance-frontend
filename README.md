@@ -1,4 +1,4 @@
-# template-frontend
+# template-frontend 
 
 ## To configure the workspace execute the following commands
 - yarn install
