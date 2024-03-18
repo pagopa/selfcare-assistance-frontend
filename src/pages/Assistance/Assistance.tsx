@@ -85,10 +85,12 @@ const Assistance = () => {
 
   useEffect(() => {
     const token = storageTokenOps.read();
-    const isExpiredSession = isExpiredToken(token);
-    if (isExpiredSession) {
-      onRedirectToLogin();
-      window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
+    if (token) {
+      const isExpiredSession = isExpiredToken(token);
+      if (isExpiredSession) {
+        onRedirectToLogin();
+        window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
+      }
     }
   }, []);
 
