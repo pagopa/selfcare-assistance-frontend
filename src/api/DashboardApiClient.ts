@@ -21,7 +21,7 @@ const apiClient = createClient({
   withDefaults: withBearer,
 });
 
-const onRedirectToLogin = () =>
+export const onRedirectToLogin = () =>
   store.dispatch(
     appStateActions.addError({
       id: 'tokenNotValid',

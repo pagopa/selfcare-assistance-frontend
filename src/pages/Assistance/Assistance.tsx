@@ -18,8 +18,10 @@ import { useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
+import { onRedirectToLogin } from '../../api/DashboardApiClient';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -80,6 +82,14 @@ const Assistance = () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const productIdByUrl = urlParams.get('productId');
+
+  useEffect(() => {
+    const token = storageTokenOps.read();
+    const isExpiredSession = isExpiredToken(token);
+    if (isExpiredSession) {
+      onRedirectToLogin();
+    }
+  }, []);
 
   useEffect(() => {
     if (!requestIdRef.current) {
