@@ -88,6 +88,7 @@ const Assistance = () => {
     const isExpiredSession = isExpiredToken(token);
     if (isExpiredSession) {
       onRedirectToLogin();
+      window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
     }
   }, []);
 
