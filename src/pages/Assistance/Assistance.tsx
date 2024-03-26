@@ -84,7 +84,8 @@ const Assistance = () => {
   const productIdByUrl = urlParams.get('productId');
 
   useEffect(() => {
-    const token = storageTokenOps.read();
+    const token =
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp3dF9hMjo3YTo0NjozYjoyYTo2MDo1Njo0MDo4ODphMDo1ZDphNDpmODowMToxZTozZSJ9.eyJmYW1pbHlfbmFtZSI6IlNhcnRvcmkiLCJmaXNjYWxfbnVtYmVyIjoiU1JUTkxNMDlUMDZHNjM1UyIsIm5hbWUiOiJBbnNlbG1vIiwic3BpZF9sZXZlbCI6Imh0dHBzOi8vd3d3LnNwaWQuZ292Lml0L1NwaWRMMiIsImZyb21fYWEiOmZhbHNlLCJ1aWQiOiI1MDk2ZTRjNi0yNWExLTQ1ZDUtOWJkZi0yZmI5NzRhN2MxYzgiLCJsZXZlbCI6IkwyIiwiaWF0IjoxNzExNDU0MjYzLCJleHAiOjE3MTE0ODY2NjMsImF1ZCI6ImFwaS5kZXYuc2VsZmNhcmUucGFnb3BhLml0IiwiaXNzIjoiU1BJRCIsImp0aSI6Il83NmFiMGMwYWI5NzdmYmUzZDQwOSJ9.V2-yjciuRE3zXK8FD2sXr8WJSpCIlPs-fhddVKQrhIgGO_6V3LDKdOAi72czpbvVIvQTKo0zqomIzEWyuS9Xj7rIT39MKkLZWlhFZtJDsh5ZyDp4Q3l1Ug7RxKcqyLKWRhqWCwvF6sNQAQTG8glh_vTZR4cT5H9A6lfMg_0lY7t0qCsBlkjHUY_buEdiLM3mOpknJ76A1s30qyStH7wx1IkuN-dNRvl1M1Od1eRTp_DX3h3ssBqfwMUbsZ41rBjHxkJwtZ3tRv040m76ADPfXWJ1y75UiiHwLM_v9GWwv0u-8NoI0Uy6QcPplaIsamlmxl6pzdGOv5BpyfWEzJmISg';
     if (token) {
       const isExpiredSession = isExpiredToken(token);
       if (isExpiredSession) {
@@ -153,8 +154,11 @@ const Assistance = () => {
         .then((res) => res.text())
         .then((res) => {
           trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-          const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
-          window.open(winUrl, 'win');
+          const document = res as unknown as Document;
+          console.log('document: ', document);
+          const script = document.scripts[0];
+          console.log('script: ', script);
+          script.click();
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
