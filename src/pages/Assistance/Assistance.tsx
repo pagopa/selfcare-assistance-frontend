@@ -153,8 +153,9 @@ const Assistance = () => {
         .then((res) => res.text())
         .then((res) => {
           trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-          const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
-          window.open(winUrl, 'win');
+          const document = res as unknown as Document;
+          const form = document.getElementById('jwtForm') as HTMLFormElement;
+          form.submit();
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
