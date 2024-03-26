@@ -155,6 +155,7 @@ const Assistance = () => {
           trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
           const document = res as unknown as Document;
           const form = document.getElementById('jwtForm') as HTMLFormElement;
+          console.log(form);
           form.submit();
         })
         .catch((reason) => {
