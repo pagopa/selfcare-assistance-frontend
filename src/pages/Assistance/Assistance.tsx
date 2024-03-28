@@ -258,7 +258,7 @@ const Assistance = () => {
           variantTitle="h3"
           variantSubTitle="body1"
         />
-        <form id="jwtForm" method="POST" action={action}>
+        <form id="jwtForm" method="POST" target='_blank' action={action}>
           <input id="jwtString" type="hidden" name="jwt" value={jwtString} />
           <input id="returnTo" type="hidden" name="return_to" value={returnTo} />
         </form>
