@@ -14,7 +14,7 @@ import {
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
@@ -74,6 +74,10 @@ const Assistance = () => {
   const dispatch = useAppDispatch();
   const onExit = useUnloadEventOnExit();
   const { registerUnloadEvent, unregisterUnloadEvent } = useUnloadEventInterceptor();
+  // Initialize state variables
+  const [returnTo, setReturnTo] = useState<string | undefined>('');
+  const [jwtString, setJwtString] = useState<string | undefined>('');
+  const [action, setAction] = useState<string | undefined>('');
   const setLoading = useLoading(LOADING_TASK_SAVE_ASSISTANCE);
 
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
@@ -118,6 +122,15 @@ const Assistance = () => {
       }).filter(([_key, value]) => value)
     );
 
+  useEffect(() => {
+    if (action && jwtString && returnTo) {
+      const form = document.getElementById('jwtForm') as HTMLFormElement;
+      if (form) {
+        form.submit();
+      }
+    }
+  }, [action, jwtString, returnTo]);
+
   const formik = useFormik<AssistanceRequest>({
     initialValues: {
       email: '',
@@ -152,9 +165,22 @@ const Assistance = () => {
       })
         .then((res) => res.text())
         .then((res) => {
+          const tempDiv = document.createElement('div');
+          // eslint-disable-next-line functional/immutable-data
+          tempDiv.innerHTML = res;
+
+          // Extract values
+          setAction(tempDiv?.querySelector('#jwtForm')?.getAttribute('action') ?? undefined);
+          setJwtString(tempDiv?.querySelector('#jwtString')?.getAttribute('value') ?? undefined);
+          setReturnTo(tempDiv?.querySelector('#returnTo')?.getAttribute('value') ?? undefined);
+
+          console.log('Action:', action);
+          console.log('JWT String:', jwtString);
+          console.log('Return To:', returnTo);
           trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-          const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
-          window.open(winUrl, 'win');
+          console.log('text', res);
+          // const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
+          // window.open(winUrl, '_self');
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
@@ -232,6 +258,10 @@ const Assistance = () => {
           variantTitle="h3"
           variantSubTitle="body1"
         />
+        <form id="jwtForm" method="POST" action={action}>
+          <input id="jwtString" type="hidden" name="jwt" value={jwtString} />
+          <input id="returnTo" type="hidden" name="return_to" value={returnTo} />
+        </form>
         <form onSubmit={formik.handleSubmit}>
           <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
             <Grid container item direction="column" spacing={3}>
