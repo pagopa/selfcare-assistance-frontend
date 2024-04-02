@@ -22,7 +22,6 @@ import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
 import { onRedirectToLogin } from '../../api/DashboardApiClient';
-import { sendRequestToSupport } from '../../services/assistanceService';
 import { ZendeskAuthorizationDTO } from '../../model/ZendeskAuthorizationDTO';
 import { useAppDispatch } from './../../redux/hooks';
 
@@ -144,9 +143,26 @@ const Assistance = () => {
           window.location.hostname?.startsWith('imprese')
         ? 'prod-pn-pg'
         : 'prod-selfcare';
+      const token = storageTokenOps.read();
+      const formData = {
+        email: values.email,
+        productId,
+      };
 
       setLoading(true);
-      sendRequestToSupport(values.email, productId)
+      await fetch(ENV.URL_API.API_DASHBOARD + '/v1/support', {
+        headers: {
+          accept: '*/*',
+          'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',
+          authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+      })
+        .then((res) => res.text())
         .then((res) => {
           const tempDiv = document.createElement('div');
           // eslint-disable-next-line functional/immutable-data
