@@ -160,7 +160,6 @@ const Assistance = () => {
         body: JSON.stringify(formData),
         method: 'POST',
         mode: 'cors',
-        credentials: 'include',
       })
         .then((res) => res.text())
         .then((res) => {
