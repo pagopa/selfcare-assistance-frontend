@@ -14,12 +14,15 @@ import {
 import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
 import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
+import { onRedirectToLogin } from '../../api/DashboardApiClient';
+import { ZendeskAuthorizationDTO } from '../../model/ZendeskAuthorizationDTO';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -76,10 +79,23 @@ const Assistance = () => {
 
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
 
+  const [zendeskAuthData, setZendeskAuthData] = useState<ZendeskAuthorizationDTO>();
+
   const requestIdRef = useRef<string>();
 
   const urlParams = new URLSearchParams(window.location.search);
   const productIdByUrl = urlParams.get('productId');
+
+  useEffect(() => {
+    const token = storageTokenOps.read();
+    if (token) {
+      const isExpiredSession = isExpiredToken(token);
+      if (isExpiredSession) {
+        onRedirectToLogin();
+        window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -105,6 +121,15 @@ const Assistance = () => {
       }).filter(([_key, value]) => value)
     );
 
+  useEffect(() => {
+    if (zendeskAuthData) {
+      const form = document.getElementById('jwtForm') as HTMLFormElement;
+      if (form) {
+        form.submit();
+      }
+    }
+  }, [zendeskAuthData]);
+
   const formik = useFormik<AssistanceRequest>({
     initialValues: {
       email: '',
@@ -112,7 +137,7 @@ const Assistance = () => {
     },
     validate,
     onSubmit: async (values: AssistanceRequest) => {
-      const product = productIdByUrl
+      const productId = productIdByUrl
         ? productIdByUrl
         : window.location.hostname?.startsWith('pnpg') ||
           window.location.hostname?.startsWith('imprese')
@@ -121,7 +146,7 @@ const Assistance = () => {
       const token = storageTokenOps.read();
       const formData = {
         email: values.email,
-        productId: product,
+        productId,
       };
 
       setLoading(true);
@@ -135,13 +160,18 @@ const Assistance = () => {
         body: JSON.stringify(formData),
         method: 'POST',
         mode: 'cors',
-        credentials: 'include',
       })
         .then((res) => res.text())
         .then((res) => {
+          const tempDiv = document.createElement('div');
+          // eslint-disable-next-line functional/immutable-data
+          tempDiv.innerHTML = res;
+          setZendeskAuthData({
+            action_url: tempDiv?.querySelector('#jwtForm')?.getAttribute('action') ?? '',
+            jwt: tempDiv?.querySelector('#jwtString')?.getAttribute('value') ?? '',
+            return_to: tempDiv?.querySelector('#returnTo')?.getAttribute('value') ?? '',
+          });
           trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-          const winUrl = URL.createObjectURL(new Blob([res], { type: 'text/html' }));
-          window.open(winUrl, 'win');
         })
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
@@ -202,84 +232,86 @@ const Assistance = () => {
   };
 
   return (
-    <Grid container xs={12}>
-      <Grid
-        container
-        item
-        justifyContent="center"
-        display="flex"
-        sx={{ backgroundColor: theme.palette.background.default }}
-      >
-        <Grid item xs={6} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
-          <TitleBox
-            title={t('assistancePageForm.title')}
-            subTitle={t('assistancePageForm.subTitle')}
-            mtTitle={3}
-            mbTitle={2}
-            mbSubTitle={4}
-            variantTitle="h3"
-            variantSubTitle="body1"
-          />
-          <form onSubmit={formik.handleSubmit}>
-            <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
-              <Grid container item direction="column" spacing={3}>
-                <Grid item xs={12} pb={1}>
-                  <CustomTextField
-                    {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
-                    size="small"
-                    onCopy={preventClipboardEvents}
-                    onPaste={preventClipboardEvents}
-                  ></CustomTextField>
-                </Grid>
-                <Grid item xs={12}>
-                  <CustomTextField
-                    {...baseTextFieldProps(
-                      'confirmEmail',
-                      t('assistancePageForm.confirmEmail.label')
-                    )}
-                    size="small"
-                    onCopy={preventClipboardEvents}
-                    onPaste={preventClipboardEvents}
-                  ></CustomTextField>
-                </Grid>
+    <Grid
+      container
+      item
+      justifyContent="center"
+      display="flex"
+      sx={{ backgroundColor: theme.palette.background.default }}
+    >
+      <Grid item xs={6} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
+        <TitleBox
+          title={t('assistancePageForm.title')}
+          subTitle={t('assistancePageForm.subTitle')}
+          mtTitle={3}
+          mbTitle={2}
+          mbSubTitle={4}
+          variantTitle="h3"
+          variantSubTitle="body1"
+        />
+        <form id="jwtForm" method="POST" target="_blank" action={zendeskAuthData?.action_url}>
+          <input id="jwtString" type="hidden" name="jwt" value={zendeskAuthData?.jwt} />
+          <input id="returnTo" type="hidden" name="return_to" value={zendeskAuthData?.return_to} />
+        </form>
+        <form onSubmit={formik.handleSubmit}>
+          <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
+            <Grid container item direction="column" spacing={3}>
+              <Grid item xs={12} pb={1}>
+                <CustomTextField
+                  {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
+                  size="small"
+                  onCopy={preventClipboardEvents}
+                  onPaste={preventClipboardEvents}
+                ></CustomTextField>
               </Grid>
-            </Paper>
-            <Typography variant="body2" mt={2} color={theme.palette.text.secondary}>
-              <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
-                Proseguendo dichiari di aver letto la
-                <Link
-                  sx={{ cursor: 'pointer', textDecoration: 'none' }}
-                  href={ENV.URL_FILE.PRIVACY_POLICY}
-                >
-                  Privacy Policy Assistenza
-                </Link>
-              </Trans>
-            </Typography>
-            <Box my={4} display="flex" justifyContent="space-between">
-              <Box>
-                <Button
+              <Grid item xs={12}>
+                <CustomTextField
+                  {...baseTextFieldProps(
+                    'confirmEmail',
+                    t('assistancePageForm.confirmEmail.label')
+                  )}
                   size="small"
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => onExit(() => history.go(-1))}
-                >
-                  {t('assistancePageForm.back')}
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                  disabled={!formik.dirty || !formik.isValid}
-                >
-                  {t('assistancePageForm.forward')}
-                </Button>
-              </Box>
+                  onCopy={preventClipboardEvents}
+                  onPaste={preventClipboardEvents}
+                ></CustomTextField>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Typography variant="body2" mt={2} color={theme.palette.text.secondary}>
+            <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
+              Proseguendo dichiari di aver letto la
+              <Link
+                sx={{ cursor: 'pointer', textDecoration: 'none' }}
+                href={ENV.URL_FILE.PRIVACY_POLICY}
+              >
+                Privacy Policy Assistenza
+              </Link>
+            </Trans>
+          </Typography>
+          <Box my={4} display="flex" justifyContent="space-between">
+            <Box>
+              <Button
+                size="small"
+                color="primary"
+                variant="outlined"
+                onClick={() => onExit(() => history.go(-1))}
+              >
+                {t('assistancePageForm.back')}
+              </Button>
             </Box>
-          </form>
-        </Grid>
+            <Box>
+              <Button
+                size="small"
+                color="primary"
+                variant="contained"
+                type="submit"
+                disabled={!formik.dirty || !formik.isValid}
+              >
+                {t('assistancePageForm.forward')}
+              </Button>
+            </Box>
+          </Box>
+        </form>
       </Grid>
     </Grid>
   );
