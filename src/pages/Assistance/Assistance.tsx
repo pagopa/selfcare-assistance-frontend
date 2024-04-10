@@ -142,6 +142,8 @@ const Assistance = () => {
         : window.location.hostname?.startsWith('pnpg') ||
           window.location.hostname?.startsWith('imprese')
         ? 'prod-pn-pg'
+        : productIdByUrl?.includes('prod-pn')
+        ? 'prod-pn'
         : 'prod-selfcare';
       const token = storageTokenOps.read();
       const formData = {
