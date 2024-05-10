@@ -6,6 +6,7 @@ import i18n from '@pagopa/selfcare-common-frontend/locale/locale-utils';
 import { store } from '../redux/store';
 import { ENV } from '../utils/env';
 import { createClient, WithDefaultsT } from './generated/b4f-dashboard/client';
+import { SupportResponse } from './generated/b4f-dashboard/SupportResponse';
 
 const withBearer: WithDefaultsT<'bearerAuth'> = (wrappedOperation) => (params: any) => {
   const token = storageTokenOps.read();
@@ -36,7 +37,7 @@ export const onRedirectToLogin = () =>
   );
 
 export const DashboardApi = {
-  sendSupportRequest: async (email: string, productId: string): Promise<string> => {
+  sendSupportRequest: async (email: string, productId: string): Promise<SupportResponse> => {
     const result = await apiClient.sendSupportRequestUsingPOST({
       body: {
         email: email as EmailString,
