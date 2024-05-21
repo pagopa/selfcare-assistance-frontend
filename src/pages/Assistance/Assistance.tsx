@@ -21,9 +21,10 @@ import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage'
 import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
-import { DashboardApi, onRedirectToLogin } from '../../api/DashboardApiClient';
+import { onRedirectToLogin } from '../../api/DashboardApiClient';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
 import { useAppDispatch } from './../../redux/hooks';
+import { sendRequestToSupport } from '../../services/assistanceService';
 
 export type AssistanceRequest = {
   email: string;
@@ -143,9 +144,8 @@ const Assistance = () => {
           window.location.hostname?.startsWith('imprese')
         ? 'prod-pn-pg'
         : 'prod-selfcare';
-
       setLoading(true);
-      DashboardApi.sendSupportRequest(values.email, productId)
+      sendRequestToSupport(values.email, productId)
         .then((res) => setZendeskAuthData(res))
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
