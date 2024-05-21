@@ -22,7 +22,8 @@ import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
 import { onRedirectToLogin } from '../../api/DashboardApiClient';
-import { ZendeskAuthorizationDTO } from '../../model/ZendeskAuthorizationDTO';
+import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
+import { sendRequestToSupport } from '../../services/assistanceService';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -79,7 +80,7 @@ const Assistance = () => {
 
   const addError = (error: AppError) => dispatch(appStateActions.addError(error));
 
-  const [zendeskAuthData, setZendeskAuthData] = useState<ZendeskAuthorizationDTO>();
+  const [zendeskAuthData, setZendeskAuthData] = useState<SupportResponse>();
 
   const requestIdRef = useRef<string>();
 
@@ -143,36 +144,9 @@ const Assistance = () => {
           window.location.hostname?.startsWith('imprese')
         ? 'prod-pn-pg'
         : 'prod-selfcare';
-      const token = storageTokenOps.read();
-      const formData = {
-        email: values.email,
-        productId,
-      };
-
       setLoading(true);
-      await fetch(ENV.URL_API.API_DASHBOARD + '/v1/support', {
-        headers: {
-          accept: '*/*',
-          'accept-language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',
-          authorization: `Bearer ${token}`,
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-        method: 'POST',
-        mode: 'cors',
-      })
-        .then((res) => res.text())
-        .then((res) => {
-          const tempDiv = document.createElement('div');
-          // eslint-disable-next-line functional/immutable-data
-          tempDiv.innerHTML = res;
-          setZendeskAuthData({
-            action_url: tempDiv?.querySelector('#jwtForm')?.getAttribute('action') ?? '',
-            jwt: tempDiv?.querySelector('#jwtString')?.getAttribute('value') ?? '',
-            return_to: tempDiv?.querySelector('#returnTo')?.getAttribute('value') ?? '',
-          });
-          trackEvent('CUSTOMER_CARE_CONTACT_SUCCESS', { request_id: requestIdRef.current });
-        })
+      sendRequestToSupport(values.email, productId)
+        .then((res) => setZendeskAuthData(res))
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
           addError({
@@ -249,9 +223,14 @@ const Assistance = () => {
           variantTitle="h3"
           variantSubTitle="body1"
         />
-        <form id="jwtForm" method="POST" target="_blank" action={zendeskAuthData?.action_url}>
+        <form id="jwtForm" method="POST" target="_blank" action={zendeskAuthData?.actionUrl}>
           <input id="jwtString" type="hidden" name="jwt" value={zendeskAuthData?.jwt} />
-          <input id="returnTo" type="hidden" name="return_to" value={zendeskAuthData?.return_to} />
+          <input
+            id="returnTo"
+            type="hidden"
+            name="return_to"
+            value={zendeskAuthData?.redirectUrl}
+          />
         </form>
         <form onSubmit={formik.handleSubmit}>
           <Paper sx={{ p: 3, borderRadius: theme.spacing(0.5) }}>
