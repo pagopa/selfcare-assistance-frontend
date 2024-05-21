@@ -23,8 +23,8 @@ import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
 import { onRedirectToLogin } from '../../api/DashboardApiClient';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
-import { useAppDispatch } from './../../redux/hooks';
 import { sendRequestToSupport } from '../../services/assistanceService';
+import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
   email: string;
