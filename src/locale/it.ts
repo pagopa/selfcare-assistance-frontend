@@ -15,8 +15,8 @@ export default {
       notEqualConfirmEmail:
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
-    title: 'Come possiamo aiutarti?',
-    subTitle: 'Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza.',
+    title: 'Hai bisogno di aiuto per l’Area Riservata Enti?',
+    subTitle: "Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza. Potrai segnalare problemi relativi all'adesione o all'utilizzo dell'Area Riservata per il tuo ente.",
     email: {
       label: 'Inserisci l’indirizzo email',
     },

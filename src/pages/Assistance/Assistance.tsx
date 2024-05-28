@@ -213,14 +213,14 @@ const Assistance = () => {
       display="flex"
       sx={{ backgroundColor: theme.palette.background.default }}
     >
-      <Grid item xs={6} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
+      <Grid item xs={12} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
         <TitleBox
           title={t('assistancePageForm.title')}
           subTitle={t('assistancePageForm.subTitle')}
           mtTitle={3}
           mbTitle={2}
           mbSubTitle={4}
-          variantTitle="h3"
+          variantTitle="h4"
           variantSubTitle="body1"
         />
         <form id="jwtForm" method="POST" target="_blank" action={zendeskAuthData?.actionUrl}>
