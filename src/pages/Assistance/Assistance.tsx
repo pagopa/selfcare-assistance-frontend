@@ -17,11 +17,8 @@ import { uniqueId } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
-import { storageTokenOps } from '@pagopa/selfcare-common-frontend/utils/storage';
-import { isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
-import { onRedirectToLogin } from '../../api/DashboardApiClient';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { useAppDispatch } from './../../redux/hooks';
@@ -84,19 +81,7 @@ const Assistance = () => {
 
   const requestIdRef = useRef<string>();
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const productIdByUrl = urlParams.get('productId');
-
-  useEffect(() => {
-    const token = storageTokenOps.read();
-    if (token) {
-      const isExpiredSession = isExpiredToken(token);
-      if (isExpiredSession) {
-        onRedirectToLogin();
-        window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
-      }
-    }
-  }, []);
+  const productIdByUrl = new URLSearchParams(window.location.search).get('productId');
 
   useEffect(() => {
     if (!requestIdRef.current) {
