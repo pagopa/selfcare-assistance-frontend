@@ -5,7 +5,7 @@ export default {
       message: 'Stai per essere rediretto alla pagina di login...',
     },
   },
-  assistancePageForm: {
+  assistancePage: {
     unloadEvent: {
       title: 'Vuoi davvero uscire?',
       description: 'Se esci, la richiesta di assistenza andrà persa.',
@@ -16,7 +16,8 @@ export default {
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
     title: 'Hai bisogno di aiuto per l’Area Riservata Enti?',
-    subTitle: "Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza. Potrai segnalare problemi relativi all'adesione o all'utilizzo dell'Area Riservata per il tuo ente.",
+    subTitle:
+      "Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza. Potrai segnalare problemi relativi all'adesione o all'utilizzo dell'Area Riservata per il tuo ente.",
     email: {
       label: 'Inserisci l’indirizzo email',
     },
@@ -26,10 +27,5 @@ export default {
     back: 'Indietro',
     forward: 'Avanti',
     linkPrivacyPolicy: 'Proseguendo dichiari di aver letto la <1>Privacy Policy Assistenza</1>',
-  },
-  thankyouPage: {
-    title: 'Abbiamo ricevuto la tua <1/> richiesta',
-    description: 'Ti risponderemo al più presto al tuo indirizzo e-mail.',
-    buttonLabel: 'Chiudi',
   },
 };

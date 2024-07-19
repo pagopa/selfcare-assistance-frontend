@@ -97,12 +97,12 @@ const Assistance = () => {
         email: !values.email
           ? requiredError
           : !emailRegexp.test(values.email)
-          ? t('assistancePageForm.dataValidate.invalidEmail')
+          ? t('assistancePage.dataValidate.invalidEmail')
           : undefined,
         confirmEmail: !values.confirmEmail
           ? requiredError
           : values.confirmEmail !== values.email
-          ? t('assistancePageForm.dataValidate.notEqualConfirmEmail')
+          ? t('assistancePage.dataValidate.notEqualConfirmEmail')
           : undefined,
       }).filter(([_key, value]) => value)
     );
@@ -149,8 +149,8 @@ const Assistance = () => {
   useEffect(() => {
     if (formik.dirty) {
       registerUnloadEvent(
-        t('assistancePageForm.unloadEvent.title'),
-        t('assistancePageForm.unloadEvent.description')
+        t('assistancePage.unloadEvent.title'),
+        t('assistancePage.unloadEvent.description')
       );
     } else {
       unregisterUnloadEvent();
@@ -200,8 +200,8 @@ const Assistance = () => {
     >
       <Grid item xs={12} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
         <TitleBox
-          title={t('assistancePageForm.title')}
-          subTitle={t('assistancePageForm.subTitle')}
+          title={t('assistancePage.title')}
+          subTitle={t('assistancePage.subTitle')}
           mtTitle={3}
           mbTitle={2}
           mbSubTitle={4}
@@ -222,7 +222,7 @@ const Assistance = () => {
             <Grid container item direction="column" spacing={3}>
               <Grid item xs={12} pb={1}>
                 <CustomTextField
-                  {...baseTextFieldProps('email', t('assistancePageForm.email.label'))}
+                  {...baseTextFieldProps('email', t('assistancePage.email.label'))}
                   size="small"
                   onCopy={preventClipboardEvents}
                   onPaste={preventClipboardEvents}
@@ -230,10 +230,7 @@ const Assistance = () => {
               </Grid>
               <Grid item xs={12}>
                 <CustomTextField
-                  {...baseTextFieldProps(
-                    'confirmEmail',
-                    t('assistancePageForm.confirmEmail.label')
-                  )}
+                  {...baseTextFieldProps('confirmEmail', t('assistancePage.confirmEmail.label'))}
                   size="small"
                   onCopy={preventClipboardEvents}
                   onPaste={preventClipboardEvents}
@@ -242,7 +239,7 @@ const Assistance = () => {
             </Grid>
           </Paper>
           <Typography variant="body2" mt={2} color={theme.palette.text.secondary}>
-            <Trans i18nKey="assistancePageForm.linkPrivacyPolicy">
+            <Trans i18nKey="assistancePage.linkPrivacyPolicy">
               Proseguendo dichiari di aver letto la
               <Link
                 sx={{ cursor: 'pointer', textDecoration: 'none' }}
@@ -260,7 +257,7 @@ const Assistance = () => {
                 variant="outlined"
                 onClick={() => onExit(() => history.go(-1))}
               >
-                {t('assistancePageForm.back')}
+                {t('assistancePage.back')}
               </Button>
             </Box>
             <Box>
@@ -271,7 +268,7 @@ const Assistance = () => {
                 type="submit"
                 disabled={!formik.dirty || !formik.isValid}
               >
-                {t('assistancePageForm.forward')}
+                {t('assistancePage.forward')}
               </Button>
             </Box>
           </Box>
