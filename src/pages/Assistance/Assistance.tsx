@@ -1,22 +1,22 @@
 import { Box, Button, Grid, Link, Paper, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
-import TitleBox from '@pagopa/selfcare-common-frontend/components/TitleBox';
-import withLogin from '@pagopa/selfcare-common-frontend/decorators/withLogin';
-import useLoading from '@pagopa/selfcare-common-frontend/hooks/useLoading';
+import TitleBox from '@pagopa/selfcare-common-frontend/lib/components/TitleBox';
+import withLogin from '@pagopa/selfcare-common-frontend/lib/decorators/withLogin';
+import useLoading from '@pagopa/selfcare-common-frontend/lib/hooks/useLoading';
 import {
   useUnloadEventInterceptor,
   useUnloadEventOnExit,
-} from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
+} from '@pagopa/selfcare-common-frontend/lib/hooks/useUnloadEventInterceptor';
 import {
   AppError,
   appStateActions,
-} from '@pagopa/selfcare-common-frontend/redux/slices/appStateSlice';
-import { trackEvent } from '@pagopa/selfcare-common-frontend/services/analyticsService';
+} from '@pagopa/selfcare-common-frontend/lib/redux/slices/appStateSlice';
+import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
 import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { emailRegexp } from '@pagopa/selfcare-common-frontend/utils/constants';
+import { emailRegexp } from '@pagopa/selfcare-common-frontend/lib/utils/constants';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
 import { ENV } from '../../utils/env';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';

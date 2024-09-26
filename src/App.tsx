@@ -1,6 +1,6 @@
-import { ErrorBoundary, LoadingOverlay } from '@pagopa/selfcare-common-frontend';
-import UnloadEventHandler from '@pagopa/selfcare-common-frontend/components/UnloadEventHandler';
-import { storageTokenOps, isExpiredToken } from '@pagopa/selfcare-common-frontend/utils/storage';
+import { ErrorBoundary, LoadingOverlay } from '@pagopa/selfcare-common-frontend/lib';
+import UnloadEventHandler from '@pagopa/selfcare-common-frontend/lib/components/UnloadEventHandler';
+import { storageTokenOps, isExpiredToken } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { useEffect } from 'react';
 import Layout from './components/Layout/Layout';
 import Assistance from './pages/Assistance/Assistance';
