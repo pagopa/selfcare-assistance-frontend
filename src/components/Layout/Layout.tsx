@@ -1,10 +1,10 @@
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import { Footer, Header } from '@pagopa/selfcare-common-frontend';
+import { Footer, Header } from '@pagopa/selfcare-common-frontend/lib';
 import { useSelector } from 'react-redux';
 import React from 'react';
-import { useUnloadEventOnExit } from '@pagopa/selfcare-common-frontend/hooks/useUnloadEventInterceptor';
-import { userSelectors } from '@pagopa/selfcare-common-frontend/redux/slices/userSlice';
+import { useUnloadEventOnExit } from '@pagopa/selfcare-common-frontend/lib/hooks/useUnloadEventInterceptor';
+import { userSelectors } from '@pagopa/selfcare-common-frontend/lib/redux/slices/userSlice';
 import { ENV } from '../../utils/env';
 
 type Props = {

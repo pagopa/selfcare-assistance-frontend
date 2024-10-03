@@ -1,10 +1,10 @@
-import '@pagopa/selfcare-common-frontend/common-polyfill';
-import '@pagopa/selfcare-common-frontend/index.css';
+import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
+import '@pagopa/selfcare-common-frontend/lib/index';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { CONFIG } from '@pagopa/selfcare-common-frontend/config/env';
+import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import { theme } from '@pagopa/mui-italia/dist/theme/theme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
