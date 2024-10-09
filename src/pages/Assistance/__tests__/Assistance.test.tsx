@@ -1,11 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Assistance from '../Assistance';
-import { verifyMockExecution as verifyLoginMockExecution } from '../../../__mocks__/@pagopa/selfcare-common-frontend/decorators/withLogin';
+import { verifyMockExecution as verifyLoginMockExecution } from '@pagopa/selfcare-common-frontend/lib/decorators/__mocks__/withLogin';
 import { Provider } from 'react-redux';
 import { createStore } from './../../../redux/store';
 import './../../../locale';
+import React from 'react';
 
-jest.mock('@pagopa/selfcare-common-frontend/decorators/withLogin');
+jest.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
 jest.mock('../../../services/assistanceService');
 
 const fieldsValue = {

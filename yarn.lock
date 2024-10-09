@@ -2061,10 +2061,10 @@
     fp-ts "^2.12.3"
     io-ts "^2.2.18"
 
-"@pagopa/mui-italia@^1.4.0":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-1.4.1.tgz#3c7406bd6407532e4b44cbac4e30eb8763118895"
-  integrity sha512-lRqg8qgaacihuCBecW2+P5mmTPtq5snvNfnRu2xIwgyrD1JSpmrIR2XQJkyYSHWyaB9IxQuI4IoDRQpBVos/7Q==
+"@pagopa/mui-italia@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-1.5.0.tgz#05be80c5c8f03c9dffcd6e583a415006b31c7b76"
+  integrity sha512-rBPd0SzVARcB5zmeviavmOK1Cih60yZ6gkZHAYqhlrrlpZnNVKW0c4K++3b3f4O4xvJNtpT0fSriKL/pM6HIoQ==
   dependencies:
     "@fontsource/dm-mono" "^4.5.10"
     "@fontsource/titillium-web" "^4.5.9"
@@ -2086,10 +2086,10 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^1.34.19":
-  version "1.34.19"
-  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.34.19.tgz#0abc60d87329e9a9a841ff985c667d8ff270e0ad"
-  integrity sha512-D+M5ssBY7n6VXn/fBrMdPeaNtImsrwM4t7uf+i9SeDhi3lJlKEXK/r8msVtFfXcaMsHLbz/m9PKXdazp5OD0/A==
+"@pagopa/selfcare-common-frontend@^1.34.39":
+  version "1.34.39"
+  resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-1.34.39.tgz#b914194244cadb418a0959cb52eb218944745444"
+  integrity sha512-UDhrfCCa1UsKaIL7yAxDLTWQ6xbg8sVxtRH5A/0QKme+lby1bwtSHpOzvEFdsxTj/2O2njwqLzLXoZfOEMfuCg==
   dependencies:
     "@emotion/react" "^11.11.1"
     "@emotion/styled" "^11.11.0"
@@ -2097,7 +2097,7 @@
     "@mui/lab" "^5.0.0-alpha.137"
     "@mui/material" "^5.14.1"
     "@mui/system" "^5.14.1"
-    "@pagopa/mui-italia" "^1.4.0"
+    "@pagopa/mui-italia" "^1.5.0"
     "@pagopa/ts-commons" "^10.2.1"
     "@reduxjs/toolkit" "^1.6.2"
     "@types/lodash" "^4.14.172"
