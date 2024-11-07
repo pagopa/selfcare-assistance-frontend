@@ -198,7 +198,16 @@ const Assistance = () => {
       display="flex"
       sx={{ backgroundColor: theme.palette.background.default }}
     >
-      <Grid item xs={12} alignContent="center" display="grid" maxWidth={{ md: '684px' }}>
+      <Grid
+        item
+        xs={12}
+        alignContent="center"
+        display="grid"
+        maxWidth={{ md: '684px' }}
+        sx={{
+          padding: { xs: 4 },
+        }}
+      >
         <TitleBox
           title={t('assistancePage.title')}
           subTitle={t('assistancePage.subTitle')}
