@@ -108,7 +108,8 @@
     "jsonpath": "^1.1.1",
     "svgo": "^2.8.0",
     "json-schema-ref-parser": "^7.1.0",
-    "z-schema": "^4.2.4"
+    "z-schema": "^4.2.4",
+    "jsonpath-plus": "^9.0.0"
   },
   "jest": {
     "restoreMocks": true,
