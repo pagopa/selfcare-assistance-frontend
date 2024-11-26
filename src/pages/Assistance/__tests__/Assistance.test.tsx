@@ -8,6 +8,7 @@ import React from 'react';
 
 jest.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
 jest.mock('../../../services/assistanceService');
+jest.mock('i18next-browser-languagedetector');
 
 const fieldsValue = {
   email: 'email@example.com',
