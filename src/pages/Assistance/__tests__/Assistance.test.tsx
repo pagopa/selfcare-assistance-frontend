@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore } from './../../../redux/store';
 import './../../../locale';
 import React from 'react';
+import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 
 jest.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
 jest.mock('../../../services/assistanceService');
@@ -12,6 +13,10 @@ jest.mock('../../../services/assistanceService');
 const fieldsValue = {
   email: 'email@example.com',
 };
+
+beforeAll(() => {
+  i18n.changeLanguage('it');
+});
 
 const renderApp = (injectedStore?: ReturnType<typeof createStore>) => {
   const store = injectedStore ? injectedStore : createStore();
