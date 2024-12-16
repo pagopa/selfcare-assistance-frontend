@@ -19,7 +19,7 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.1.8",
-    "@types/redux-logger": "^3.0.9",
+    "@types/redux-logger": "^3.0.13",
     "axios": "^0.28.0",
     "core-js": "^3.20.2",
     "env-var": "^7.1.1",
