@@ -56,3 +56,6 @@ yarn-error.log
 !.release-it.js
 .idea
 .vscode
+
+# Local .terraform directories
+**/.terraform/*
