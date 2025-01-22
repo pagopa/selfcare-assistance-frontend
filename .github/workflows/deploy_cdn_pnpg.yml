@@ -1,0 +1,39 @@
+name: Deploy CDN PNPG
+
+on:
+  push:
+    branches:
+      - main
+      - releases/*
+    paths:
+      - "!.github/**"
+      - "!.devops/**"
+      - "!infra/**"
+      - "!.pre-commit-config.yaml"
+      - "!.terraform-version"
+      - "!CODEOWNERS"
+
+  workflow_dispatch:
+    inputs:
+      env:
+        type: choice
+        description: Environment
+        options: 
+        - dev
+        - uat
+        - prod
+
+jobs:
+  release_and_deploy:
+    uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn.yml@main
+    name: "Release [${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
+    secrets: inherit
+    with:
+      environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
+      file_environment: ${{ format('fe_{0}_pnpg.env', (inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev')) }}
+      storage_account_name: "weupnpgcheckoutsa"
+      profile_name: weu-pnpg-checkout-cdn-profile
+      endpoint_name: weu-pnpg-checkout-cdn-endpoint
+      resource_group_name: weu-pnpg-checkout-fe-rg
+      blob_container_name: "$web"
+      base_path: assistenza
