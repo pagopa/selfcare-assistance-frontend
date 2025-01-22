@@ -36,3 +36,8 @@ jobs:
         run: |
           gh workflow run deploy_cdn.yml \
             --ref ${{ steps.create_branch.outputs.new_branch_name }}
+
+      - name: Trigger release and Deploy on CDN PNPG
+        run: |
+          gh workflow run deploy_cdn_pnpg.yml \
+            --ref ${{ steps.create_branch.outputs.new_branch_name }}
