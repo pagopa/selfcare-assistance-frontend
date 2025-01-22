@@ -43,6 +43,7 @@
   "scripts": {
     "clean": "npm-run-all clean:*",
     "start": "craco start",
+    "prebuild": "npm run generate",
     "build": "craco build",
     "clean:build": "rimraf build",
     "test": "craco test -i",
