@@ -82,7 +82,7 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "api-spec-converter": "^2.12.0",
