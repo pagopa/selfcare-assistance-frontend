@@ -3,7 +3,8 @@ import { SupportResponse } from '../api/generated/b4f-dashboard/SupportResponse'
 
 export const sendRequestToSupport = async (
   email: string,
-  productId: string
+  productId: string,
+  data?: string
 ): Promise<SupportResponse> => {
   /* istanbul ignore if */
   if (process.env.REACT_APP_API_MOCK_ASSISTANCE === 'true') {
@@ -11,6 +12,6 @@ export const sendRequestToSupport = async (
       resolve({ jwt: 'mockJwt', actionUrl: 'mockActionUrl', redirectUrl: 'mockRedirectUrl' })
     );
   } else {
-    return DashboardApi.sendSupportRequest(email, productId);
+    return DashboardApi.sendSupportRequest(email, productId, data);
   }
 };

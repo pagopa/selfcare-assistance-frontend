@@ -1,6 +1,9 @@
 import { storageTokenOps } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { appStateActions } from '@pagopa/selfcare-common-frontend/lib/redux/slices/appStateSlice';
-import { buildFetchApi, extractResponse } from '@pagopa/selfcare-common-frontend/lib/utils/api-utils';
+import {
+  buildFetchApi,
+  extractResponse,
+} from '@pagopa/selfcare-common-frontend/lib/utils/api-utils';
 import { EmailString } from '@pagopa/ts-commons/lib/strings';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import { store } from '../redux/store';
@@ -37,11 +40,16 @@ export const onRedirectToLogin = () =>
   );
 
 export const DashboardApi = {
-  sendSupportRequest: async (email: string, productId: string): Promise<SupportResponse> => {
+  sendSupportRequest: async (
+    email: string,
+    productId: string,
+    data?: string
+  ): Promise<SupportResponse> => {
     const result = await apiClient.sendSupportRequestUsingPOST({
       body: {
         email: email as EmailString,
         productId,
+        data,
       },
     });
     return extractResponse(result, 200, onRedirectToLogin);

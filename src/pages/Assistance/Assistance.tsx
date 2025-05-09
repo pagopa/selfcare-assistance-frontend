@@ -82,6 +82,7 @@ const Assistance = () => {
   const requestIdRef = useRef<string>();
 
   const productIdByUrl = new URLSearchParams(window.location.search).get('productId');
+  const dataUrlEncoded = new URLSearchParams(window.location.search).get('data');
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -97,13 +98,13 @@ const Assistance = () => {
         email: !values.email
           ? requiredError
           : !emailRegexp.test(values.email)
-          ? t('assistancePage.dataValidate.invalidEmail')
-          : undefined,
+            ? t('assistancePage.dataValidate.invalidEmail')
+            : undefined,
         confirmEmail: !values.confirmEmail
           ? requiredError
           : values.confirmEmail !== values.email
-          ? t('assistancePage.dataValidate.notEqualConfirmEmail')
-          : undefined,
+            ? t('assistancePage.dataValidate.notEqualConfirmEmail')
+            : undefined,
       }).filter(([_key, value]) => value)
     );
 
@@ -126,11 +127,13 @@ const Assistance = () => {
       const productId = productIdByUrl
         ? productIdByUrl
         : window.location.hostname?.startsWith('pnpg') ||
-          window.location.hostname?.startsWith('imprese')
-        ? 'prod-pn-pg'
-        : 'prod-selfcare';
+            window.location.hostname?.startsWith('imprese')
+          ? 'prod-pn-pg'
+          : 'prod-selfcare';
+
+      const data = dataUrlEncoded ?? undefined;
       setLoading(true);
-      sendRequestToSupport(values.email, productId)
+      sendRequestToSupport(values.email, productId, data)
         .then((res) => setZendeskAuthData(res))
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
