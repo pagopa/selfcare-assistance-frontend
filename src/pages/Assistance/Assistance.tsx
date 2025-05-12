@@ -12,15 +12,15 @@ import {
   appStateActions,
 } from '@pagopa/selfcare-common-frontend/lib/redux/slices/appStateSlice';
 import { trackEvent } from '@pagopa/selfcare-common-frontend/lib/services/analyticsService';
+import { emailRegexp } from '@pagopa/selfcare-common-frontend/lib/utils/constants';
 import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { emailRegexp } from '@pagopa/selfcare-common-frontend/lib/utils/constants';
-import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
-import { ENV } from '../../utils/env';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
 import { sendRequestToSupport } from '../../services/assistanceService';
+import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
+import { ENV } from '../../utils/env';
 import { useAppDispatch } from './../../redux/hooks';
 
 export type AssistanceRequest = {
@@ -82,7 +82,8 @@ const Assistance = () => {
   const requestIdRef = useRef<string>();
 
   const productIdByUrl = new URLSearchParams(window.location.search).get('productId');
-  const dataUrlEncoded = new URLSearchParams(window.location.search).get('data');
+  const data = new URLSearchParams(window.location.search).get('data');
+  const dataUrlEncoded = data ? encodeURIComponent(data) : undefined;
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -131,9 +132,8 @@ const Assistance = () => {
           ? 'prod-pn-pg'
           : 'prod-selfcare';
 
-      const data = dataUrlEncoded ?? undefined;
       setLoading(true);
-      sendRequestToSupport(values.email, productId, data)
+      sendRequestToSupport(values.email, productId, dataUrlEncoded)
         .then((res) => setZendeskAuthData(res))
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
