@@ -130,7 +130,9 @@ const Assistance = () => {
         : window.location.hostname?.startsWith('pnpg') ||
             window.location.hostname?.startsWith('imprese')
           ? 'prod-pn-pg'
-          : 'prod-selfcare';
+          : window.location.pathname?.includes('prod-idpay-merchant')
+            ? 'prod-idpay-merchant'
+            : 'prod-selfcare';
 
       setLoading(true);
       sendRequestToSupport(values.email, productId, dataUrlEncoded)
