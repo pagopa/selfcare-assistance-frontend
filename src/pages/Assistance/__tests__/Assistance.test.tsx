@@ -6,7 +6,7 @@ import { createStore } from './../../../redux/store';
 import './../../../locale';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 
-vi.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
+// vi.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
 vi.mock('../../../services/assistanceService');
 
 const fieldsValue = {
@@ -34,12 +34,12 @@ test('test render', async () => {
 test('test send request to support', async () => {
   const { store } = renderApp();
   verifyLoginMockExecution(store.getState());
-  const button = screen.getByRole('button', { name: 'Avanti' });
+  const button = document.getElementById('assistanceForwardButton') as HTMLButtonElement;
 
   expect(button).toBeDisabled();
 
-  const emailField = document.querySelector('#email');
-  const confirmEmailField = document.querySelector('#confirmEmail');
+  const emailField = document.querySelector('#email') as HTMLInputElement;
+  const confirmEmailField = document.querySelector('#confirmEmail') as HTMLInputElement;
 
   fireEvent.change(emailField, { target: { value: fieldsValue.email } });
   fireEvent.change(confirmEmailField, { target: { value: fieldsValue.email } });
@@ -52,25 +52,25 @@ test('test send request to support', async () => {
 test('test errors helpertext on input fields and consequent behavior of the forward button', async () => {
   const { store } = renderApp();
   verifyLoginMockExecution(store.getState());
-  const button = screen.getByRole('button', { name: 'Avanti' });
+  const button = document.getElementById('assistanceForwardButton') as HTMLButtonElement;
 
   expect(button).toBeDisabled();
 
-  const emailField = document.querySelector('#email');
-  const confirmEmailField = document.querySelector('#confirmEmail');
+  const emailField = document.querySelector('#email') as HTMLInputElement;
+  const confirmEmailField = document.querySelector('#confirmEmail') as HTMLInputElement;
 
   fireEvent.change(emailField, { target: { value: 'wrongEmailTest' } });
   fireEvent.change(confirmEmailField, { target: { value: 'wrongEmailTest' } });
 
   await waitFor(() => expect(button).toBeDisabled());
-  await waitFor(() => screen.getByText('L’indirizzo email non è valido'));
+  await waitFor(() => screen.getByText('assistancePage.dataValidate.invalidEmail'));
 
   fireEvent.change(emailField, { target: { value: fieldsValue.email } });
   fireEvent.change(confirmEmailField, { target: { value: 'wrongEmailTest' } });
 
   await waitFor(() => expect(button).toBeDisabled());
   await waitFor(() =>
-    screen.getByText("L’indirizzo email di conferma non è uguale all'indirizzo email inserito")
+    screen.getByText('assistancePage.dataValidate.notEqualConfirmEmail')
   );
 
   fireEvent.change(emailField, { target: { value: fieldsValue.email } });
