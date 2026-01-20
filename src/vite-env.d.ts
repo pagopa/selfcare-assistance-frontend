@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_ANALYTICS_DEBUG: string;
   readonly VITE_MIXPANEL_TOKEN: string;
   readonly VITE_MIXPANEL_API_HOST?: string;
+  readonly [key: string]: string | undefined;
 }
 
 interface ImportMeta {
