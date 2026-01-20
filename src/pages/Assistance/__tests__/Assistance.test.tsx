@@ -4,11 +4,10 @@ import { verifyMockExecution as verifyLoginMockExecution } from '@pagopa/selfcar
 import { Provider } from 'react-redux';
 import { createStore } from './../../../redux/store';
 import './../../../locale';
-import React from 'react';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 
-jest.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
-jest.mock('../../../services/assistanceService');
+vi.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
+vi.mock('../../../services/assistanceService');
 
 const fieldsValue = {
   email: 'email@example.com',
