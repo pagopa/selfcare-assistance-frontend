@@ -22,19 +22,16 @@
     "@types/redux-logger": "^3.0.13",
     "axios": "^0.30.0",
     "core-js": "^3.20.2",
-    "env-var": "^7.1.1",
     "formik": "^2.2.9",
     "fp-ts": "^2.11.5",
     "io-ts": "^2.2.16",
     "lodash": "^4.17.21",
     "node-fetch": "^3.2.10",
     "react": "^18.2.0",
-    "react-app-polyfill": "^3.0.0",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
     "react-md-spinner": "^1.0.0",
     "react-redux": "^7.2.6",
-    "react-scripts": "5.0.0",
     "redux-logger": "^3.0.6",
     "typescript": "^5.6.3",
     "url": "0.11.0",
@@ -42,26 +39,22 @@
   },
   "scripts": {
     "clean": "npm-run-all clean:*",
-    "start": "craco start",
+    "start": "vite",
+    "dev": "vite",
     "prebuild": "npm run generate",
-    "build": "craco build",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
     "clean:build": "rimraf build",
-    "test": "craco test -i",
-    "test:coverage": "craco test -i --coverage",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "clean:coverage": "rimraf coverage",
-    "eject": "craco eject",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
     "generate": "npm-run-all generate:*",
     "clean:api-b4f-dashboard": "rimraf src/api/generated/dashboard && rimraf openApi/generated",
     "generate:api-b4f-dashboard": "yarn run clean:api-b4f-dashboard && mkdirp openApi/generated-dashboard && api-spec-converter --from=openapi_3 --to=swagger_2 openApi/dashboard-api-docs.json > openApi/generated-dashboard/dashboard-swagger20.json && node openApi/scripts/api-b4f-dashboard_fixPreGen.js && node ./node_modules/@pagopa/selfcare-common-frontend/utils/fixSwagger20ArraySchemaDef.js openApi/generated-dashboard/dashboard-swagger20.json && gen-api-models --api-spec openApi/generated-dashboard/dashboard-swagger20.json --out-dir src/api/generated/b4f-dashboard --no-strict --request-types --response-decoders --client && node openApi/scripts/api-b4f-dashboard_fixPostGen.js"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -76,13 +69,10 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "7.21.11",
-    "@craco/craco": "^6.4.3",
     "@pagopa/openapi-codegen-ts": "^10.0.6",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "api-spec-converter": "^2.12.0",
@@ -97,7 +87,14 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.3.2",
     "regex-replace": "^2.3.1",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "vite": "^5.4.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "vite-plugin-html": "^3.2.2",
+    "vite-tsconfig-paths": "^4.3.0",
+    "vitest": "^2.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "jsdom": "^24.0.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -111,15 +108,5 @@
     "json-schema-ref-parser": "^7.1.0",
     "z-schema": "^4.2.4",
     "jsonpath-plus": "^10.0.0"
-  },
-  "jest": {
-    "restoreMocks": true,
-    "clearMocks": true,
-    "resetMocks": true,
-    "coveragePathIgnorePatterns": [
-      "src/index.tsx",
-      "src/reportWebVitals.ts",
-      "src/api/generated"
-    ]
   }
 }
