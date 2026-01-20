@@ -3,7 +3,6 @@
   "version": "1.3.0",
   "homepage": "/assistenza",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -50,8 +49,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "clean:coverage": "rimraf coverage",
-    "lint-autofix": "eslint . -c .eslintrc.cjs --ext .ts,.tsx --fix",
-    "lint": "eslint . -c .eslintrc.cjs --ext .ts,.tsx ",
+    "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
+    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx ",
     "prettify": "prettier --write \"./**/*.{ts,tsx}\"",
     "generate": "npm-run-all generate:*",
     "clean:api-b4f-dashboard": "rimraf src/api/generated/dashboard && rimraf openApi/generated",
