@@ -18,7 +18,17 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
-      exclude: ['src/index.tsx', 'src/reportWebVitals.ts', 'src/api/generated/**'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'src/index.tsx',
+        'src/consentAndAnalyticsConfiguration.ts',
+        'src/api/generated/**',
+        'src/**/*.test.{ts,tsx}',
+        'src/**/*.spec.{ts,tsx}',
+        'src/**/__tests__/**',
+        'src/**/__mocks__/**',
+        'src/vite-env.d.ts',
+      ],
     },
     restoreMocks: true,
     clearMocks: true,

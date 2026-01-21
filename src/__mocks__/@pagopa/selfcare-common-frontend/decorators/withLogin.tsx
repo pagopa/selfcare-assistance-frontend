@@ -24,7 +24,9 @@ export default (WrappedComponent: React.ComponentType<any>) => () => {
   const dispatch = useAppDispatch();
   const loggedUser = useSelector(userSelectors.selectLoggedUser);
   useEffect(() => {
-    dispatch(userActions.setLoggedUser(mockedUser));
-  }, []);
+    if (!loggedUser) {
+      dispatch(userActions.setLoggedUser(mockedUser));
+    }
+  }, [dispatch, loggedUser]);
   return loggedUser ? <WrappedComponent /> : <></>;
 };
