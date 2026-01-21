@@ -7,7 +7,7 @@ export const sendRequestToSupport = async (
   data?: string
 ): Promise<SupportResponse> => {
   /* istanbul ignore if */
-  if (process.env.REACT_APP_API_MOCK_ASSISTANCE === 'true') {
+  if (import.meta.env.VITE_API_MOCK_ASSISTANCE === 'true') {
     return new Promise((resolve) =>
       resolve({ jwt: 'mockJwt', actionUrl: 'mockActionUrl', redirectUrl: 'mockRedirectUrl' })
     );

@@ -1,13 +1,25 @@
-import * as env from 'env-var';
+const getEnvVar = (key: string, required = true): string => {
+  const value = import.meta.env[key];
+  if (required && !value) {
+    throw new Error(`Missing required env var: ${key}`);
+  }
+  return value || '';
+};
 
-const PUBLIC_URL_INNER: string | undefined = env.get('PUBLIC_URL').asString();
+const getEnvBool = (key: string, defaultValue = false): boolean => {
+  const value = import.meta.env[key];
+  return value ? value === 'true' : defaultValue;
+};
+
+const getEnvInt = (key: string): number => parseInt(getEnvVar(key), 10);
+
 export const ENV = {
-  ENV: env.get('REACT_APP_ENV').required().asString(),
-  PUBLIC_URL: PUBLIC_URL_INNER ? PUBLIC_URL_INNER : '/assistenza',
+  ENV: getEnvVar('VITE_ENV'),
+  PUBLIC_URL: '/assistenza',
 
   ASSISTANCE: {
-    ENABLE: env.get('REACT_APP_ENABLE_ASSISTANCE').required().asBool(),
-    EMAIL: env.get('REACT_APP_PAGOPA_HELP_EMAIL').required().asString(),
+    ENABLE: getEnvBool('VITE_ENABLE_ASSISTANCE'),
+    EMAIL: getEnvVar('VITE_PAGOPA_HELP_EMAIL'),
   },
 
   URL_FILE: {
@@ -15,28 +27,25 @@ export const ENV = {
   },
 
   URL_FE: {
-    LOGIN: env.get('REACT_APP_URL_FE_LOGIN').required().asString(),
-    LOGOUT: env.get('REACT_APP_URL_FE_LOGOUT').required().asString(),
-    DASHBOARD: env.get('REACT_APP_URL_FE_DASHBOARD').required().asString(),
-    LANDING: env.get('REACT_APP_URL_FE_LANDING').required().asString(),
+    LOGIN: getEnvVar('VITE_URL_FE_LOGIN'),
+    LOGOUT: getEnvVar('VITE_URL_FE_LOGOUT'),
+    DASHBOARD: getEnvVar('VITE_URL_FE_DASHBOARD'),
+    LANDING: getEnvVar('VITE_URL_FE_LANDING'),
   },
 
   URL_API: {
-    API_DASHBOARD: env.get('REACT_APP_URL_API_DASHBOARD').required().asString(),
+    API_DASHBOARD: getEnvVar('VITE_URL_API_DASHBOARD'),
   },
 
   API_TIMEOUT_MS: {
-    ASSISTANCE: env.get('REACT_APP_API_DASHBOARD_TIMEOUT_MS').required().asInt(),
+    ASSISTANCE: getEnvInt('VITE_API_DASHBOARD_TIMEOUT_MS'),
   },
 
   ANALYTCS: {
-    ENABLE: env.get('REACT_APP_ANALYTICS_ENABLE').default('false').asBool(),
-    MOCK: env.get('REACT_APP_ANALYTICS_MOCK').default('false').asBool(),
-    DEBUG: env.get('REACT_APP_ANALYTICS_DEBUG').default('false').asBool(),
-    TOKEN: env.get('REACT_APP_MIXPANEL_TOKEN').required().asString(),
-    API_HOST: env
-      .get('REACT_APP_MIXPANEL_API_HOST')
-      .default('https://api-eu.mixpanel.com')
-      .asString(),
+    ENABLE: getEnvBool('VITE_ANALYTICS_ENABLE'),
+    MOCK: getEnvBool('VITE_ANALYTICS_MOCK'),
+    DEBUG: getEnvBool('VITE_ANALYTICS_DEBUG'),
+    TOKEN: getEnvVar('VITE_MIXPANEL_TOKEN'),
+    API_HOST: import.meta.env.VITE_MIXPANEL_API_HOST || 'https://api-eu.mixpanel.com',
   },
 };

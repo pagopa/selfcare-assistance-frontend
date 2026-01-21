@@ -19,7 +19,7 @@ module.exports = {
     'no-inner-declarations': 'off',
     'prefer-const': 'error',
     curly: 'error',
-    'spaced-comment': ['error', 'always', { block: { balanced: true } }],
+    'spaced-comment': ['error', 'always', { block: { balanced: true }, markers: ['/'] }],
     radix: 'error',
     'one-var': ['error', 'never'],
     'object-shorthand': 'error',

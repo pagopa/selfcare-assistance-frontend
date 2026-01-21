@@ -274,6 +274,7 @@ const Assistance = () => {
             </Box>
             <Box>
               <Button
+                id="assistanceForwardButton"
                 size="small"
                 color="primary"
                 variant="contained"

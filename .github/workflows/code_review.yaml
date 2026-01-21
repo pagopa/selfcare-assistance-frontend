@@ -44,4 +44,4 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ env.DANGER_GITHUB_API_TOKEN }}
 
       - name: Unit tests exec
-        run: yarn test:coverage --watchAll=false
+        run: yarn test:coverage
