@@ -6,42 +6,41 @@ on:
       - main
       - releases/*
     paths:
-      - "!.github/**"
-      - "!.devops/**"
-      - "!infra/**"
-      - "!.pre-commit-config.yaml"
-      - "!.terraform-version"
-      - "!CODEOWNERS"
+      - '!.github/**'
+      - '!.devops/**'
+      - '!infra/**'
+      - '!.pre-commit-config.yaml'
+      - '!.terraform-version'
+      - '!CODEOWNERS'
 
   workflow_dispatch:
     inputs:
       env:
         type: choice
         description: Environment
-        options: 
-        - dev
-        - uat
-        - prod
-
+        options:
+          - dev
+          - uat
+          - prod
 
 jobs:
   release_and_deploy:
-    uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn_vite.yml@main
-    name: "Release [${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
+    uses: pagopa/selfcare-commons/.github/workflows/call_release_cdn_vite_frontdoor.yml@main
+    name: "Release [${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
     secrets: inherit
     with:
-      environment: ${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
-      file_environment: ${{ format('fe_{0}_vite.env', (inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev')) }}
-      storage_account_name: "checkoutsa"
-      profile_name: checkout-cdn-profile
-      endpoint_name: checkout-cdn-endpoint
+      environment: ${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}
+      file_environment: ${{ format('fe_{0}.env', (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev') }}
+      storage_account_name: weuarcheckoutst01
+      profile_name: weu-ar-checkout-afd-01
+      endpoint_name: weu-ar-checkout-fde-01
       resource_group_name: checkout-fe-rg
-      blob_container_name: "$web"
+      blob_container_name: $web
       base_path: assistenza
 
   promote_release:
-    name: 'Promote prerelase release'
-    if: ${{ inputs.env == 'prod' }}
+    name: Promote prerelease release
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.env == 'prod' }}
     runs-on: ubuntu-22.04
     needs: [release_and_deploy]
     steps:
