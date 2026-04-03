@@ -36,7 +36,7 @@ jobs:
       endpoint_name: weu-ar-checkout-fde-01
       resource_group_name: checkout-fe-rg
       blob_container_name: $web
-      base_path: onboarding
+      base_path: assistenza
 
   promote_release:
     name: Promote prerelease release
