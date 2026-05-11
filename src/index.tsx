@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
-import { theme } from '@pagopa/mui-italia/dist/theme/theme';
+import { theme } from '@pagopa/mui-italia';
 import App from './App';
 import { store } from './redux/store';
 import { MOCK_USER } from './utils/constants';
