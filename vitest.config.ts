@@ -32,5 +32,10 @@ export default defineConfig({
     },
     restoreMocks: true,
     clearMocks: true,
+    server: {
+      deps: {
+        inline: ['@pagopa/mui-italia'],
+      },
+    },
   },
 });
