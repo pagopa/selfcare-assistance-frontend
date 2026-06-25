@@ -91,7 +91,7 @@
     "prettier": "^3.3.2",
     "regex-replace": "^2.3.1",
     "rimraf": "^6.0.1",
-    "vite": "^5.4.0",
+    "vite": "^6.0.0",
     "vite-plugin-html": "^3.2.2",
     "vite-tsconfig-paths": "^4.3.0",
     "vitest": "^2.0.0"
