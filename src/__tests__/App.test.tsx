@@ -1,11 +1,13 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { createStore } from '../redux/store';
 import App from '../App';
 import { storageTokenOps, isExpiredToken } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
 import { onRedirectToLogin } from '../api/DashboardApiClient';
 
-vi.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', () => ({
+vi.mock('@pagopa/selfcare-common-frontend/lib/utils/storage', async (importOriginal) => ({
+  ...(await importOriginal<object>()),
   storageTokenOps: {
     read: vi.fn(),
   },
@@ -22,7 +24,9 @@ const renderApp = () => {
   const store = createStore();
   return render(
     <Provider store={store}>
-      <App />
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
     </Provider>
   );
 };

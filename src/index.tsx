@@ -1,8 +1,8 @@
-import '@pagopa/selfcare-common-frontend/lib/common-polyfill';
 import '@pagopa/selfcare-common-frontend/lib/index';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { CONFIG } from '@pagopa/selfcare-common-frontend/lib/config/env';
 import { theme } from '@pagopa/mui-italia';
@@ -28,7 +28,9 @@ root.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <BrowserRouter basename="/assistenza">
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
