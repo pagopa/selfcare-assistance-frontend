@@ -12,6 +12,7 @@ export default {
     },
     dataValidate: {
       invalidEmail: 'The email address is not valid',
+      invalidPecEmail: 'The email address is not valid. PEC addresses are not allowed.',
       notEqualConfirmEmail:
         "The confirmation email address is not the same as the email address that was entered",
     },

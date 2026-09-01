@@ -12,6 +12,7 @@ export default {
     },
     dataValidate: {
       invalidEmail: 'E-poštni naslov je neveljaven',
+      invalidPecEmail: 'E-poštni naslov je neveljaven. Naslovi PEC niso dovoljeni.',
       notEqualConfirmEmail:
         "Potrditveni e-poštni naslov ni enak e-poštnemu naslovu, ki ste ga vnesli",
     },

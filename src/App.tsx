@@ -14,7 +14,14 @@ const App = () => {
       const isExpiredSession = isExpiredToken(token);
       if (isExpiredSession) {
         onRedirectToLogin();
-        window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
+        // In local development the shared "selfcare" gateway host is not reachable,
+        // so a hard navigation to it would just show a browser DNS error page.
+        // Clear the stale token instead of redirecting, so the app can be used locally.
+        if (ENV.ENV === 'LOCAL_DEV') {
+          storageTokenOps.delete();
+        } else {
+          window.setTimeout(() => window.location.assign(ENV.URL_FE.LOGOUT), 2000);
+        }
       }
     }
   }, []);

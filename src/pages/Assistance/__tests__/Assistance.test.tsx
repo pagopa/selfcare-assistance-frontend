@@ -79,3 +79,18 @@ test('test errors helpertext on input fields and consequent behavior of the forw
   await waitFor(() => expect(button).toBeEnabled());
   fireEvent.click(button);
 });
+
+test('test PEC email is rejected with dedicated helper text', async () => {
+  const { store } = renderApp();
+  verifyLoginMockExecution(store.getState());
+  const button = document.getElementById('assistanceForwardButton') as HTMLButtonElement;
+
+  const emailField = document.querySelector('#email') as HTMLInputElement;
+  const confirmEmailField = document.querySelector('#confirmEmail') as HTMLInputElement;
+
+  fireEvent.change(emailField, { target: { value: 'test@pec.it' } });
+  fireEvent.change(confirmEmailField, { target: { value: 'test@pec.it' } });
+
+  await waitFor(() => expect(button).toBeDisabled());
+  await waitFor(() => screen.getByText('assistancePage.dataValidate.invalidPecEmail'));
+});

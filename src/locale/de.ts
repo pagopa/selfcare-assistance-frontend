@@ -12,6 +12,7 @@ export default {
     },
     dataValidate: {
       invalidEmail: 'Die E-Mail-Adresse ist ungültig',
+      invalidPecEmail: 'Die E-Mail-Adresse ist ungültig. PEC-Adressen sind nicht zulässig.',
       notEqualConfirmEmail:
         "Die Bestätigungs-E-Mail-Adresse stimmt nicht mit der eingegebenen E-Mail-Adresse überein",
     },

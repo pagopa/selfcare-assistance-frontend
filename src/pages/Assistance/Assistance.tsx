@@ -17,6 +17,7 @@ import { useFormik } from 'formik';
 import { uniqueId } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { isPecEmail } from '@pagopa/selfcare-common-frontend/lib/utils/utils';
 import { SupportResponse } from '../../api/generated/b4f-dashboard/SupportResponse';
 import { sendRequestToSupport } from '../../services/assistanceService';
 import { LOADING_TASK_SAVE_ASSISTANCE } from '../../utils/constants';
@@ -100,7 +101,9 @@ const Assistance = () => {
           ? requiredError
           : !emailRegexp.test(values.email)
             ? t('assistancePage.dataValidate.invalidEmail')
-            : undefined,
+            : isPecEmail(values.email)
+              ? t('assistancePage.dataValidate.invalidPecEmail')
+              : undefined,
         confirmEmail: !values.confirmEmail
           ? requiredError
           : values.confirmEmail !== values.email
@@ -128,7 +131,7 @@ const Assistance = () => {
       const productId = productIdByUrl
         ? productIdByUrl
         : window.location.hostname?.startsWith('pnpg') ||
-            window.location.hostname?.startsWith('imprese')
+          window.location.hostname?.startsWith('imprese')
           ? 'prod-pn-pg'
           : 'prod-selfcare';
 
