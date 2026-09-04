@@ -31,13 +31,13 @@
   },
   "include": [
     "src/**/*",
-    "vite.config.ts",
-    "vitest.config.ts"
+    "vite.config.ts"
   ],
   "exclude": [
     "__mocks__",
     "dist",
     "node_modules",
-    "Dangerfile.ts"
+    "Dangerfile.ts",
+    "vitest.config.ts"
   ]
 }

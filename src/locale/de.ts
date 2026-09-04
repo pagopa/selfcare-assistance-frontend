@@ -12,12 +12,13 @@ export default {
     },
     dataValidate: {
       invalidEmail: 'Die E-Mail-Adresse ist ungültig',
+      invalidPecEmail: 'Die E-Mail-Adresse ist ungültig. PEC-Adressen sind nicht zulässig.',
       notEqualConfirmEmail:
         "Die Bestätigungs-E-Mail-Adresse stimmt nicht mit der eingegebenen E-Mail-Adresse überein",
     },
     title: 'Brauchst du Hilfe mit dem reservierten Bereich für Körperschaften?',
     subTitle:
-      "Bitte gib die E-Mail-Adresse an, an die du Antworten vom Kundendienst erhalten möchtest. Du kannst Probleme im Zusammenhang mit dem Beitritt oder der Nutzung des reservierten Bereichs für deine Körperschaft melden.",
+      'Bitte gib die E-Mail-Adresse an, an die du Antworten vom Kundendienst erhalten möchtest.<1></1><2></2>Verwende eine <4>gewöhnliche E-Mail-Adresse</4>: PEC-Adressen können die Kundendienst-Mitteilungen nicht korrekt empfangen.',
     email: {
       label: 'Gib die E-Mail-Adresse ein',
     },

@@ -12,12 +12,13 @@ export default {
     },
     dataValidate: {
       invalidEmail: 'L’indirizzo email non è valido',
+      invalidPecEmail: 'L’indirizzo email non è valido. Non sono ammessi gli indirizzi PEC.',
       notEqualConfirmEmail:
         "L’indirizzo email di conferma non è uguale all'indirizzo email inserito",
     },
     title: 'Hai bisogno di aiuto per l’Area Riservata Enti?',
     subTitle:
-      "Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza. Potrai segnalare problemi relativi all'adesione o all'utilizzo dell'Area Riservata per il tuo ente.",
+      'Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza.<1></1><2></2>Usa un <4>indirizzo email ordinario</4>: le PEC non possono ricevere correttamente le comunicazioni dell’assistenza.',
     email: {
       label: 'Inserisci l’indirizzo email',
     },
