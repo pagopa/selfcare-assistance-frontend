@@ -18,7 +18,7 @@ export default {
     },
     title: 'Besoin d’aide pour utiliser l’espace réservé aux institutions ?',
     subTitle:
-      "Veuillez indiquer l’adresse mail à laquelle vous souhaitez recevoir les réponses de l’assistance. Vous pourrez signaler tout problème lié à l’adhésion ou à l’utilisation de l’espace réservé à votre institution.",
+      'Veuillez indiquer l’adresse mail à laquelle vous souhaitez recevoir les réponses de l’assistance.<1></1><2></2>Utilisez une <4>adresse mail ordinaire</4> : les adresses PEC ne peuvent pas recevoir correctement les communications de l’assistance.',
     email: {
       label: 'Saisissez votre adresse mail',
     },

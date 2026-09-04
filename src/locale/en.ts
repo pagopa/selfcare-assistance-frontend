@@ -18,7 +18,7 @@ export default {
     },
     title: 'Do you need help for the Reserved Area for institutions?',
     subTitle:
-      "Enter the email address where you want to receive the support answers. You can report problems related to registering or using the Reserved Area for your institution.",
+      'Enter the email address where you want to receive the support answers.<1></1><2></2>Use a <4>regular email address</4>: certified email addresses (PEC) cannot correctly receive support communications.',
     email: {
       label: 'Enter your email address',
     },

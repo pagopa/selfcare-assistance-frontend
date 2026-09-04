@@ -18,7 +18,7 @@ export default {
     },
     title: 'Potrebujete pomoč pri varnem območju za organizacije?',
     subTitle:
-      "Navedite e-poštni naslov, na katerega želite prejemati odgovore s strani podpore. Prijavili boste lahko težave v zvezi s članstvom ali uporabo varnega območja za vašo organizacijo.",
+      'Navedite e-poštni naslov, na katerega želite prejemati odgovore s strani podpore.<1></1><2></2>Uporabite <4>običajen e-poštni naslov</4>: naslovi PEC ne morejo pravilno prejemati sporočil podpore.',
     email: {
       label: 'Vnesite svoj e-poštni naslov',
     },

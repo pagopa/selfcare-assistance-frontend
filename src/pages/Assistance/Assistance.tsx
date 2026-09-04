@@ -216,7 +216,15 @@ const Assistance = () => {
       >
         <TitleBox
           title={t('assistancePage.title')}
-          subTitle={t('assistancePage.subTitle')}
+          subTitle={
+            <Trans i18nKey="assistancePage.subTitle">
+              Indica l’indirizzo email in cui desideri ricevere le risposte dell’assistenza.
+              <br />
+              <br />
+              Usa un <strong>indirizzo email ordinario</strong>: le PEC non possono ricevere
+              correttamente le comunicazioni dell’assistenza.
+            </Trans>
+          }
           mtTitle={3}
           mbTitle={2}
           mbSubTitle={4}
