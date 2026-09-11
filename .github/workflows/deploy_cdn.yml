@@ -25,7 +25,7 @@ on:
 
 jobs:
   release_and_deploy:
-    uses: pagopa/selfcare/.github/workflows/call_release_cdn_vite_frontdoor.yml@main
+    uses: pagopa/selfcare/.github/workflows/call_release_cdn_vite_frontdoor.yml@3533fa6a6853836da202ca98971a640470503858 # main
     name: "Release [${{ (github.event_name == 'workflow_dispatch' && inputs.env) || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
     secrets: inherit
     with:
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [release_and_deploy]
     steps:
-      - uses: pagopa/selfcare-commons/github-actions-template/promote-release@main
+      - uses: pagopa/selfcare-commons/github-actions-template/promote-release@efdc1a6deca2f704d6046a7f3adaa0afc2515f7a # main
         with:
           github_path_token: ${{ secrets.GH_PAT_VARIABLES }}
           release_version: ${{ vars.CURRENT_UAT_VERSION }}
