@@ -27,7 +27,7 @@ jobs:
 
       - name: Create Release Branch
         id: create_branch
-        uses: pagopa/selfcare/.github/actions/create-release@main
+        uses: pagopa/selfcare/.github/actions/create-release@cd0a2751f24b3279c1239a10b38e1a91f56703a7 # main
         with:
           version_bump: ${{ inputs.version-bump }}
           github_path_token: ${{ secrets.GH_PAT_VARIABLES }}
