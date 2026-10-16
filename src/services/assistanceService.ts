@@ -4,7 +4,8 @@ import { SupportResponse } from '../api/generated/b4f-dashboard/SupportResponse'
 export const sendRequestToSupport = async (
   email: string,
   productId: string,
-  data?: string
+  data?: string,
+  category?: string
 ): Promise<SupportResponse> => {
   /* istanbul ignore if */
   if (import.meta.env.VITE_API_MOCK_ASSISTANCE === 'true') {
@@ -12,6 +13,6 @@ export const sendRequestToSupport = async (
       resolve({ jwt: 'mockJwt', actionUrl: 'mockActionUrl', redirectUrl: 'mockRedirectUrl' })
     );
   } else {
-    return DashboardApi.sendSupportRequest(email, productId, data);
+    return DashboardApi.sendSupportRequest(email, productId, data, category);
   }
 };

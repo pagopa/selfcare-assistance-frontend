@@ -43,13 +43,15 @@ export const DashboardApi = {
   sendSupportRequest: async (
     email: string,
     productId: string,
-    data?: string
+    data?: string,
+    category?: string
   ): Promise<SupportResponse> => {
     const result = await apiClient.sendSupportRequestUsingPOST({
       body: {
         email: email as EmailString,
         productId,
         data,
+        category,
       },
     });
     return extractResponse(result, 200, onRedirectToLogin);

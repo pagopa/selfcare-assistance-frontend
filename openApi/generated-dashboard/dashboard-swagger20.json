@@ -2,11 +2,11 @@
   "swagger": "2.0",
   "info": {
     "description": "Self Care Dashboard API documentation",
-    "title": "${openapi_title}",
+    "title": "Dashboard BFF API",
     "version": "0.0.1-SNAPSHOT"
   },
   "host": "localhost:80",
-  "basePath": "%7BbasePath%7D",
+  "basePath": "/",
   "schemes": [
     "http"
   ],
@@ -24,6 +24,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/DelegationRequestDto"
             }
@@ -49,7 +50,10 @@
             }
           },
           "409": {
-            "description": "Conflict"
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -205,6 +209,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UpdateInstitutionDto"
             }
@@ -270,6 +275,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/GeographicTaxonomyListDto"
             }
@@ -344,9 +350,9 @@
           {
             "description": "Order to show response NONE, ASC, DESC",
             "enum": [
+              "NONE",
               "ASC",
-              "DESC",
-              "NONE"
+              "DESC"
             ],
             "in": "query",
             "name": "order",
@@ -422,7 +428,6 @@
         ],
         "produces": [
           "application/json",
-          "multipart/form-data",
           "application/problem+json"
         ],
         "parameters": [
@@ -550,6 +555,60 @@
         "summary": "Retrieve institution's delegations"
       }
     },
+    "/v1/products/my-permissions": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductRolePermissionsList"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "products"
+        ],
+        "description": "Service to retrieve the logged user's permissions for all products",
+        "operationId": "getMyPermissions",
+        "summary": "Service to retrieve the logged user's permissions for all products"
+      }
+    },
     "/v1/products/{productId}/brokers/{institutionType}": {
       "get": {
         "produces": [
@@ -642,7 +701,9 @@
         "responses": {
           "200": {
             "description": "OK",
-            "schema":{"$ref":"#/definitions/ProductRoleMappingsResourceArray"}
+            "schema": {
+              "$ref": "#/definitions/ProductRolesResource"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -697,6 +758,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/SupportRequestDto"
             }
@@ -794,6 +856,137 @@
         "description": "Service to get all the institutions related to logged user",
         "operationId": "v2RetrieveUserInstitutions",
         "summary": "getInstitutions"
+      }
+    },
+    "/v2/institutions/all/{institutionId}": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "description": "Institution's unique internal identifier",
+            "in": "path",
+            "name": "institutionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/InstitutionResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "institutions"
+        ],
+        "description": "Service to get a specific institution in ARB",
+        "operationId": "v2GetAllInstitution",
+        "summary": "Service to get a specific institution in ARB"
+      }
+    },
+    "/v2/institutions/all/{institutionId}/users/{userId}": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "description": "Institution's unique internal identifier",
+            "in": "path",
+            "name": "institutionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "User's unique identifier",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/InstitutionUserDetailsResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "institutions"
+        ],
+        "description": "Service to get the users with the given user id related to a specific institution even without a role on the institution",
+        "operationId": "v2RetrieveAllInstitutionUser",
+        "summary": "getAllInstitutionUser"
       }
     },
     "/v2/institutions/onboardings/{productId}/pending": {
@@ -1031,9 +1224,9 @@
           {
             "description": "Order to show response NONE, ASC, DESC",
             "enum": [
+              "NONE",
               "ASC",
-              "DESC",
-              "NONE"
+              "DESC"
             ],
             "in": "query",
             "name": "order",
@@ -1042,7 +1235,6 @@
           },
           {
             "description": "page",
-            "exclusiveMinimum": false,
             "format": "int32",
             "in": "query",
             "minimum": 0,
@@ -1052,7 +1244,6 @@
           },
           {
             "description": "size",
-            "exclusiveMinimum": false,
             "format": "int32",
             "in": "query",
             "minimum": 1,
@@ -1175,6 +1366,82 @@
         "summary": "getOnboardingsInfo"
       }
     },
+    "/v2/institutions/{institutionId}/product/{productId}/attachment/status": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "description": "Institution's unique internal identifier",
+            "in": "path",
+            "name": "institutionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Product's unique identifier",
+            "in": "path",
+            "name": "productId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "name",
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CheckAttachmentResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "institutions"
+        ],
+        "description": "Service to verify if the attachment is already uploaded or not",
+        "operationId": "v2CheckAttachment",
+        "summary": "checkAttachmentStatus"
+      }
+    },
     "/v2/institutions/{institutionId}/product/{productId}/check-user": {
       "post": {
         "consumes": [
@@ -1202,6 +1469,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/SearchUserDto"
             }
@@ -1275,6 +1543,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/CreateUserDto"
             }
@@ -1437,6 +1706,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UserProductRoles"
             }
@@ -1578,6 +1848,7 @@
             "type": "string"
           },
           {
+            "default": "it",
             "description": "Selected language",
             "in": "query",
             "name": "lang",
@@ -1737,6 +2008,7 @@
             "type": "string"
           },
           {
+            "default": "it",
             "description": "Selected language",
             "in": "query",
             "name": "lang",
@@ -1882,33 +2154,6 @@
             "type": "string"
           },
           {
-            "description": "The page number to access (0 indexed, defaults to 0)",
-            "format": "int32",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "Number of records per page (defaults to 20, max 2000)",
-            "format": "int32",
-            "in": "query",
-            "name": "size",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
-            "required": false,
-            "type": "array"
-          },
-          {
             "description": "Users group's productId",
             "in": "query",
             "name": "productId",
@@ -1922,13 +2167,31 @@
             "name": "userId",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "The page number to access",
+            "in": "query",
+            "name": "page",
+            "type": "integer"
+          },
+          {
+            "description": "Number of records per page",
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "in": "query",
+            "name": "sort",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PageOfUserGroupPlainResource"
+              "$ref": "#/definitions/PageUserGroupPlainResource"
             }
           },
           "400": {
@@ -1984,6 +2247,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/CreateUserGroupDto"
             }
@@ -2009,7 +2273,10 @@
             }
           },
           "409": {
-            "description": "Conflict"
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -2048,37 +2315,28 @@
             "type": "string"
           },
           {
-            "description": "The page number to access (0 indexed, defaults to 0)",
-            "format": "int32",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "Number of records per page (defaults to 20, max 2000)",
-            "format": "int32",
-            "in": "query",
-            "name": "size",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
-            "required": false,
-            "type": "array"
-          },
-          {
             "description": "Users group's productId",
             "in": "query",
             "name": "productId",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "The page number to access",
+            "in": "query",
+            "name": "page",
+            "type": "integer"
+          },
+          {
+            "description": "Number of records per page",
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "in": "query",
+            "name": "sort",
             "type": "string"
           }
         ],
@@ -2086,7 +2344,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PageOfUserGroupPlainResource"
+              "$ref": "#/definitions/PageUserGroupPlainResource"
             }
           },
           "400": {
@@ -2320,6 +2578,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UpdateUserGroupDto"
             }
@@ -2342,7 +2601,10 @@
             }
           },
           "409": {
-            "description": "Conflict"
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -2590,6 +2852,87 @@
         "summary": "deleteMemberFromUserGroup"
       }
     },
+    "/v2/users/all/institution/{institutionId}": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "description": "Institution's unique internal identifier",
+            "in": "path",
+            "name": "institutionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "productId",
+            "in": "query",
+            "name": "productId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "states",
+            "in": "query",
+            "name": "states",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "roles",
+            "in": "query",
+            "name": "roles",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema":{"$ref":"#/definitions/UserInstitutionRoleArray"}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "description": "Service to get all the users related to a specific institution",
+        "operationId": "v2GetAllUsersUsingGET",
+        "summary": "getAllUsers"
+      }
+    },
     "/v2/users/institution/{institutionId}": {
       "get": {
         "produces": [
@@ -2671,6 +3014,60 @@
         "summary": "getUsers"
       }
     },
+    "/v2/users/otp-info": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserOtpEmailInfo"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "global"
+            ]
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "description": "Service to get the otp info for the current user",
+        "operationId": "getUserOtpEmailInfoUsingGET",
+        "summary": "getUserOtpEmailInfo"
+      }
+    },
     "/v2/users/search": {
       "post": {
         "consumes": [
@@ -2691,6 +3088,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/SearchUserDto"
             }
@@ -2843,6 +3241,7 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UpdateUserDto"
             }
@@ -3106,7 +3505,7 @@
       }
     }
   },
-  "definitions" : {"ProductUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductUserResource"}},"OnboardingInfoArray":{"type": "array", "items": {"$ref": "#/definitions/OnboardingInfo"}},"InstitutionBaseResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionBaseResource"}},"ProductRoleMappingsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductRoleMappingsResource"}},"BrokerResourceArray":{"type": "array", "items": {"$ref": "#/definitions/BrokerResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"STRINGWrapper":{"type": "string"},"STRINGArray":{"type": "array", "items": {"type": "string"}},"ProductsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductsResource"}},
+  "definitions" : {"ProductUserResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductUserResource"}},"UserInstitutionRoleArray":{"type": "array", "items": {"$ref": "#/definitions/UserInstitutionRole"}},"OnboardingInfoArray":{"type": "array", "items": {"$ref": "#/definitions/OnboardingInfo"}},"InstitutionBaseResourceArray":{"type": "array", "items": {"$ref": "#/definitions/InstitutionBaseResource"}},"BrokerResourceArray":{"type": "array", "items": {"$ref": "#/definitions/BrokerResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"DelegationResourceArray":{"type": "array", "items": {"$ref": "#/definitions/DelegationResource"}},"STRINGWrapper":{"type": "string"},"STRINGArray":{"type": "array", "items": {"type": "string"}},"ProductsResourceArray":{"type": "array", "items": {"$ref": "#/definitions/ProductsResource"}},
     "Attribute": {
       "properties": {
         "code": {
@@ -3119,10 +3518,10 @@
           "type": "string"
         }
       },
-      "title": "Attribute",
       "type": "object"
     },
     "BackOfficeConfigurationsResource": {
+      "description": "Environment-specific configurations for back-office redirection with Token Exchange",
       "properties": {
         "environment": {
           "description": "Back Office environment",
@@ -3133,7 +3532,6 @@
           "type": "string"
         }
       },
-      "title": "BackOfficeConfigurationsResource",
       "type": "object"
     },
     "Billing": {
@@ -3148,7 +3546,6 @@
           "type": "string"
         }
       },
-      "title": "Billing",
       "type": "object"
     },
     "BrokerResource": {
@@ -3163,18 +3560,16 @@
         },
         "enabled": {
           "description": "Partner's enabling",
-          "example": false,
           "type": "boolean"
         }
       },
-      "title": "BrokerResource",
       "type": "object"
     },
-    "CertifiedFieldResourceOfstring": {
+    "CertifiedFieldResourceString": {
+      "description": "User's institutional phone number",
       "properties": {
         "certified": {
           "description": "Indicates whether the value comes from a certified information source",
-          "example": false,
           "type": "boolean"
         },
         "value": {
@@ -3182,26 +3577,30 @@
           "type": "string"
         }
       },
-      "title": "CertifiedFieldResourceOfstring",
+      "type": "object"
+    },
+    "CheckAttachmentResponse": {
+      "properties": {
+        "isAttachmentAvailable": {
+          "description": "Boolean indicating the presence of an uploaded attachment given its name, institutionId and productId",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "CheckUserResponse": {
       "properties": {
         "isUserOnboarded": {
           "description": "Boolean indicating the presence of a user given its fiscal code, institutionId and productId",
-          "example": false,
           "type": "boolean"
         }
       },
-      "title": "CheckUserResponse",
       "type": "object"
     },
     "CreateUserDto": {
       "properties": {
         "email": {
           "description": "User's personal email",
-          "example": "email@example.com",
-          "format": "email",
           "type": "string"
         },
         "name": {
@@ -3211,13 +3610,14 @@
         "productRoles": {
           "description": "User's roles in product",
           "items": {
+            "description": "User's roles in product",
             "type": "string"
           },
           "type": "array",
           "uniqueItems": true
         },
         "role": {
-          "description": "User's role, available values: [MANAGER, DELEGATE, SUBDELEGATE, OPERATOR, ADMIN_EA]",
+          "description": "User's role, available values: [MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA]",
           "type": "string"
         },
         "surname": {
@@ -3230,7 +3630,6 @@
         },
         "toAddOnAggregates": {
           "description": "Enable automatic management of group assignment",
-          "example": false,
           "type": "boolean"
         }
       },
@@ -3238,7 +3637,6 @@
         "productRoles",
         "taxCode"
       ],
-      "title": "CreateUserDto",
       "type": "object"
     },
     "CreateUserGroupDto": {
@@ -3254,6 +3652,7 @@
         "members": {
           "description": "List of all the members of the group",
           "items": {
+            "description": "List of all the members of the group",
             "format": "uuid",
             "type": "string"
           },
@@ -3276,7 +3675,6 @@
         "name",
         "productId"
       ],
-      "title": "CreateUserGroupDto",
       "type": "object"
     },
     "DataProtectionOfficer": {
@@ -3291,7 +3689,6 @@
           "type": "string"
         }
       },
-      "title": "DataProtectionOfficer",
       "type": "object"
     },
     "DelegationIdResource": {
@@ -3301,7 +3698,6 @@
           "type": "string"
         }
       },
-      "title": "DelegationIdResource",
       "type": "object"
     },
     "DelegationRequestDto": {
@@ -3329,10 +3725,10 @@
         "type": {
           "description": "Delegation type",
           "enum": [
-            "AOO",
-            "EA",
             "PT",
-            "UO"
+            "AOO",
+            "UO",
+            "EA"
           ],
           "type": "string"
         }
@@ -3342,10 +3738,8 @@
         "institutionFromName",
         "institutionToName",
         "productId",
-        "to",
-        "type"
+        "to"
       ],
-      "title": "DelegationRequestDto",
       "type": "object"
     },
     "DelegationResource": {
@@ -3373,15 +3767,14 @@
         },
         "type": {
           "enum": [
-            "AOO",
-            "EA",
             "PT",
-            "UO"
+            "AOO",
+            "UO",
+            "EA"
           ],
           "type": "string"
         }
       },
-      "title": "DelegationResource",
       "type": "object"
     },
     "DelegationWithInfo": {
@@ -3428,10 +3821,10 @@
         },
         "type": {
           "enum": [
-            "AOO",
-            "EA",
             "PT",
-            "UO"
+            "AOO",
+            "UO",
+            "EA"
           ],
           "type": "string"
         },
@@ -3440,7 +3833,6 @@
           "type": "string"
         }
       },
-      "title": "DelegationWithInfo",
       "type": "object"
     },
     "DelegationWithPagination": {
@@ -3455,7 +3847,6 @@
           "$ref": "#/definitions/PageInfo"
         }
       },
-      "title": "DelegationWithPagination",
       "type": "object"
     },
     "GeographicTaxonomy": {
@@ -3467,10 +3858,10 @@
           "type": "string"
         }
       },
-      "title": "GeographicTaxonomy",
       "type": "object"
     },
     "GeographicTaxonomyDto": {
+      "description": "List of institution's geographic taxonomies",
       "properties": {
         "code": {
           "description": "Institution's geographic taxonomy ISTAT code",
@@ -3485,10 +3876,10 @@
         "code",
         "desc"
       ],
-      "title": "GeographicTaxonomyDto",
       "type": "object"
     },
     "GeographicTaxonomyListDto": {
+      "description": "Institution's geographic taxonomy",
       "properties": {
         "geographicTaxonomyDtoList": {
           "description": "List of institution's geographic taxonomies",
@@ -3501,10 +3892,10 @@
       "required": [
         "geographicTaxonomyDtoList"
       ],
-      "title": "GeographicTaxonomyListDto",
       "type": "object"
     },
     "GeographicTaxonomyResource": {
+      "description": "Institution's geographic taxonomy",
       "properties": {
         "code": {
           "description": "Institution's geographic taxonomy ISTAT code",
@@ -3515,7 +3906,6 @@
           "type": "string"
         }
       },
-      "title": "GeographicTaxonomyResource",
       "type": "object"
     },
     "IdentityTokenResource": {
@@ -3528,7 +3918,6 @@
       "required": [
         "token"
       ],
-      "title": "IdentityTokenResource",
       "type": "object"
     },
     "Institution": {
@@ -3621,7 +4010,6 @@
           "type": "string"
         }
       },
-      "title": "Institution",
       "type": "object"
     },
     "InstitutionBaseResource": {
@@ -3647,7 +4035,6 @@
           "type": "string"
         }
       },
-      "title": "InstitutionBaseResource",
       "type": "object"
     },
     "InstitutionResource": {
@@ -3682,7 +4069,6 @@
         },
         "delegation": {
           "description": "Institution's delegation presence",
-          "example": false,
           "type": "boolean"
         },
         "externalId": {
@@ -3752,8 +4138,7 @@
           "type": "string"
         },
         "supportContact": {
-          "$ref": "#/definitions/SupportContactResource",
-          "description": "'Institution's assistance contacts'"
+          "$ref": "#/definitions/SupportContactResource"
         },
         "userRole": {
           "description": "Logged user's role",
@@ -3765,7 +4150,6 @@
         },
         "vatNumberGroup": {
           "description": "PSP's Vat Number group",
-          "example": false,
           "type": "boolean"
         },
         "zipCode": {
@@ -3773,7 +4157,6 @@
           "type": "string"
         }
       },
-      "title": "InstitutionResource",
       "type": "object"
     },
     "InstitutionUserDetailsResource": {
@@ -3807,11 +4190,11 @@
           "type": "array"
         },
         "role": {
-          "description": "User's role, available values: [MANAGER, DELEGATE, SUBDELEGATE, OPERATOR, ADMIN_EA]",
+          "description": "User's role, available values: [MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA]",
           "enum": [
             "ADMIN",
-            "ADMIN_EA",
-            "LIMITED"
+            "LIMITED",
+            "ADMIN_EA"
           ],
           "type": "string"
         },
@@ -3824,7 +4207,6 @@
           "type": "string"
         }
       },
-      "title": "InstitutionUserDetailsResource",
       "type": "object"
     },
     "InvalidParam": {
@@ -3842,7 +4224,6 @@
         "name",
         "reason"
       ],
-      "title": "InvalidParam",
       "type": "object"
     },
     "OnboardedProduct": {
@@ -3859,20 +4240,20 @@
         },
         "institutionType": {
           "enum": [
-            "AS",
-            "CON",
-            "GPU",
-            "GSP",
             "PA",
             "PG",
+            "GSP",
+            "SA",
+            "PT",
+            "SCP",
+            "PSP",
+            "AS",
+            "REC",
+            "CON",
             "PRV",
             "PRV_PF",
-            "PSP",
-            "PT",
-            "REC",
-            "SA",
-            "SCEC",
-            "SCP"
+            "GPU",
+            "SCEC"
           ],
           "type": "string"
         },
@@ -3885,19 +4266,28 @@
         "originId": {
           "type": "string"
         },
+        "partnerTechRolesEnabled": {
+          "type": "boolean"
+        },
         "productId": {
           "type": "string"
         },
         "status": {
           "enum": [
             "ACTIVE",
-            "DELETED",
             "PENDING",
-            "REJECTED",
+            "TOBEVALIDATED",
             "SUSPENDED",
-            "TOBEVALIDATED"
+            "DELETED",
+            "REJECTED"
           ],
           "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        },
+        "userPartnerTechRole": {
+          "type": "boolean"
         },
         "userProductActions": {
           "items": {
@@ -3909,10 +4299,10 @@
           "type": "string"
         }
       },
-      "title": "OnboardedProduct",
       "type": "object"
     },
     "OnboardedProductResource": {
+      "description": "Authorized user products",
       "properties": {
         "authorized": {
           "type": "boolean"
@@ -3926,20 +4316,20 @@
         },
         "institutionType": {
           "enum": [
-            "AS",
-            "CON",
-            "GPU",
-            "GSP",
             "PA",
             "PG",
+            "GSP",
+            "SA",
+            "PT",
+            "SCP",
+            "PSP",
+            "AS",
+            "REC",
+            "CON",
             "PRV",
             "PRV_PF",
-            "PSP",
-            "PT",
-            "REC",
-            "SA",
-            "SCEC",
-            "SCP"
+            "GPU",
+            "SCEC"
           ],
           "type": "string"
         },
@@ -3952,19 +4342,28 @@
         "originId": {
           "type": "string"
         },
+        "partnerTechRolesEnabled": {
+          "type": "boolean"
+        },
         "productId": {
           "type": "string"
         },
         "productOnBoardingStatus": {
           "enum": [
             "ACTIVE",
-            "DELETED",
             "PENDING",
-            "REJECTED",
+            "TOBEVALIDATED",
             "SUSPENDED",
-            "TOBEVALIDATED"
+            "DELETED",
+            "REJECTED"
           ],
           "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        },
+        "userPartnerTechRole": {
+          "type": "boolean"
         },
         "userProductActions": {
           "items": {
@@ -3976,33 +4375,31 @@
           "type": "string"
         }
       },
-      "title": "OnboardedProductResource",
       "type": "object"
     },
     "OnboardingInfo": {
       "properties": {
         "contractAvailable": {
           "description": "Boolean indicating the presence of a contract",
-          "example": false,
           "type": "boolean"
         },
         "institutionType": {
           "description": "Institution Type",
           "enum": [
-            "AS",
-            "CON",
-            "GPU",
-            "GSP",
             "PA",
             "PG",
+            "GSP",
+            "SA",
+            "PT",
+            "SCP",
+            "PSP",
+            "AS",
+            "REC",
+            "CON",
             "PRV",
             "PRV_PF",
-            "PSP",
-            "PT",
-            "REC",
-            "SA",
-            "SCEC",
-            "SCP"
+            "GPU",
+            "SCEC"
           ],
           "type": "string"
         },
@@ -4023,7 +4420,6 @@
           "type": "string"
         }
       },
-      "title": "OnboardingInfo",
       "type": "object"
     },
     "PageInfo": {
@@ -4045,10 +4441,9 @@
           "type": "integer"
         }
       },
-      "title": "PageInfo",
       "type": "object"
     },
-    "PageOfUserGroupPlainResource": {
+    "PageUserGroupPlainResource": {
       "properties": {
         "content": {
           "description": "The page content",
@@ -4085,7 +4480,6 @@
         "totalElements",
         "totalPages"
       ],
-      "title": "PageOfUserGroupPlainResource",
       "type": "object"
     },
     "PaymentServiceProvider": {
@@ -4106,10 +4500,10 @@
           "type": "boolean"
         }
       },
-      "title": "PaymentServiceProvider",
       "type": "object"
     },
     "PlainUserResource": {
+      "description": "User by which the group was modified",
       "properties": {
         "id": {
           "description": "User's unique identifier",
@@ -4125,7 +4519,6 @@
           "type": "string"
         }
       },
-      "title": "PlainUserResource",
       "type": "object"
     },
     "Problem": {
@@ -4150,6 +4543,8 @@
           "description": "The HTTP status code.",
           "example": 500,
           "format": "int32",
+          "maximum": 599,
+          "minimum": 100,
           "type": "integer"
         },
         "title": {
@@ -4165,10 +4560,10 @@
         "status",
         "title"
       ],
-      "title": "Problem",
       "type": "object"
     },
     "ProductInfoResource": {
+      "description": "Authorized user product",
       "properties": {
         "id": {
           "description": "Product's unique identifier",
@@ -4186,11 +4581,24 @@
           "type": "string"
         }
       },
-      "title": "ProductInfoResource",
       "type": "object"
     },
     "ProductRoleInfoResource": {
+      "description": "User's role infos in product",
       "properties": {
+        "createdAt": {
+          "description": "User's role creation date associated with a product",
+          "format": "date-time",
+          "type": "string"
+        },
+        "excludeRoleFromUserGroups": {
+          "description": "Boolean indicating if the current product role should be excluded from the user groups",
+          "type": "boolean"
+        },
+        "partyRole": {
+          "description": "User's role, available values: [MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA]",
+          "type": "string"
+        },
         "relationshipId": {
           "description": "Unique relationship identifier between User and Product",
           "type": "string"
@@ -4203,26 +4611,26 @@
           "description": "User's Selfcare role, available values: [ADMIN, ADMIN_EA, LIMITED]",
           "enum": [
             "ADMIN",
-            "ADMIN_EA",
-            "LIMITED"
+            "LIMITED",
+            "ADMIN_EA"
           ],
           "type": "string"
         },
         "status": {
           "description": "User's status",
           "type": "string"
+        },
+        "updatedAt": {
+          "description": "User's role last update date",
+          "format": "date-time",
+          "type": "string"
         }
       },
-      "title": "ProductRoleInfoResource",
       "type": "object"
     },
     "ProductRoleMappingsResource": {
+      "description": "List of partner technical role mappings",
       "properties": {
-        "multiroleAllowed": {
-          "description": "Indicates if an User can have more than one product role",
-          "example": false,
-          "type": "boolean"
-        },
         "partyRole": {
           "description": "Party role, available values: MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA",
           "type": "string"
@@ -4230,6 +4638,7 @@
         "phasesAdditionAllowed": {
           "description": "List of phases where addition of the role is allowed",
           "items": {
+            "description": "List of phases where addition of the role is allowed",
             "type": "string"
           },
           "type": "array"
@@ -4245,16 +4654,62 @@
           "description": "Self Care role",
           "enum": [
             "ADMIN",
-            "ADMIN_EA",
-            "LIMITED"
+            "LIMITED",
+            "ADMIN_EA"
           ],
           "type": "string"
         }
       },
-      "title": "ProductRoleMappingsResource",
+      "type": "object"
+    },
+    "ProductRolePermissions": {
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "permissions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ProductRolePermissionsList": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/ProductRolePermissions"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "ProductRoleResource": {
+      "description": "Available product roles",
       "properties": {
         "code": {
           "description": "Product role internal code",
@@ -4267,15 +4722,41 @@
         "label": {
           "description": "Product role label",
           "type": "string"
+        },
+        "multiroleGroups": {
+          "description": "Product role groups that allow to assign multiple roles to the same user",
+          "items": {
+            "description": "Product role groups that allow to assign multiple roles to the same user",
+            "type": "string"
+          },
+          "type": "array"
         }
       },
-      "title": "ProductRoleResource",
+      "type": "object"
+    },
+    "ProductRolesResource": {
+      "properties": {
+        "partnerTechRoleMappings": {
+          "description": "List of partner technical role mappings",
+          "items": {
+            "$ref": "#/definitions/ProductRoleMappingsResource"
+          },
+          "type": "array"
+        },
+        "roleMappings": {
+          "description": "List of product role mappings",
+          "items": {
+            "$ref": "#/definitions/ProductRoleMappingsResource"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "ProductUserResource": {
       "properties": {
         "createdAt": {
-          "description": "User's creation date associated with a product",
+          "description": "User's role creation date associated with a product",
           "format": "date-time",
           "type": "string"
         },
@@ -4297,15 +4778,14 @@
           "type": "string"
         },
         "product": {
-          "$ref": "#/definitions/ProductInfoResource",
-          "description": "Authorized user product"
+          "$ref": "#/definitions/ProductInfoResource"
         },
         "role": {
           "description": "User's Selfcare role, available values: [ADMIN, ADMIN_EA, LIMITED]",
           "enum": [
             "ADMIN",
-            "ADMIN_EA",
-            "LIMITED"
+            "LIMITED",
+            "ADMIN_EA"
           ],
           "type": "string"
         },
@@ -4318,7 +4798,6 @@
           "type": "string"
         }
       },
-      "title": "ProductUserResource",
       "type": "object"
     },
     "ProductsResource": {
@@ -4339,7 +4818,6 @@
         },
         "delegable": {
           "description": "If a product is delegable to a technical partner",
-          "example": false,
           "type": "boolean"
         },
         "description": {
@@ -4356,7 +4834,6 @@
         },
         "invoiceable": {
           "description": "If a product is invoiceable",
-          "example": false,
           "type": "boolean"
         },
         "logo": {
@@ -4371,9 +4848,9 @@
           "description": "Product's status",
           "enum": [
             "ACTIVE",
-            "INACTIVE",
+            "TESTING",
             "PHASE_OUT",
-            "TESTING"
+            "INACTIVE"
           ],
           "type": "string"
         },
@@ -4386,11 +4863,9 @@
           "type": "string"
         },
         "urlPublic": {
-          "description": "URL that redirects to the public information webpage of the product",
           "type": "string"
         }
       },
-      "title": "ProductsResource",
       "type": "object"
     },
     "RootParentResponse": {
@@ -4402,10 +4877,10 @@
           "type": "string"
         }
       },
-      "title": "RootParentResponse",
       "type": "object"
     },
     "SearchUserDto": {
+      "description": "User's roles in product",
       "properties": {
         "fiscalCode": {
           "description": "User's fiscal code",
@@ -4415,14 +4890,13 @@
       "required": [
         "fiscalCode"
       ],
-      "title": "SearchUserDto",
       "type": "object"
     },
     "SubProductResource": {
+      "description": "Product's sub products list",
       "properties": {
         "delegable": {
           "description": "If a product is delegable to a technical partner",
-          "example": false,
           "type": "boolean"
         },
         "description": {
@@ -4439,7 +4913,6 @@
         },
         "invoiceable": {
           "description": "If a product is invoiceable",
-          "example": false,
           "type": "boolean"
         },
         "logo": {
@@ -4454,8 +4927,8 @@
           "description": "Product's onBoarding status",
           "enum": [
             "ACTIVE",
-            "INACTIVE",
-            "PENDING"
+            "PENDING",
+            "INACTIVE"
           ],
           "type": "string"
         },
@@ -4463,9 +4936,9 @@
           "description": "Product's status",
           "enum": [
             "ACTIVE",
-            "INACTIVE",
+            "TESTING",
             "PHASE_OUT",
-            "TESTING"
+            "INACTIVE"
           ],
           "type": "string"
         },
@@ -4478,7 +4951,6 @@
           "type": "string"
         }
       },
-      "title": "SubProductResource",
       "type": "object"
     },
     "SupportContact": {
@@ -4490,10 +4962,10 @@
           "type": "string"
         }
       },
-      "title": "SupportContact",
       "type": "object"
     },
     "SupportContactResource": {
+      "description": "'Institution's assistance contacts'",
       "properties": {
         "supportEmail": {
           "description": "Institution's support email contact",
@@ -4504,19 +4976,20 @@
           "type": "string"
         }
       },
-      "title": "SupportContactResource",
       "type": "object"
     },
     "SupportRequestDto": {
       "properties": {
+        "category": {
+          "description": "Support request category (e.g. contract-update)",
+          "type": "string"
+        },
         "data": {
           "description": "Technical data",
           "type": "string"
         },
         "email": {
           "description": "User's email",
-          "example": "email@example.com",
-          "format": "email",
           "type": "string"
         },
         "institutionId": {
@@ -4535,7 +5008,6 @@
       "required": [
         "email"
       ],
-      "title": "SupportRequestDto",
       "type": "object"
     },
     "SupportResponse": {
@@ -4550,7 +5022,6 @@
           "type": "string"
         }
       },
-      "title": "SupportResponse",
       "type": "object"
     },
     "UpdateInstitutionDto": {
@@ -4564,15 +5035,12 @@
           "type": "string"
         }
       },
-      "title": "UpdateInstitutionDto",
       "type": "object"
     },
     "UpdateUserDto": {
       "properties": {
         "email": {
           "description": "User's institutional email",
-          "example": "email@example.com",
-          "format": "email",
           "type": "string"
         },
         "mobilePhone": {
@@ -4589,7 +5057,6 @@
           "type": "string"
         }
       },
-      "title": "UpdateUserDto",
       "type": "object"
     },
     "UpdateUserGroupDto": {
@@ -4601,6 +5068,7 @@
         "members": {
           "description": "List of all the members of the group",
           "items": {
+            "description": "List of all the members of the group",
             "format": "uuid",
             "type": "string"
           },
@@ -4617,7 +5085,6 @@
         "members",
         "name"
       ],
-      "title": "UpdateUserGroupDto",
       "type": "object"
     },
     "UserCountResource": {
@@ -4638,6 +5105,7 @@
         "roles": {
           "description": "Party role, available values: MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA",
           "items": {
+            "description": "Party role, available values: MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA",
             "type": "string"
           },
           "type": "array"
@@ -4645,12 +5113,12 @@
         "status": {
           "description": "User's status",
           "items": {
+            "description": "User's status",
             "type": "string"
           },
           "type": "array"
         }
       },
-      "title": "UserCountResource",
       "type": "object"
     },
     "UserGroupIdResource": {
@@ -4663,10 +5131,10 @@
       "required": [
         "id"
       ],
-      "title": "UserGroupIdResource",
       "type": "object"
     },
     "UserGroupPlainResource": {
+      "description": "The page content",
       "properties": {
         "createdAt": {
           "description": "Date on which the group was created",
@@ -4717,13 +5185,12 @@
           "description": "Users group's status",
           "enum": [
             "ACTIVE",
-            "DELETED",
-            "SUSPENDED"
+            "SUSPENDED",
+            "DELETED"
           ],
           "type": "string"
         }
       },
-      "title": "UserGroupPlainResource",
       "type": "object"
     },
     "UserGroupResource": {
@@ -4734,8 +5201,7 @@
           "type": "string"
         },
         "createdBy": {
-          "$ref": "#/definitions/PlainUserResource",
-          "description": "User by which the group was created"
+          "$ref": "#/definitions/PlainUserResource"
         },
         "description": {
           "description": "Users group's description",
@@ -4762,8 +5228,7 @@
           "type": "string"
         },
         "modifiedBy": {
-          "$ref": "#/definitions/PlainUserResource",
-          "description": "User by which the group was modified"
+          "$ref": "#/definitions/PlainUserResource"
         },
         "name": {
           "description": "Users group's name",
@@ -4777,13 +5242,12 @@
           "description": "Users group's status",
           "enum": [
             "ACTIVE",
-            "DELETED",
-            "SUSPENDED"
+            "SUSPENDED",
+            "DELETED"
           ],
           "type": "string"
         }
       },
-      "title": "UserGroupResource",
       "type": "object"
     },
     "UserIdResource": {
@@ -4794,10 +5258,53 @@
           "type": "string"
         }
       },
-      "title": "UserIdResource",
+      "type": "object"
+    },
+    "UserInstitutionRole": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "fiscalCode": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "partyRole": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UserOtpEmailInfo": {
+      "properties": {
+        "canUserChangeOtpEmail": {
+          "type": "boolean"
+        },
+        "otpEmail": {
+          "type": "string"
+        },
+        "otpReferenceInstitutionId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "UserProductRoles": {
+      "description": "User's roles in product",
       "properties": {
         "productRoles": {
           "items": {
@@ -4807,27 +5314,26 @@
           "uniqueItems": true
         },
         "role": {
-          "description": "User's role, available values: [MANAGER, DELEGATE, SUBDELEGATE, OPERATOR, ADMIN_EA]",
+          "description": "User's role, available values: [MANAGER, DELEGATE, SUB_DELEGATE, OPERATOR, ADMIN_EA]",
           "type": "string"
         },
         "toAddOnAggregates": {
           "description": "Enable automatic management of group assignment",
-          "example": false,
           "type": "boolean"
         }
       },
-      "title": "UserProductRoles",
+      "required": [
+        "productRoles"
+      ],
       "type": "object"
     },
     "UserResource": {
       "properties": {
         "email": {
-          "$ref": "#/definitions/CertifiedFieldResourceOfstring",
-          "description": "User's institutional email"
+          "$ref": "#/definitions/CertifiedFieldResourceString"
         },
         "familyName": {
-          "$ref": "#/definitions/CertifiedFieldResourceOfstring",
-          "description": "User's surname"
+          "$ref": "#/definitions/CertifiedFieldResourceString"
         },
         "fiscalCode": {
           "description": "User's fiscal code",
@@ -4839,12 +5345,10 @@
           "type": "string"
         },
         "mobilePhone": {
-          "$ref": "#/definitions/CertifiedFieldResourceOfstring",
-          "description": "User's institutional phone number"
+          "$ref": "#/definitions/CertifiedFieldResourceString"
         },
         "name": {
-          "$ref": "#/definitions/CertifiedFieldResourceOfstring",
-          "description": "User's name"
+          "$ref": "#/definitions/CertifiedFieldResourceString"
         },
         "workContacts": {
           "additionalProperties": {
@@ -4854,17 +5358,15 @@
           "type": "object"
         }
       },
-      "title": "UserResource",
       "type": "object"
     },
     "WorkContactResource": {
+      "description": "User's workcontacts, contains the emails associated to every institution the user is assigned to",
       "properties": {
         "email": {
-          "$ref": "#/definitions/CertifiedFieldResourceOfstring",
-          "description": "User's institutional email"
+          "$ref": "#/definitions/CertifiedFieldResourceString"
         }
       },
-      "title": "WorkContactResource",
       "type": "object"
     }
   },
