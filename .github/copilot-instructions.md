@@ -32,4 +32,8 @@ SelfCare assistance page (PagoPA): React 18 + TypeScript SPA built with Vite, MU
 - ESLint (`.eslintrc.js`) includes sonarjs, functional and react-hooks rules; keep lint clean.
 - Functional components with hooks; Formik for forms; fp-ts/io-ts for decoding API responses.
 - Tests live in `__tests__` folders next to the code, using Vitest + React Testing Library; globals are enabled and setup is in `src/setupTests.ts`.
+- Routing is React Router v5 (`useHistory`, `useLocation`); do not use v6 APIs.
+- `src/setupTests.ts` mocks `react-i18next` so `t(key)` returns the key: assert on keys. `withLogin` is aliased to a mock in `src/__mocks__` via `vitest.config.ts`; `restoreMocks`/`clearMocks` are on.
+- Type-check with `yarn tsc --noEmit`; a change is done when type-check, lint and the relevant tests pass.
+- Detailed path-specific rules live in `.github/instructions/` (`locale`, `tests`, `ui`); API calls go through `src/services`, not directly from components.
 - Never commit secrets.
