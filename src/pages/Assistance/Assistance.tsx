@@ -82,9 +82,11 @@ const Assistance = () => {
 
   const requestIdRef = useRef<string>();
 
-  const productIdByUrl = new URLSearchParams(window.location.search).get('productId');
-  const data = new URLSearchParams(window.location.search).get('data');
+  const searchParams = new URLSearchParams(window.location.search);
+  const productIdByUrl = searchParams.get('productId');
+  const data = searchParams.get('data');
   const dataUrlEncoded = data ? encodeURIComponent(data) : undefined;
+  const category = searchParams.get('cat') || undefined;
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -136,7 +138,7 @@ const Assistance = () => {
           : 'prod-selfcare';
 
       setLoading(true);
-      sendRequestToSupport(values.email, productId, dataUrlEncoded)
+      sendRequestToSupport(values.email, productId, dataUrlEncoded, category)
         .then((res) => setZendeskAuthData(res))
         .catch((reason) => {
           trackEvent('CUSTOMER_CARE_CONTACT_FAILURE', { request_id: requestIdRef.current });
