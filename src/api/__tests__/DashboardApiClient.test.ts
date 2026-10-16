@@ -57,9 +57,33 @@ describe('DashboardApiClient', () => {
           email: 'test@example.com',
           productId: 'product-id',
           data: 'test-data',
+          category: undefined,
         },
       });
       expect(result).toEqual(mockResponse.value);
+    });
+
+    test('sendSupportRequest sends category when provided', async () => {
+      mockSendSupportRequestUsingPOST.mockResolvedValue({
+        status: 200,
+        value: { jwt: 'jwt', actionUrl: 'url', redirectUrl: 'redirect' },
+      });
+
+      await DashboardApi.sendSupportRequest(
+        'test@example.com',
+        'product-id',
+        undefined,
+        'contract-update'
+      );
+
+      expect(mockSendSupportRequestUsingPOST).toHaveBeenCalledWith({
+        body: {
+          email: 'test@example.com',
+          productId: 'product-id',
+          data: undefined,
+          category: 'contract-update',
+        },
+      });
     });
 
     test('sendSupportRequest works without optional data parameter', async () => {
@@ -76,6 +100,7 @@ describe('DashboardApiClient', () => {
           email: 'test@example.com',
           productId: 'product-id',
           data: undefined,
+          category: undefined,
         },
       });
       expect(result).toEqual(mockResponse.value);

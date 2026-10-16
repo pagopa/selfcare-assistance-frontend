@@ -5,6 +5,7 @@ import { createStore } from './../../../redux/store';
 import './../../../locale';
 import i18n from '@pagopa/selfcare-common-frontend/lib/locale/locale-utils';
 import { Provider } from 'react-redux';
+import { sendRequestToSupport } from '../../../services/assistanceService';
 
 // vi.mock('@pagopa/selfcare-common-frontend/lib/decorators/withLogin');
 vi.mock('../../../services/assistanceService');
@@ -69,9 +70,7 @@ test('test errors helpertext on input fields and consequent behavior of the forw
   fireEvent.change(confirmEmailField, { target: { value: 'wrongEmailTest' } });
 
   await waitFor(() => expect(button).toBeDisabled());
-  await waitFor(() =>
-    screen.getByText('assistancePage.dataValidate.notEqualConfirmEmail')
-  );
+  await waitFor(() => screen.getByText('assistancePage.dataValidate.notEqualConfirmEmail'));
 
   fireEvent.change(emailField, { target: { value: fieldsValue.email } });
   fireEvent.change(confirmEmailField, { target: { value: fieldsValue.email } });
@@ -93,4 +92,52 @@ test('test PEC email is rejected with dedicated helper text', async () => {
 
   await waitFor(() => expect(button).toBeDisabled());
   await waitFor(() => screen.getByText('assistancePage.dataValidate.invalidPecEmail'));
+});
+
+const submitValidForm = async () => {
+  const button = document.getElementById('assistanceForwardButton') as HTMLButtonElement;
+  const emailField = document.querySelector('#email') as HTMLInputElement;
+  const confirmEmailField = document.querySelector('#confirmEmail') as HTMLInputElement;
+
+  fireEvent.change(emailField, { target: { value: fieldsValue.email } });
+  fireEvent.change(confirmEmailField, { target: { value: fieldsValue.email } });
+
+  await waitFor(() => expect(button).toBeEnabled());
+  fireEvent.click(button);
+};
+
+test('test cat query param is sent as category', async () => {
+  window.history.pushState({}, '', '/?productId=prod-io&cat=contract-update');
+  vi.mocked(sendRequestToSupport).mockReturnValue(new Promise(() => undefined));
+
+  renderApp();
+  await submitValidForm();
+
+  await waitFor(() =>
+    expect(sendRequestToSupport).toHaveBeenCalledWith(
+      fieldsValue.email,
+      'prod-io',
+      undefined,
+      'contract-update'
+    )
+  );
+  window.history.pushState({}, '', '/');
+});
+
+test('test category is undefined when cat query param is missing', async () => {
+  window.history.pushState({}, '', '/?productId=prod-io');
+  vi.mocked(sendRequestToSupport).mockReturnValue(new Promise(() => undefined));
+
+  renderApp();
+  await submitValidForm();
+
+  await waitFor(() =>
+    expect(sendRequestToSupport).toHaveBeenCalledWith(
+      fieldsValue.email,
+      'prod-io',
+      undefined,
+      undefined
+    )
+  );
+  window.history.pushState({}, '', '/');
 });

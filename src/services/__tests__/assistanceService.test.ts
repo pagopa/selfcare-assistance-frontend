@@ -24,9 +24,19 @@ describe('assistanceService', () => {
     const mockResponse = { jwt: 'jwt', actionUrl: 'url', redirectUrl: 'redirect' };
     vi.mocked(DashboardApi.sendSupportRequest).mockResolvedValue(mockResponse);
 
-    const result = await sendRequestToSupport('test@test.it', 'product-id', 'data');
+    const result = await sendRequestToSupport(
+      'test@test.it',
+      'product-id',
+      'data',
+      'contract-update'
+    );
 
-    expect(DashboardApi.sendSupportRequest).toHaveBeenCalledWith('test@test.it', 'product-id', 'data');
+    expect(DashboardApi.sendSupportRequest).toHaveBeenCalledWith(
+      'test@test.it',
+      'product-id',
+      'data',
+      'contract-update'
+    );
     expect(result).toEqual(mockResponse);
   });
 });
