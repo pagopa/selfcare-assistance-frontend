@@ -807,7 +807,7 @@
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.154.0.tgz#0a4f2adaeef41d1931861adca8166b7615e5a49a"
   integrity sha512-KYOUGQFlLWR+s4QMV2Q9ko38TZm7EdO87Qm7rvZLqk/webse/cDjtyxKhg/47l0byCbs/k46LT8qc4PKjAikzA==
 
-"@pagopa/mui-italia@^2.7.0":
+"@pagopa/mui-italia@2.7.0", "@pagopa/mui-italia@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@pagopa/mui-italia/-/mui-italia-2.7.0.tgz#e612d20ad8d9dc6449e9bfdba99edb0401413fa1"
   integrity sha512-MEGj613VkMpgviMzmXKXKoKpd0Ij40FvPjjt/UrC1lnBmCObfhs4Wx0LbJwOmY1Y57UcIgDey/EjaEJQWDEJsw==
@@ -832,7 +832,7 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^2.5.4":
+"@pagopa/selfcare-common-frontend@2.5.4":
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-2.5.4.tgz#e780a26684a9b56b429af1111b69b671ba801b69"
   integrity sha512-2yynnrgaRu4UcNtRQ+eFPZjVT5ZNYYKDbdvM9s5GMcCugl57KCFkSr7Yefl14nXpsI/Ewf5Ipx2CBLpDdp3LVg==
