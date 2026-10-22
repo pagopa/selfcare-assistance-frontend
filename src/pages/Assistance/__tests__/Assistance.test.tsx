@@ -141,3 +141,21 @@ test('test category is undefined when cat query param is missing', async () => {
   );
   window.history.pushState({}, '', '/');
 });
+
+test('test back button is hidden when opened from the contract update wizard', () => {
+  window.history.pushState({}, '', '/?productId=prod-io&cat=contract-update');
+
+  renderApp();
+
+  expect(screen.queryByRole('button', { name: 'assistancePage.back' })).not.toBeInTheDocument();
+  window.history.pushState({}, '', '/');
+});
+
+test('test back button is shown for other categories', () => {
+  window.history.pushState({}, '', '/?productId=prod-io&cat=other');
+
+  renderApp();
+
+  expect(screen.getByRole('button', { name: 'assistancePage.back' })).toBeInTheDocument();
+  window.history.pushState({}, '', '/');
+});
