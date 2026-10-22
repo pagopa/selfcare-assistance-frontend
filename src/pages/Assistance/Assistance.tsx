@@ -87,6 +87,8 @@ const Assistance = () => {
   const data = searchParams.get('data');
   const dataUrlEncoded = data ? encodeURIComponent(data) : undefined;
   const category = searchParams.get('cat') || undefined;
+  // The contract update wizard opens this page in a new tab, so there is no page to go back to
+  const showBackButton = category !== 'contract-update';
 
   useEffect(() => {
     if (!requestIdRef.current) {
@@ -276,14 +278,16 @@ const Assistance = () => {
           </Typography>
           <Box my={4} display="flex" justifyContent="space-between">
             <Box>
-              <Button
-                size="small"
-                color="primary"
-                variant="outlined"
-                onClick={() => onExit(() => history.go(-1))}
-              >
-                {t('assistancePage.back')}
-              </Button>
+              {showBackButton && (
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => onExit(() => history.go(-1))}
+                >
+                  {t('assistancePage.back')}
+                </Button>
+              )}
             </Box>
             <Box>
               <Button
