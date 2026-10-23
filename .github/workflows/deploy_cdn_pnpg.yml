@@ -25,7 +25,7 @@ on:
 
 jobs:
   release_and_deploy:
-    uses: pagopa/selfcare/.github/workflows/call_release_cdn_vite_frontdoor.yml@main
+    uses: pagopa/selfcare/.github/workflows/call_release_cdn_vite_frontdoor.yml@c8829a3759f84ea976e2a7f64f88b4f9ef379cee # main
     name: "Release [${{ inputs.env != null && inputs.env || (startsWith(github.ref_name, 'releases/') && 'uat') || 'dev' }}]"
     secrets: inherit
     with:
