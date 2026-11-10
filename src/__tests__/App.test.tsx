@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { createStore } from '../redux/store';
 import App from '../App';
 import { storageTokenOps, isExpiredToken } from '@pagopa/selfcare-common-frontend/lib/utils/storage';
