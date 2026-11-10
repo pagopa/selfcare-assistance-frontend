@@ -39,5 +39,5 @@ Without `yarn generate`, `tsc` and many tests fail with missing-module errors. R
 
 - `src/setupTests.ts` mocks `react-i18next` so `t(key)` returns the key itself: assert on keys, not translated text.
 - `vitest.config.ts` aliases `withLogin` to a mock in `src/__mocks__`; `restoreMocks` and `clearMocks` are on.
-- Routing uses React Router v5; do not use v6 APIs.
+- Routing uses React Router v7 (import everything from `react-router`, not `react-router-dom`); do not use v5 APIs (`Switch`, `useHistory`).
 - Prettier: 100 cols, single quotes, semicolons, trailing commas `es5`.
