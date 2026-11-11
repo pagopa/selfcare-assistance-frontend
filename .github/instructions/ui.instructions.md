@@ -10,7 +10,7 @@ applyTo: "src/components/**,src/pages/**"
 - API calls go through `src/services/*` (which use `src/api` clients), not directly in presentational components.
 - Handle loading, error and empty states using the common-frontend error handling.
 - Forms use Formik.
-- Routing is React Router v5 (`useHistory`, `useLocation`).
+- Routing is React Router v7 (`useNavigate`, `useLocation`, imported from `react-router`).
 - Extract reusable logic to hooks; avoid `useEffect` when a derived value or event handler suffices.
 - Keep state as close as possible to where it is used; don't store values derivable from props or other state.
 - Use semantic HTML and accessibility attributes (labels, alt, roles); stable keys in lists, never the index when order can change.
