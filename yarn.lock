@@ -832,7 +832,7 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/selfcare-common-frontend@^3":
+"@pagopa/selfcare-common-frontend@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@pagopa/selfcare-common-frontend/-/selfcare-common-frontend-3.0.0.tgz#b5e315dee6a5ea7efb0f06011f26dfec06278e5c"
   integrity sha512-ESawi/+LN7gBdGo/vfs8ucDtTcDSVe8BeZV0rgOLtQ/LjNriv4n5xDDqnWOaAOYHzJ7rYx+nFYlrbebkDJl2nw==
@@ -5057,7 +5057,7 @@ react-redux@^7.2.6, react-redux@^8.1.0:
     react-is "^18.0.0"
     use-sync-external-store "^1.0.0"
 
-react-router@^7:
+react-router@^7, react-router@^7.18.5:
   version "7.18.5"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.18.5.tgz#808611f9f8675fe4506699815168822f4d9f3ee3"
   integrity sha512-dTgvcXDOrLPrlLHrcZAqWveiK1hMSqN+rGAJzegP8HtmNkfRxOoshGWBNX3ZJ0cZjOHkRdlUJtaIhZMLLyGyPw==
