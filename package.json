@@ -76,7 +76,7 @@
     "eslint-plugin-functional": "^4.2.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-sonarjs": "^0.24.0",
     "jsdom": "^29.1.1",
     "mkdirp": "^1.0.4",
